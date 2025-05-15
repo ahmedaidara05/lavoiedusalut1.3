@@ -33,6 +33,11 @@ header {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.left-nav, .right-nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
 .header-content {
     display: flex;
     align-items: center;
@@ -45,11 +50,6 @@ header {
     object-fit: cover;
     border-radius: 5px;
     border: 2px solid #d4af37;
-}
-
-nav {
-    display: flex;
-    gap: 0.5rem;
 }
 
 nav button {
@@ -116,7 +116,61 @@ p {
     font-size: 1.1rem;
 }
 
-.back-btn, .favorite {
+.close-btn {
+    background: none;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+
+.close-btn:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+.favorite {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #d4af37;
+    transition: color 0.3s, transform 0.2s;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.favorite.active {
+    color: #fff;
+    transform: scale(1.2);
+}
+
+body.dark .favorite.active {
+    color: #d4af37;
+}
+
+.favorite:hover {
+    transform: scale(1.2);
+}
+
+/* Navigation entre chapitres */
+.chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.prev-btn, .next-btn {
     background-color: #1e3a8a;
     color: #d4af37;
     border: 2px solid #d4af37;
@@ -125,13 +179,19 @@ p {
     border-radius: 25px;
     font-size: 1rem;
     transition: background-color 0.3s, transform 0.2s;
-    margin: 0.5rem 0;
 }
 
-.back-btn:hover, .favorite:hover {
+.prev-btn:hover, .next-btn:hover {
     background-color: #d4af37;
     color: #1e3a8a;
     transform: translateY(-2px);
+}
+
+.prev-btn:disabled, .next-btn:disabled {
+    background-color: #ccc;
+    color: #666;
+    border-color: #ccc;
+    cursor: not-allowed;
 }
 
 /* Liste des chapitres */
@@ -192,16 +252,16 @@ body.dark #favorites-list a:hover {
 /* Responsive pour mobile */
 @media (max-width: 600px) {
     header {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .header-content {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
     }
 
-    nav {
+    .left-nav, .right-nav {
         flex-wrap: wrap;
         justify-content: center;
         gap: 0.3rem;
@@ -223,6 +283,11 @@ body.dark #favorites-list a:hover {
         width: 35px;
         height: 35px;
         font-size: 1rem;
+    }
+
+    .chapter-nav {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }
 
