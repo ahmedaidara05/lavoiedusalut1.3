@@ -36,6 +36,7 @@ header {
 .left-nav, .right-nav {
     display: flex;
     gap: 0.5rem;
+    align-items: center;
 }
 
 .header-content {
@@ -52,7 +53,7 @@ header {
     border: 2px solid #d4af37;
 }
 
-nav button {
+nav button, #voice-select {
     background: none;
     border: 2px solid #d4af37;
     color: #d4af37;
@@ -68,7 +69,14 @@ nav button {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-nav button:hover {
+#voice-select {
+    border-radius: 10px;
+    width: auto;
+    padding: 0.3rem;
+    font-size: 0.9rem;
+}
+
+nav button:hover, #voice-select:hover {
     background-color: #d4af37;
     color: #1e3a8a;
     transform: scale(1.1);
@@ -279,10 +287,15 @@ body.dark #favorites-list a:hover {
         max-width: 150px;
     }
 
-    nav button {
+    nav button, #voice-select {
         width: 35px;
         height: 35px;
         font-size: 1rem;
+    }
+
+    #voice-select {
+        width: auto;
+        font-size: 0.8rem;
     }
 
     .chapter-nav {
