@@ -45,7 +45,7 @@ zoomOut.addEventListener('click', () => {
 // Navigation entre sections
 const sections = document.querySelectorAll('section');
 const links = document.querySelectorAll('#chapter-list a, #favorites-list a');
-const backButtons = document.querySelectorAll('.back-btn');
+const closeButtons = document.querySelectorAll('.close-btn');
 
 links.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -56,15 +56,47 @@ links.forEach(link => {
     });
 });
 
-backButtons.forEach(button => {
+closeButtons.forEach(button => {
     button.addEventListener('click', () => {
         sections.forEach(section => section.classList.remove('active'));
         document.getElementById('home').classList.add('active');
     });
 });
 
+document.getElementById('menu-btn').addEventListener('click', () => {
+    sections.forEach(section => section.classList.remove('active'));
+    document.getElementById('home').classList.add('active');
+});
+
+// Navigation entre chapitres
+const chapters = ['chapter1', 'chapter2', 'chapter3', 'chapter4', 'chapter5'];
+const prevButtons = document.querySelectorAll('.prev-btn');
+const nextButtons = document.querySelectorAll('.next-btn');
+
+prevButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const currentChapter = button.closest('section').id;
+        const currentIndex = chapters.indexOf(currentChapter);
+        if (currentIndex > 0) {
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(chapters[currentIndex - 1]).classList.add('active');
+        }
+    });
+});
+
+nextButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const currentChapter = button.closest('section').id;
+        const currentIndex = chapters.indexOf(currentChapter);
+        if (currentIndex < chapters.length - 1) {
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(chapters[currentIndex + 1]).classList.add('active');
+        }
+    });
+});
+
 // Gestion des favoris
-const favoriteButtons = document.querySelectorAll('.favorite');
+const favoriteStars = document.querySelectorAll('.favorite');
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
 function updateFavoritesList() {
@@ -78,20 +110,24 @@ function updateFavoritesList() {
     });
 }
 
-favoriteButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const chapterId = button.dataset.chapter;
+favoriteStars.forEach(star => {
+    const chapterId = star.dataset.chapter;
+    if (favorites.includes(chapterId)) {
+        star.classList.add('active');
+        star.textContent = '★';
+    }
+    star.addEventListener('click', () => {
         if (!favorites.includes(chapterId)) {
             favorites.push(chapterId);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            updateFavoritesList();
-            button.textContent = 'Retirer des favoris ⭐';
+            star.classList.add('active');
+            star.textContent = '★';
         } else {
             favorites = favorites.filter(id => id !== chapterId);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            updateFavoritesList();
-            button.textContent = 'Ajouter aux favoris ⭐';
+            star.classList.remove('active');
+            star.textContent = '⭐';
         }
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        updateFavoritesList();
     });
 });
 
