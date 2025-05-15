@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Application de lecture de livre sécurisée avec mode sombre, zoom, favoris et lecture vocale">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Application de lecture moderne avec mode sombre, zoom, favoris, lecture vocale et traduction">
+    <meta name="theme-color" content="#1e3a8a">
     <title>Lecteur de Livre</title>
-    <link rel="icon" href="book-icon.png"> <!-- Icône du site -->
+    <link rel="icon" href="book-icon.png">
     <link rel="stylesheet" href="styles.css">
-    <!-- PWA Manifest pour conversion en app mobile -->
     <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -20,6 +20,12 @@
         <nav>
             <button id="theme-toggle" title="Mode sombre/clair">
                 <span class="icon">🌙</span>
+            </button>
+            <button id="voice-toggle" title="Lecture vocale">
+                <span class="icon">🔊</span>
+            </button>
+            <button id="language-toggle" title="Changer de langue">
+                <span class="icon">🌐</span>
             </button>
             <button id="zoom-in" title="Agrandir le texte">+</button>
             <button id="zoom-out" title="Réduire le texte">-</button>
@@ -32,7 +38,7 @@
         <section id="home" class="active">
             <h2>Bienvenue dans votre Lecteur de Livre</h2>
             <img src="book-cover.jpg" alt="Couverture du livre" class="book-cover">
-            <p>Plongez dans une expérience de lecture unique avec des fonctionnalités adaptées pour tous.</p>
+            <p>Plongez dans une expérience de lecture moderne avec des fonctionnalités adaptées pour tous.</p>
             <h3>Chapitres</h3>
             <ul id="chapter-list">
                 <li><a href="#chapter1">Chapitre 1 : L'Aube Nouvelle</a></li>
@@ -45,43 +51,154 @@
 
         <!-- Chapitres -->
         <section id="chapter1" class="chapter">
+            <button class="back-btn">← Retour</button>
             <h2>Chapitre 1 : L'Aube Nouvelle</h2>
-            <p>Le soleil se levait lentement sur les collines verdoyantes, annonçant un jour nouveau. Clara, une jeune aventurière, observait l'horizon avec espoir...</p>
-            <p>Elle savait que ce voyage changerait sa vie à jamais. Les étoiles s'effaçaient doucement, laissant place à une lumière dorée.</p>
-            <button class="read-aloud" data-chapter="chapter1">Lire à haute voix</button>
             <button class="favorite" data-chapter="chapter1">Ajouter aux favoris ⭐</button>
+            <div class="content" data-lang="fr">
+                <p>Le soleil se levait lentement sur les collines verdoyantes, annonçant un jour nouveau. Clara, une jeune aventurière, observait l'horizon avec espoir...</p>
+                <p>Elle savait que ce voyage changerait sa vie à jamais. Les étoiles s'effaçaient doucement, laissant place à une lumière dorée.</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>The sun rose slowly over the lush hills, heralding a new day. Clara, a young adventurer, gazed at the horizon with hope...</p>
+                <p>She knew this journey would change her life forever. The stars faded gently, giving way to a golden light.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>كانت الشمس ترتفع ببطء فوق التلال الخضراء، معلنة عن يوم جديد. كلارا، المغامرة الشابة، كانت تنظر إلى الأفق بأمل...</p>
+                <p>كانت تعلم أن هذه الرحلة ستغير حياتها إلى الأبد. تلاشت النجوم بهدوء، تstationary, giving way to a golden light.</p>
+            </div>
+            <div class="content" data-lang="es" style="display: none;">
+                <p>El sol salía lentamente sobre las colinas verdes, anunciando un nuevo día. Clara, una joven aventurera, miraba el horizonte con esperanza...</p>
+                <p>Sabía que este viaje cambiaría su vida para siempre. Las estrellas se desvanecían suavemente, dando paso a una luz dorada.</p>
+            </div>
+            <div class="content" data-lang="de" style="display: none;">
+                <p>Die Sonne ging langsam über den grünen Hügeln auf und kündigte einen neuen Tag an. Clara, eine junge Abenteurerin, blickte hoffnungsvoll zum Horizont...</p>
+                <p>Sie wusste, dass diese Reise ihr Leben für immer verändern würde. Die Sterne verblassten sanft und machten einem goldenen Licht Platz.</p>
+            </div>
+            <div class="content" data-lang="it" style="display: none;">
+                <p>Il sole sorgeva lentamente sulle colline verdeggianti, annunciando un nuovo giorno. Clara, una giovane avventuriera, guardava l'orizzonte con speranza...</p>
+                <p>Sapeva che questo viaggio avrebbe cambiato la sua vita per sempre. Le stelle svanivano dolcemente, lasciando il posto a una luce dorata.</p>
+            </div>
         </section>
         <section id="chapter2" class="chapter">
+            <button class="back-btn">← Retour</button>
             <h2>Chapitre 2 : Les Ombres du Passé</h2>
-            <p>Dans les ruelles sombres de la vieille ville, des murmures parlaient d'un ancien artefact. Clara sentit un frisson la parcourir...</p>
-            <p>Les souvenirs de son enfance resurgissaient, comme des ombres dansant dans la nuit.</p>
-            <button class="read-aloud" data-chapter="chapter2">Lire à haute voix</button>
             <button class="favorite" data-chapter="chapter2">Ajouter aux favoris ⭐</button>
+            <div class="content" data-lang="fr">
+                <p>Dans les ruelles sombres de la vieille ville, des murmures parlaient d'un ancien artefact. Clara sentit un frisson la parcourir...</p>
+                <p>Les souvenirs de son enfance resurgissaient, comme des ombres dansant dans la nuit.</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>In the dark alleys of the old town, whispers spoke of an ancient artifact. Clara felt a shiver run through her...</p>
+                <p>Memories of her childhood resurfaced, like shadows dancing in the night.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>في الأزقة المظلمة للمدينة القديمة، كانت الهمسات تتحدث عن قطعة أثرية قديمة. شعرت كلارا بقشعريرة...</p>
+                <p>تذكرت ذكريات طفولتها، مثل الظلال التي ترقص في الليل.</p>
+            </div>
+            <div class="content" data-lang="es" style="display: none;">
+                <p>En los oscuros callejones de la ciudad vieja, los susurros hablaban de un artefacto antiguo. Clara sintió un escalofrío...</p>
+                <p>Los recuerdos de su infancia resurgían, como sombras danzando en la noche.</p>
+            </div>
+            <div class="content" data-lang="de" style="display: none;">
+                <p>In den dunklen Gassen der Altstadt flüsterten Stimmen von einem alten Artefakt. Clara spürte ein Schaudern...</p>
+                <p>Erinnerungen an ihre Kindheit tauchten wieder auf, wie Schatten, die in der Nacht tanzten.</p>
+            </div>
+            <div class="content" data-lang="it" style="display: none;">
+                <p>Nei vicoli bui della città vecchia, sussurri parlavano di un antico artefatto. Clara sentì un brivido percorrerla...</p>
+                <p>I ricordi della sua infanzia riaffioravano, come ombre che danzavano nella notte.</p>
+            </div>
         </section>
         <section id="chapter3" class="chapter">
+            <button class="back-btn">← Retour</button>
             <h2>Chapitre 3 : Le Voyage Commence</h2>
-            <p>Clara embarqua sur un vieux navire, les vagues frappant la coque avec force. L'aventure l'attendait, mais aussi le danger...</p>
-            <p>Chaque vague semblait murmurer un secret oublié depuis des siècles.</p>
-            <button class="read-aloud" data-chapter="chapter3">Lire à haute voix</button>
             <button class="favorite" data-chapter="chapter3">Ajouter aux favoris ⭐</button>
+            <div class="content" data-lang="fr">
+                <p>Clara embarqua sur un vieux navire, les vagues frappant la coque avec force. L'aventure l'attendait, mais aussi le danger...</p>
+                <p>Chaque vague semblait murmurer un secret oublié depuis des siècles.</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>Clara boarded an old ship, the waves crashing against the hull with force. Adventure awaited her, but so did danger...</p>
+                <p>Each wave seemed to whisper a secret forgotten for centuries.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>صعدت كلارا على متن سفينة قديمة، الأمواج تضرب الهيكل بقوة. المغامرة كانت تنتظرها، ولكن أيضًا الخطر...</p>
+                <p>كل موجة بدت وكأنها تهمس بسر منسي منذ قرون.</p>
+            </div>
+            <div class="content" data-lang="es" style="display: none;">
+                <p>Clara subió a un viejo barco, las olas golpeaban el casco con fuerza. La aventura la esperaba, pero también el peligro...</p>
+                <p>Cada ola parecía susurrar un secreto olvidado durante siglos.</p>
+            </div>
+            <div class="content" data-lang="de" style="display: none;">
+                <p>Clara stieg auf ein altes Schiff, die Wellen schlugen kräftig gegen den Rumpf. Das Abenteuer wartete auf sie, aber auch die Gefahr...</p>
+                <p>Jede Welle schien ein seit Jahrhunderten vergessenes Geheimnis zu flüstern.</p>
+            </div>
+            <div class="content" data-lang="it" style="display: none;">
+                <p>Clara salì su una vecchia nave, le onde colpivano lo scafo con forza. L'avventura la aspettava, ma anche il pericolo...</p>
+                <p>Ogni onda sembrava sussurrare un segreto dimenticato da secoli.</p>
+            </div>
         </section>
         <section id="chapter4" class="chapter">
+            <button class="back-btn">← Retour</button>
             <h2>Chapitre 4 : Secrets Révélés</h2>
-            <p>Dans une grotte cachée, Clara découvrit une inscription ancienne. Les mots semblaient vivants, pulsant d'une énergie mystérieuse...</p>
-            <p>Chaque symbole racontait une histoire, un fragment du passé oublié.</p>
-            <button class="read-aloud" data-chapter="chapter4">Lire à haute voix</button>
             <button class="favorite" data-chapter="chapter4">Ajouter aux favoris ⭐</button>
+            <div class="content" data-lang="fr">
+                <p>Dans une grotte cachée, Clara découvrit une inscription ancienne. Les mots semblaient vivants, pulsant d'une énergie mystérieuse...</p>
+                <p>Chaque symbole racontait une histoire, un fragment du passé oublié.</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>In a hidden cave, Clara discovered an ancient inscription. The words seemed alive, pulsing with a mysterious energy...</p>
+                <p>Each symbol told a story, a fragment of the forgotten past.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>في كهف مخفي، اكتشفت كلارا نقشًا قديمًا. بدت الكلمات حية، تنبض بطاقة غامضة...</p>
+                <p>كل رمز يروي قصة، جزءًا من الماضي المنسي.</p>
+            </div>
+            <div class="content" data-lang="es" style="display: none;">
+                <p>En una cueva oculta, Clara descubrió una inscripción antigua. Las palabras parecían vivas, pulsando con una energía misteriosa...</p>
+                <p>Cada símbolo contaba una historia, un fragmento del pasado olvidado.</p>
+            </div>
+            <div class="content" data-lang="de" style="display: none;">
+                <p>In einer versteckten Höhle entdeckte Clara eine alte Inschrift. Die Worte schienen lebendig, pulsierten mit einer geheimnisvollen Energie...</p>
+                <p>Jedes Symbol erzählte eine Geschichte, ein Fragment der vergessenen Vergangenheit.</p>
+            </div>
+            <div class="content" data-lang="it" style="display: none;">
+                <p>In una grotta nascosta, Clara scoprì un'iscrizione antica. Le parole sembravano vive, pulsando con un'energia misteriosa...</p>
+                <p>Ogni simbolo raccontava una storia, un frammento del passato dimenticato.</p>
+            </div>
         </section>
         <section id="chapter5" class="chapter">
+            <button class="back-btn">← Retour</button>
             <h2>Chapitre 5 : L'Horizon Lointain</h2>
-            <p>Debout sur une falaise, Clara contemplait l'horizon. Le vent portait des promesses de liberté, mais aussi d'incertitude...</p>
-            <p>Elle savait que son destin était lié à cet horizon lointain, quelque part au-delà des mers.</p>
-            <button class="read-aloud" data-chapter="chapter5">Lire à haute voix</button>
             <button class="favorite" data-chapter="chapter5">Ajouter aux favoris ⭐</button>
+            <div class="content" data-lang="fr">
+                <p>Debout sur une falaise, Clara contemplait l'horizon. Le vent portait des promesses de liberté, mais aussi d'incertitude...</p>
+                <p>Elle savait que son destin était lié à cet horizon lointain, quelque part au-delà des mers.</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>Standing on a cliff, Clara gazed at the horizon. The wind carried promises of freedom, but also uncertainty...</p>
+                <p>She knew her destiny was tied to that distant horizon, somewhere beyond the seas.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>واقفة على جرف، تأملت كلارا الأفق. حملت الرياح وعودًا بالحرية، ولكن أيضًا عدم اليقين...</p>
+                <p>كانت تعلم أن مصيرها مرتبط بذلك الأفق البعيد، في مكان ما وراء البحار.</p>
+            </div>
+            <div class="content" data-lang="es" style="display: none;">
+                <p>De pie en un acantilado, Clara contemplaba el horizonte. El viento traía promesas de libertad, pero también incertidumbre...</p>
+                <p>Sabía que su destino estaba ligado a ese horizonte lejano, en algún lugar más allá de los mares.</p>
+            </div>
+            <div class="content" data-lang="de" style="display: none;">
+                <p>Auf einer Klippe stehend, blickte Clara zum Horizont. Der Wind trug Versprechen von Freiheit, aber auch Unsicherheit...</p>
+                <p>Sie wusste, dass ihr Schicksal mit diesem fernen Horizont verbunden war, irgendwo jenseits der Meere.</p>
+            </div>
+            <div class="content" data-lang="it" style="display: none;">
+                <p>In piedi su una scogliera, Clara contemplava l'orizzonte. Il vento portava promesse di libertà, ma anche incertezza...</p>
+                <p>Sapeva che il suo destino era legato a quell'orizzonte lontano, da qualche parte oltre i mari.</p>
+            </div>
         </section>
 
         <!-- Page des favoris -->
         <section id="favorites" class="chapter">
+            <button class="back-btn">← Retour</button>
             <h2>Vos Chapitres Favoris</h2>
             <ul id="favorites-list"></ul>
         </section>
