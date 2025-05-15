@@ -13,11 +13,14 @@
 </head>
 <body>
     <header>
+        <nav class="left-nav">
+            <button id="menu-btn" title="Sommaire">☰</button>
+        </nav>
         <div class="header-content">
             <h1>Lecteur de Livre</h1>
             <img src="book-cover.jpg" alt="Couverture du livre" class="header-book">
         </div>
-        <nav>
+        <nav class="right-nav">
             <button id="theme-toggle" title="Mode sombre/clair">
                 <span class="icon">🌙</span>
             </button>
@@ -51,9 +54,9 @@
 
         <!-- Chapitres -->
         <section id="chapter1" class="chapter">
-            <button class="back-btn">← Retour</button>
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
             <h2>Chapitre 1 : L'Aube Nouvelle</h2>
-            <button class="favorite" data-chapter="chapter1">Ajouter aux favoris ⭐</button>
+            <span class="favorite" data-chapter="chapter1" title="Ajouter aux favoris">⭐</span>
             <div class="content" data-lang="fr">
                 <p>Le soleil se levait lentement sur les collines verdoyantes, annonçant un jour nouveau. Clara, une jeune aventurière, observait l'horizon avec espoir...</p>
                 <p>Elle savait que ce voyage changerait sa vie à jamais. Les étoiles s'effaçaient doucement, laissant place à une lumière dorée.</p>
@@ -64,7 +67,7 @@
             </div>
             <div class="content" data-lang="ar" style="display: none;">
                 <p>كانت الشمس ترتفع ببطء فوق التلال الخضراء، معلنة عن يوم جديد. كلارا، المغامرة الشابة، كانت تنظر إلى الأفق بأمل...</p>
-                <p>كانت تعلم أن هذه الرحلة ستغير حياتها إلى الأبد. تلاشت النجوم بهدوء، تstationary, giving way to a golden light.</p>
+                <p>كانت تعلم أن هذه الرحلة ستغير حياتها إلى الأبد. تلاشت النجوم بهدوء، تاركة المجال لضوء ذهبي.</p>
             </div>
             <div class="content" data-lang="es" style="display: none;">
                 <p>El sol salía lentamente sobre las colinas verdes, anunciando un nuevo día. Clara, una joven aventurera, miraba el horizonte con esperanza...</p>
@@ -78,11 +81,15 @@
                 <p>Il sole sorgeva lentamente sulle colline verdeggianti, annunciando un nuovo giorno. Clara, una giovane avventuriera, guardava l'orizzonte con speranza...</p>
                 <p>Sapeva che questo viaggio avrebbe cambiato la sua vita per sempre. Le stelle svanivano dolcemente, lasciando il posto a una luce dorata.</p>
             </div>
+            <div class="chapter-nav">
+                <button class="prev-btn" disabled>← Précédent</button>
+                <button class="next-btn">Suivant →</button>
+            </div>
         </section>
         <section id="chapter2" class="chapter">
-            <button class="back-btn">← Retour</button>
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
             <h2>Chapitre 2 : Les Ombres du Passé</h2>
-            <button class="favorite" data-chapter="chapter2">Ajouter aux favoris ⭐</button>
+            <span class="favorite" data-chapter="chapter2" title="Ajouter aux favoris">⭐</span>
             <div class="content" data-lang="fr">
                 <p>Dans les ruelles sombres de la vieille ville, des murmures parlaient d'un ancien artefact. Clara sentit un frisson la parcourir...</p>
                 <p>Les souvenirs de son enfance resurgissaient, comme des ombres dansant dans la nuit.</p>
@@ -107,11 +114,15 @@
                 <p>Nei vicoli bui della città vecchia, sussurri parlavano di un antico artefatto. Clara sentì un brivido percorrerla...</p>
                 <p>I ricordi della sua infanzia riaffioravano, come ombre che danzavano nella notte.</p>
             </div>
+            <div class="chapter-nav">
+                <button class="prev-btn">← Précédent</button>
+                <button class="next-btn">Suivant →</button>
+            </div>
         </section>
         <section id="chapter3" class="chapter">
-            <button class="back-btn">← Retour</button>
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
             <h2>Chapitre 3 : Le Voyage Commence</h2>
-            <button class="favorite" data-chapter="chapter3">Ajouter aux favoris ⭐</button>
+            <span class="favorite" data-chapter="chapter3" title="Ajouter aux favoris">⭐</span>
             <div class="content" data-lang="fr">
                 <p>Clara embarqua sur un vieux navire, les vagues frappant la coque avec force. L'aventure l'attendait, mais aussi le danger...</p>
                 <p>Chaque vague semblait murmurer un secret oublié depuis des siècles.</p>
@@ -136,11 +147,15 @@
                 <p>Clara salì su una vecchia nave, le onde colpivano lo scafo con forza. L'avventura la aspettava, ma anche il pericolo...</p>
                 <p>Ogni onda sembrava sussurrare un segreto dimenticato da secoli.</p>
             </div>
+            <div class="chapter-nav">
+                <button class="prev-btn">← Précédent</button>
+                <button class="next-btn">Suivant →</button>
+            </div>
         </section>
         <section id="chapter4" class="chapter">
-            <button class="back-btn">← Retour</button>
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
             <h2>Chapitre 4 : Secrets Révélés</h2>
-            <button class="favorite" data-chapter="chapter4">Ajouter aux favoris ⭐</button>
+            <span class="favorite" data-chapter="chapter4" title="Ajouter aux favoris">⭐</span>
             <div class="content" data-lang="fr">
                 <p>Dans une grotte cachée, Clara découvrit une inscription ancienne. Les mots semblaient vivants, pulsant d'une énergie mystérieuse...</p>
                 <p>Chaque symbole racontait une histoire, un fragment du passé oublié.</p>
@@ -165,11 +180,15 @@
                 <p>In una grotta nascosta, Clara scoprì un'iscrizione antica. Le parole sembravano vive, pulsando con un'energia misteriosa...</p>
                 <p>Ogni simbolo raccontava una storia, un frammento del passato dimenticato.</p>
             </div>
+            <div class="chapter-nav">
+                <button class="prev-btn">← Précédent</button>
+                <button class="next-btn">Suivant →</button>
+            </div>
         </section>
         <section id="chapter5" class="chapter">
-            <button class="back-btn">← Retour</button>
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
             <h2>Chapitre 5 : L'Horizon Lointain</h2>
-            <button class="favorite" data-chapter="chapter5">Ajouter aux favoris ⭐</button>
+            <span class="favorite" data-chapter="chapter5" title="Ajouter aux favoris">⭐</span>
             <div class="content" data-lang="fr">
                 <p>Debout sur une falaise, Clara contemplait l'horizon. Le vent portait des promesses de liberté, mais aussi d'incertitude...</p>
                 <p>Elle savait que son destin était lié à cet horizon lointain, quelque part au-delà des mers.</p>
@@ -194,11 +213,15 @@
                 <p>In piedi su una scogliera, Clara contemplava l'orizzonte. Il vento portava promesse di libertà, ma anche incertezza...</p>
                 <p>Sapeva che il suo destino era legato a quell'orizzonte lontano, da qualche parte oltre i mari.</p>
             </div>
+            <div class="chapter-nav">
+                <button class="prev-btn">← Précédent</button>
+                <button class="next-btn" disabled>Suivant →</button>
+            </div>
         </section>
 
         <!-- Page des favoris -->
         <section id="favorites" class="chapter">
-            <button class="back-btn">← Retour</button>
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
             <h2>Vos Chapitres Favoris</h2>
             <ul id="favorites-list"></ul>
         </section>
