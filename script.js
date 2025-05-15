@@ -31,16 +31,26 @@ const zoomOut = document.getElementById('zoom-out');
 zoomIn.addEventListener('click', () => {
     if (fontSize < 24) {
         fontSize += 2;
-        document.body.style.fontSize = `${fontSize}px`;
+        updateFontSize();
     }
 });
 
 zoomOut.addEventListener('click', () => {
     if (fontSize > 12) {
         fontSize -= 2;
-        document.body.style.fontSize = `${fontSize}px`;
+        updateFontSize();
     }
 });
+
+function updateFontSize() {
+    document.querySelectorAll('section, section *').forEach(element => {
+        element.style.fontSize = `${fontSize}px`;
+    });
+    // Ajuster les boutons de navigation pour qu'ils restent lisibles
+    document.querySelectorAll('.prev-btn, .next-btn, .close-btn, .favorite').forEach(element => {
+        element.style.fontSize = `${fontSize * 0.9}px`;
+    });
+}
 
 // Navigation entre sections
 const sections = document.querySelectorAll('section');
@@ -108,6 +118,15 @@ function updateFavoritesList() {
         li.innerHTML = `<a href="#${chapterId}">${chapterTitle}</a>`;
         favoritesList.appendChild(li);
     });
+    // Ré-attacher les événements de clic pour les nouveaux liens
+    document.querySelectorAll('#favorites-list a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
 }
 
 favoriteStars.forEach(star => {
@@ -140,8 +159,27 @@ updateFavoritesList();
 
 // Gestion de la lecture vocale
 const voiceToggle = document.getElementById('voice-toggle');
+const voiceSelect = document.getElementById('voice-select');
 let currentSpeech = null;
 let currentChapter = null;
+let voices = [];
+
+function populateVoiceList() {
+    voices = speechSynthesis.getVoices();
+    voiceSelect.innerHTML = '<option value="">Voix par défaut</option>';
+    voices.forEach((voice, index) => {
+        if (voice.lang.startsWith('fr') || voice.lang.startsWith('en') || voice.lang.startsWith('ar')) {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = `${voice.name} (${voice.lang})`;
+            voiceSelect.appendChild(option);
+        }
+    });
+}
+
+// Charger les voix (peut nécessiter un délai sur certains navigateurs)
+speechSynthesis.onvoiceschanged = populateVoiceList;
+populateVoiceList();
 
 voiceToggle.addEventListener('click', () => {
     const activeSection = document.querySelector('section.active');
@@ -165,10 +203,10 @@ voiceToggle.addEventListener('click', () => {
 
     currentSpeech = new SpeechSynthesisUtterance(text);
     currentSpeech.lang = currentLanguage === 'fr' ? 'fr-FR' :
-                        currentLanguage === 'en' ? 'en-US' :
-                        currentLanguage === 'ar' ? 'ar-SA' :
-                        currentLanguage === 'es' ? 'es-ES' :
-                        currentLanguage === 'de' ? 'de-DE' : 'it-IT';
+                        currentLanguage === 'en' ? 'en-US' : 'ar-SA';
+    if (voiceSelect.value) {
+        currentSpeech.voice = voices[parseInt(voiceSelect.value)];
+    }
     currentSpeech.onend = () => {
         voiceToggle.querySelector('.icon').textContent = '🔊';
         currentSpeech = null;
@@ -182,7 +220,7 @@ voiceToggle.addEventListener('click', () => {
 // Gestion de la langue
 let currentLanguage = 'fr';
 const languageToggle = document.getElementById('language-toggle');
-const languages = ['fr', 'en', 'ar', 'es', 'de', 'it'];
+const languages = ['fr', 'en', 'ar'];
 
 languageToggle.addEventListener('click', () => {
     const currentIndex = languages.indexOf(currentLanguage);
@@ -194,6 +232,7 @@ languageToggle.addEventListener('click', () => {
         currentSpeech = null;
         currentChapter = null;
     }
+    populateVoiceList();
 });
 
 function updateLanguage() {
@@ -208,14 +247,8 @@ function updateLanguage() {
                 h2.textContent = h2.textContent.replace('Chapitre', 'Chapter');
             } else if (currentLanguage === 'ar') {
                 h2.textContent = h2.textContent.replace('Chapitre', 'الفصل');
-            } else if (currentLanguage === 'es') {
-                h2.textContent = h2.textContent.replace('Chapitre', 'Capítulo');
-            } else if (currentLanguage === 'de') {
-                h2.textContent = h2.textContent.replace('Chapitre', 'Kapitel');
-            } else if (currentLanguage === 'it') {
-                h2.textContent = h2.textContent.replace('Chapitre', 'Capitolo');
             } else {
-                h2.textContent = h2.textContent.replace(/Chapter|الفصل|Capítulo|Kapitel|Capitolo/, 'Chapitre');
+                h2.textContent = h2.textContent.replace(/Chapter|الفصل/, 'Chapitre');
             }
         }
     });
@@ -224,12 +257,6 @@ function updateLanguage() {
         favoritesTitle.textContent = 'Your Favorite Chapters';
     } else if (currentLanguage === 'ar') {
         favoritesTitle.textContent = 'فصولك المفضلة';
-    } else if (currentLanguage === 'es') {
-        favoritesTitle.textContent = 'Tus capítulos favoritos';
-    } else if (currentLanguage === 'de') {
-        favoritesTitle.textContent = 'Ihre Lieblingskapitel';
-    } else if (currentLanguage === 'it') {
-        favoritesTitle.textContent = 'I tuoi capitoli preferiti';
     } else {
         favoritesTitle.textContent = 'Vos Chapitres Favoris';
     }
