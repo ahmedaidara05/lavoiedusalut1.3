@@ -5,25 +5,24 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #f0f4f8;
+    color: #1e3a8a;
     font-size: 16px;
-    user-select: none; /* Empêche la sélection de texte */
+    user-select: none;
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Mode sombre */
 body.dark {
-    background-color: #1a1a1a;
-    color: #e0e0e0;
+    background-color: #000;
+    color: #fff;
 }
 
 /* En-tête */
 header {
-    background-color: #2c3e50;
-    color: #fff;
+    background-color: #1e3a8a;
+    color: #d4af37;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
@@ -31,6 +30,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .header-content {
@@ -44,6 +44,7 @@ header {
     height: 70px;
     object-fit: cover;
     border-radius: 5px;
+    border: 2px solid #d4af37;
 }
 
 nav {
@@ -53,21 +54,29 @@ nav {
 
 nav button {
     background: none;
-    border: none;
-    color: #fff;
+    border: 2px solid #d4af37;
+    color: #d4af37;
     font-size: 1.2rem;
     cursor: pointer;
     padding: 0.5rem;
-    transition: transform 0.2s;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 nav button:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
     transform: scale(1.1);
 }
 
 /* Main */
 main {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 1rem;
 }
@@ -75,9 +84,8 @@ main {
 section {
     display: none;
     padding: 1rem;
-    background: #fff;
+    background: transparent;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
 }
 
@@ -90,32 +98,40 @@ section.active {
     display: block;
     margin: 1rem auto;
     border-radius: 8px;
+    border: 3px solid #d4af37;
 }
 
 h2 {
     margin-bottom: 1rem;
-    color: #2c3e50;
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+body.dark h2 {
+    color: #d4af37;
 }
 
 p {
     margin-bottom: 1rem;
+    font-size: 1.1rem;
 }
 
-button.read-aloud,
-button.favorite {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
+.back-btn, .favorite {
+    background-color: #1e3a8a;
+    color: #d4af37;
+    border: 2px solid #d4af37;
     padding: 0.5rem 1rem;
-    margin: 0.5rem 0;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.2s;
+    border-radius: 25px;
+    font-size: 1rem;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 0.5rem 0;
 }
 
-button.read-aloud:hover,
-button.favorite:hover {
-    background-color: #2980b9;
+.back-btn:hover, .favorite:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: translateY(-2px);
 }
 
 /* Liste des chapitres */
@@ -128,13 +144,22 @@ button.favorite:hover {
 }
 
 #chapter-list a {
-    color: #3498db;
+    color: #1e3a8a;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+body.dark #chapter-list a {
+    color: #d4af37;
 }
 
 #chapter-list a:hover {
-    text-decoration: underline;
+    color: #d4af37;
+}
+
+body.dark #chapter-list a:hover {
+    color: #fff;
 }
 
 /* Favoris */
@@ -147,12 +172,21 @@ button.favorite:hover {
 }
 
 #favorites-list a {
-    color: #3498db;
+    color: #1e3a8a;
     text-decoration: none;
+    font-weight: 600;
+}
+
+body.dark #favorites-list a {
+    color: #d4af37;
 }
 
 #favorites-list a:hover {
-    text-decoration: underline;
+    color: #d4af37;
+}
+
+body.dark #favorites-list a:hover {
+    color: #fff;
 }
 
 /* Responsive pour mobile */
@@ -170,6 +204,7 @@ button.favorite:hover {
     nav {
         flex-wrap: wrap;
         justify-content: center;
+        gap: 0.3rem;
     }
 
     main {
@@ -182,6 +217,12 @@ button.favorite:hover {
 
     .book-cover {
         max-width: 150px;
+    }
+
+    nav button {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
     }
 }
 
