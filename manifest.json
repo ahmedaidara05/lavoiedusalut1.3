@@ -1,11 +1,24 @@
 {
     "name": "Lecteur de Livre",
     "short_name": "Livre",
-    "start_url": "index.html",
+    "description": "Application de lecture moderne avec mode sombre, zoom, favoris, lecture vocale et traduction",
+    "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#f0f4f8",
+    "background_color": "#1e3a8a",
     "theme_color": "#1e3a8a",
     "icons": [
         {
-            "src": "book-icon.png",
-            "sizes":
+            "src": "book-icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "book-icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "lang": "fr",
+    "dir": "ltr",
+    "orientation": "portrait"
+}
