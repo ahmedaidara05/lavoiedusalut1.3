@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Vérifier que firebase est chargé
+    if (!window.firebase) {
+        console.error('Firebase SDK non chargé. Vérifiez les scripts dans index.html.');
+        return;
+    }
+
     // Protection contre le copier-coller
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     document.addEventListener('copy', (e) => e.preventDefault());
