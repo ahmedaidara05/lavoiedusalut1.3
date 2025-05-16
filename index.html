@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"></script>
 </head>
 <body>
     <header>
@@ -33,7 +37,10 @@
                 <span class="icon">🌐</span>
             </button>
             <button id="favorites-btn" title="Voir les favoris">⭐</button>
-            <button id="profile-btn" title="Profil">👤</button>
+            <button id="profile-btn" title="Profil">
+                <span class="icon">👤</span>
+                <span id="user-status" class="user-status"></span>
+            </button>
         </nav>
     </header>
 
@@ -43,7 +50,7 @@
             <div class="home-content">
                 <div class="home-text">
                     <h2>Bienvenue dans votre Lecteur de Livre</h2>
-                    <p>Plongez dans une aventure captivante avec *L'Aube Nouvelle*, une histoire épique qui suit Clara, une jeune aventurière en quête de vérité. À travers des paysages luxuriants, des cités oubliées et des mystères anciens, ce livre vous transporte dans un monde où chaque page révèle un nouveau secret. Conçu pour une expérience de lecture unique, notre application offre un mode sombre élégant, une lecture vocale immersive, un zoom pour plus de confort, et une traduction en français, anglais, et arabe. Que vous soyez un lecteur passionné ou malvoyant, notre interface moderne et accessible est pensée pour vous. Commencez votre voyage dès maintenant et laissez-vous emporter par l’histoire !</p>
+                    <p>Plongez dans une aventure captivante avec *L'Aube Nouvelle*, une histoire épique qui suit Clara, une jeune aventurière en quête de vérité...</p>
                     <button id="start-btn">Commencer</button>
                 </div>
                 <img src="book-cover.jpg" alt="Couverture du livre" class="book-cover">
@@ -63,7 +70,7 @@
             </ul>
         </section>
 
-        <!-- Chapitres -->
+        <!-- Chapitre 1 (autres chapitres similaires, omis pour brièveté) -->
         <section id="chapter1" class="chapter">
             <button class="close-btn" title="Retour à l'accueil">✖</button>
             <div class="chapter-header">
@@ -72,7 +79,6 @@
             </div>
             <div class="content" data-lang="fr">
                 <p>Le soleil se levait lentement sur les collines verdoyantes, annonçant un jour nouveau. Clara, une jeune aventurière, observait l’horizon avec espoir, son cœur battant d’excitation...</p>
-                <!-- Contenu complet omis pour brièveté, mais identique au précédent -->
             </div>
             <div class="content" data-lang="en" style="display: none;">
                 <p>The sun rose slowly over the lush hills, heralding a new day. Clara, a young adventurer, gazed at the horizon with hope...</p>
@@ -85,7 +91,6 @@
                 <button class="next-btn">Suivant →</button>
             </div>
         </section>
-        <!-- Chapitres 2 à 5 similaires, omis pour brièveté -->
 
         <!-- Page des favoris -->
         <section id="favorites" class="chapter">
@@ -100,7 +105,45 @@
             <h2>Profil</h2>
             <div class="profile-content">
                 <h3>Compte</h3>
-                <p>Connexion et inscription à venir.</p>
+                <div id="user-info" style="display: none;">
+                    <p><strong>Nom :</strong> <span id="user-name"></span></p>
+                    <p><strong>E-mail :</strong> <span id="user-email"></span></p>
+                    <button id="sign-out-btn">Déconnexion</button>
+                </div>
+                <div id="auth-forms">
+                    <!-- Formulaire de connexion -->
+                    <h4>Connexion</h4>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-email">E-mail :</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Mot de passe :</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <button type="submit">Se connecter</button>
+                        <p><a href="#" id="reset-password">Mot de passe oublié ?</a></p>
+                    </form>
+                    <!-- Formulaire d'inscription -->
+                    <h4>Inscription</h4>
+                    <form id="signup-form">
+                        <div class="form-group">
+                            <label for="signup-name">Nom :</label>
+                            <input type="text" id="signup-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">E-mail :</label>
+                            <input type="email" id="signup-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Mot de passe :</label>
+                            <input type="password" id="signup-password" required>
+                        </div>
+                        <button type="submit">S'inscrire</button>
+                    </form>
+                </div>
+                <p id="auth-error" style="color: red;"></p>
                 <h3>Paramètres</h3>
                 <div class="setting">
                     <label for="profile-language">Langue :</label>
@@ -128,6 +171,7 @@
         </section>
     </main>
 
+    <script src="firebase.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
