@@ -46,7 +46,6 @@ function updateFontSize() {
     document.querySelectorAll('section, section *').forEach(element => {
         element.style.fontSize = `${fontSize}px`;
     });
-    // Ajuster les boutons de navigation pour qu'ils restent lisibles
     document.querySelectorAll('.prev-btn, .next-btn, .close-btn, .favorite').forEach(element => {
         element.style.fontSize = `${fontSize * 0.9}px`;
     });
@@ -56,6 +55,7 @@ function updateFontSize() {
 const sections = document.querySelectorAll('section');
 const links = document.querySelectorAll('#chapter-list a, #favorites-list a');
 const closeButtons = document.querySelectorAll('.close-btn');
+const startButton = document.getElementById('start-btn');
 
 links.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -75,7 +75,12 @@ closeButtons.forEach(button => {
 
 document.getElementById('menu-btn').addEventListener('click', () => {
     sections.forEach(section => section.classList.remove('active'));
-    document.getElementById('home').classList.add('active');
+    document.getElementById('table-of-contents').classList.add('active');
+});
+
+startButton.addEventListener('click', () => {
+    sections.forEach(section => section.classList.remove('active'));
+    document.getElementById('table-of-contents').classList.add('active');
 });
 
 // Navigation entre chapitres
@@ -105,20 +110,26 @@ nextButtons.forEach(button => {
     });
 });
 
-// Gestion des favoris
+// Gestion des favoris et progression
 const favoriteStars = document.querySelectorAll('.favorite');
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+let progress = JSON.parse(localStorage.getItem('progress')) || {};
 
 function updateFavoritesList() {
     const favoritesList = document.getElementById('favorites-list');
     favoritesList.innerHTML = '';
     favorites.forEach(chapterId => {
         const chapterTitle = document.getElementById(chapterId).querySelector('h2').textContent;
+        const progressPercent = progress[chapterId] || 0;
         const li = document.createElement('li');
-        li.innerHTML = `<a href="#${chapterId}">${chapterTitle}</a>`;
+        li.innerHTML = `
+            <a href="#${chapterId}">${chapterTitle}</a>
+            <div class="progress-bar">
+                <div class="progress" style="width: ${progressPercent}%"></div>
+            </div>
+        `;
         favoritesList.appendChild(li);
     });
-    // Ré-attacher les événements de clic pour les nouveaux liens
     document.querySelectorAll('#favorites-list a').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -155,6 +166,23 @@ document.getElementById('favorites-btn').addEventListener('click', () => {
     document.getElementById('favorites').classList.add('active');
 });
 
+// Suivi de la progression
+function trackProgress() {
+    const activeSection = document.querySelector('section.active');
+    if (!activeSection || !activeSection.classList.contains('chapter') || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents') return;
+
+    const chapterId = activeSection.id;
+    const content = activeSection.querySelector('.content');
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const contentHeight = content.scrollHeight - window.innerHeight;
+    const progressPercent = contentHeight > 0 ? Math.min(100, (scrollTop / contentHeight) * 100) : 100;
+
+    progress[chapterId] = Math.max(progress[chapterId] || 0, progressPercent);
+    localStorage.setItem('progress', JSON.stringify(progress));
+    updateFavoritesList();
+}
+
+window.addEventListener('scroll', trackProgress);
 updateFavoritesList();
 
 // Gestion de la lecture vocale
@@ -167,40 +195,42 @@ let voices = [];
 function populateVoiceList() {
     voices = speechSynthesis.getVoices();
     voiceSelect.innerHTML = '<option value="">Voix par défaut</option>';
+    let voiceCounter = 1;
     voices.forEach((voice, index) => {
         if (voice.lang.startsWith('fr') || voice.lang.startsWith('en') || voice.lang.startsWith('ar')) {
             const option = document.createElement('option');
             option.value = index;
-            option.textContent = `${voice.name} (${voice.lang})`;
+            option.textContent = `Voix ${voiceCounter}`;
             voiceSelect.appendChild(option);
+            voiceCounter++;
         }
     });
 }
 
-// Charger les voix (peut nécessiter un délai sur certains navigateurs)
 speechSynthesis.onvoiceschanged = populateVoiceList;
 populateVoiceList();
 
 voiceToggle.addEventListener('click', () => {
     const activeSection = document.querySelector('section.active');
-    if (!activeSection || activeSection.id === 'home' || activeSection.id === 'favorites') return;
+    if (!activeSection || activeSection.id === 'home' || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents') return;
 
     const chapterId = activeSection.id;
     const content = activeSection.querySelector(`.content[data-lang="${currentLanguage}"]`);
     const text = Array.from(content.querySelectorAll('p')).map(p => p.textContent).join(' ');
 
     if (currentSpeech && !currentSpeech.paused) {
-        currentSpeech.pause();
+        window.speechSynthesis.pause();
         voiceToggle.querySelector('.icon').textContent = '🔊';
         return;
     }
 
     if (currentSpeech && currentSpeech.paused) {
-        currentSpeech.resume();
+        window.speechSynthesis.resume();
         voiceToggle.querySelector('.icon').textContent = '⏸️';
         return;
     }
 
+    window.speechSynthesis.cancel(); // Annuler toute lecture précédente
     currentSpeech = new SpeechSynthesisUtterance(text);
     currentSpeech.lang = currentLanguage === 'fr' ? 'fr-FR' :
                         currentLanguage === 'en' ? 'en-US' : 'ar-SA';
@@ -259,6 +289,14 @@ function updateLanguage() {
         favoritesTitle.textContent = 'فصولك المفضلة';
     } else {
         favoritesTitle.textContent = 'Vos Chapitres Favoris';
+    }
+    const tocTitle = document.querySelector('#table-of-contents h2');
+    if (currentLanguage === 'en') {
+        tocTitle.textContent = 'Table of Contents';
+    } else if (currentLanguage === 'ar') {
+        tocTitle.textContent = 'جدول المحتويات';
+    } else {
+        tocTitle.textContent = 'Sommaire';
     }
     updateFavoritesList();
 }
