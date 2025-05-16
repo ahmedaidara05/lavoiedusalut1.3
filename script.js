@@ -70,6 +70,32 @@ profileVolume.addEventListener('input', () => {
     }
 });
 
+// Gestion de la langue
+let currentLanguage = localStorage.getItem('language') || 'fr';
+const languageToggle = document.getElementById('language-toggle');
+const profileLanguage = document.getElementById('profile-language');
+profileLanguage.value = currentLanguage;
+
+languageToggle.addEventListener('click', () => {
+    currentLanguage = currentLanguage === 'fr' ? 'en' : currentLanguage === 'en' ? 'ar' : 'fr';
+    updateLanguage();
+});
+
+profileLanguage.addEventListener('change', () => {
+    currentLanguage = profileLanguage.value;
+    updateLanguage();
+});
+
+function updateLanguage() {
+    document.querySelectorAll('.content').forEach(content => {
+        content.style.display = content.dataset.lang === currentLanguage ? 'block' : 'none';
+    });
+    localStorage.setItem('language', currentLanguage);
+    profileLanguage.value = currentLanguage;
+}
+
+updateLanguage();
+
 // Navigation entre sections
 const sections = document.querySelectorAll('section');
 const links = document.querySelectorAll('#chapter-list a, #favorites-list a');
@@ -147,7 +173,7 @@ let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 let progress = JSON.parse(localStorage.getItem('progress')) || {};
 
 function updateFavoritesList() {
-    const favoritesList = document.getElementById('favorites-list');
+    const favoritesList = document.getElementBy Ninth = document.getElementById('favorites-list');
     favoritesList.innerHTML = '';
     favorites.forEach(chapterId => {
         const chapterTitle = document.getElementById(chapterId).querySelector('h2').textContent;
@@ -231,7 +257,7 @@ function populateVoiceList() {
         if (voice.lang.startsWith('fr') || voice.lang.startsWith('en') || voice.lang.startsWith('ar')) {
             const option = document.createElement('option');
             option.value = index;
-            option.textContent = `Voix ${voiceCounter}`;
+            option.textContent = `Voix ${voiceCounter} (${voice.lang})`;
             voiceSelect.appendChild(option);
             voiceCounter++;
         }
@@ -249,4 +275,32 @@ voiceToggle.addEventListener('click', () => {
     const content = activeSection.querySelector(`.content[data-lang="${currentLanguage}"]`);
     const text = Array.from(content.querySelectorAll('p')).map(p => p.textContent).join(' ');
 
-    if
+    if (currentSpeech && currentChapter === chapterId && !speechSynthesis.paused) {
+        speechSynthesis.pause();
+        currentSpeech.paused = true;
+        voiceToggle.querySelector('.icon').textContent = '▶️';
+    } else if (currentSpeech && currentSpeech.paused) {
+        speechSynthesis.resume();
+        currentSpeech.paused = false;
+        voiceToggle.querySelector('.icon').textContent = '⏸️';
+    } else {
+        if (currentSpeech) {
+            speechSynthesis.cancel();
+        }
+        currentSpeech = new SpeechSynthesisUtterance(text);
+        currentSpeech.lang = currentLanguage === 'fr' ? 'fr-FR' : currentLanguage === 'en' ? 'en-US' : 'ar-SA';
+        currentSpeech.volume = volume / 100;
+        if (voiceSelect.value) {
+            currentSpeech.voice = voices[parseInt(voiceSelect.value)];
+        }
+        currentSpeech.paused = false;
+        currentChapter = chapterId;
+        speechSynthesis.speak(currentSpeech);
+        voiceToggle.querySelector('.icon').textContent = '⏸️';
+        currentSpeech.onend = () => {
+            voiceToggle.querySelector('.icon').textContent = '🔊';
+            currentSpeech = null;
+            currentChapter = null;
+        };
+    }
+});
