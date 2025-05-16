@@ -57,12 +57,12 @@ nav button, #voice-select {
     background: none;
     border: 2px solid #d4af37;
     color: #d4af37;
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.3rem;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,14 +72,52 @@ nav button, #voice-select {
 #voice-select {
     border-radius: 10px;
     width: auto;
-    padding: 0.3rem;
-    font-size: 0.9rem;
+    padding: 0.2rem;
+    font-size: 0.8rem;
 }
 
 nav button:hover, #voice-select:hover {
     background-color: #d4af37;
     color: #1e3a8a;
     transform: scale(1.1);
+}
+
+/* Page d'accueil */
+.home-content {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.home-text {
+    flex: 1;
+}
+
+.home-text p {
+    margin-bottom: 1rem;
+}
+
+#start-btn {
+    background-color: #1e3a8a;
+    color: #d4af37;
+    border: 2px solid #d4af37;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 25px;
+    font-size: 1rem;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#start-btn:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: translateY(-2px);
+}
+
+.book-cover {
+    max-width: 200px;
+    border-radius: 8px;
+    border: 3px solid #d4af37;
 }
 
 /* Main */
@@ -101,16 +139,14 @@ section.active {
     display: block;
 }
 
-.book-cover {
-    max-width: 200px;
-    display: block;
-    margin: 1rem auto;
-    border-radius: 8px;
-    border: 3px solid #d4af37;
+.chapter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
 h2 {
-    margin-bottom: 1rem;
     color: #1e3a8a;
     font-weight: 600;
 }
@@ -154,8 +190,6 @@ p {
     cursor: pointer;
     color: #d4af37;
     transition: color 0.3s, transform 0.2s;
-    display: inline-block;
-    margin-bottom: 1rem;
 }
 
 .favorite.active {
@@ -237,6 +271,9 @@ body.dark #chapter-list a:hover {
 
 #favorites-list li {
     margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 #favorites-list a {
@@ -255,6 +292,24 @@ body.dark #favorites-list a {
 
 body.dark #favorites-list a:hover {
     color: #fff;
+}
+
+.progress-bar {
+    width: 100px;
+    height: 8px;
+    background-color: #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #1e3a8a;
+    transition: width 0.3s;
+}
+
+body.dark .progress {
+    background-color: #d4af37;
 }
 
 /* Responsive pour mobile */
@@ -283,19 +338,24 @@ body.dark #favorites-list a:hover {
         padding: 0.5rem;
     }
 
+    .home-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .book-cover {
         max-width: 150px;
     }
 
     nav button, #voice-select {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
     }
 
     #voice-select {
         width: auto;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
     }
 
     .chapter-nav {
