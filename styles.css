@@ -82,11 +82,6 @@ nav button:hover, #voice-select:hover {
     transform: scale(1.1);
 }
 
-.user-status {
-    font-size: 0.8rem;
-    margin-left: 0.3rem;
-}
-
 /* Page d'accueil */
 .home-content {
     display: flex;
@@ -217,7 +212,7 @@ body.dark .favorite.active {
     margin-top: 2rem;
 }
 
-.prev-btn, .next-btn, #sign-out-btn {
+.prev-btn, .next-btn {
     background-color: #1e3a8a;
     color: #d4af37;
     border: 2px solid #d4af37;
@@ -228,7 +223,7 @@ body.dark .favorite.active {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-.prev-btn:hover, .next-btn:hover, #sign-out-btn:hover {
+.prev-btn:hover, .next-btn:hover {
     background-color: #d4af37;
     color: #1e3a8a;
     transform: translateY(-2px);
@@ -322,23 +317,18 @@ body.dark .progress {
     margin-top: 1rem;
 }
 
-.profile-content h3, .profile-content h4 {
-    margin: 1rem 0 0.5rem;
-}
-
-.setting, .form-group {
+.setting {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin: 0.5rem 0;
 }
 
-.setting label, .form-group label {
+.setting label {
     flex: 1;
 }
 
-.setting select, .setting input[type="range"], .setting input[type="checkbox"],
-.form-group input {
+.setting select, .setting input[type="range"], .setting input[type="checkbox"] {
     flex: 2;
     padding: 0.3rem;
     border: 2px solid #d4af37;
@@ -348,7 +338,7 @@ body.dark .progress {
 }
 
 body.dark .setting select, body.dark .setting input[type="range"],
-body.dark .setting input[type="checkbox"], body.dark .form-group input {
+body.dark .setting input[type="checkbox"] {
     background-color: #333;
     color: #d4af37;
 }
@@ -359,31 +349,6 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
 
 .setting input[type="checkbox"] {
     width: auto;
-}
-
-.form-group input {
-    width: 100%;
-}
-
-#login-form, #signup-form {
-    margin-bottom: 1rem;
-}
-
-#login-form button, #signup-form button {
-    background-color: #1e3a8a;
-    color: #d4af37;
-    border: 2px solid #d4af37;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 25px;
-    font-size: 1rem;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#login-form button:hover, #signup-form button:hover {
-    background-color: #d4af37;
-    color: #1e3a8a;
-    transform: translateY(-2px);
 }
 
 /* Responsive pour mobile */
@@ -437,13 +402,13 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
         gap: 0.5rem;
     }
 
-    .setting, .form-group {
+    .setting {
         flex-direction: column;
         align-items: flex-start;
     }
 
     .setting label, .setting select, .setting input[type="range"],
-    .setting input[type="checkbox"], .form-group label, .form-group input {
+    .setting input[type="checkbox"] {
         width: 100%;
     }
 }
