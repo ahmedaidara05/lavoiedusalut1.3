@@ -1,16 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Importer Firebase
-    import { auth, db } from './firebase.js';
-    import { 
-        createUserWithEmailAndPassword, 
-        signInWithEmailAndPassword, 
-        signOut, 
-        sendPasswordResetEmail, 
-        onAuthStateChanged,
-        updateProfile
-    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-    import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-
     // Protection contre le copier-coller
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     document.addEventListener('copy', (e) => e.preventDefault());
@@ -30,16 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const userStatus = document.getElementById('user-status');
     const authError = document.getElementById('auth-error');
 
-    onAuthStateChanged(auth, async (user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
         if (user) {
             userInfo.style.display = 'block';
             authForms.style.display = 'none';
             userName.textContent = user.displayName || 'Utilisateur';
             userEmail.textContent = user.email;
-            userStatus.textContent = '🔵'; // Indicateur de connexion
+            userStatus.textContent = '🔵';
             // Charger les préférences depuis Firestore
-            const userDoc = await getDoc(doc(db, 'users', user.uid));
-            if (userDoc.exists()) {
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists) {
                 const data = userDoc.data();
                 currentLanguage = data.language || 'fr';
                 fontSize = data.fontSize || 16;
@@ -62,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
             userInfo.style.display = 'none';
             authForms.style.display = 'block';
             userStatus.textContent = '';
-            // Réinitialiser les préférences locales
             currentLanguage = localStorage.getItem('language') || 'fr';
             fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
             volume = parseInt(localStorage.getItem('volume')) || 100;
@@ -77,77 +64,88 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gestion de l'inscription
     const signupForm = document.getElementById('signup-form');
     if (signupForm) {
-        signupForm.addEventListener('submit', async (e) => {
+        signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                await updateProfile(userCredential.user, { displayName: name });
-                // Enregistrer les préférences par défaut
-                await setDoc(doc(db, 'users', userCredential.user.uid), {
-                    language: currentLanguage,
-                    theme: document.body.classList.contains('dark') ? 'dark' : 'light',
-                    fontSize,
-                    volume,
-                    favorites,
-                    progress
+            console.log('Inscription:', email); // Débogage
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    return userCredential.user.updateProfile({ displayName: name });
+                })
+                .then(() => {
+                    return db.collection('users').doc(firebase.auth().currentUser.uid).set({
+                        language: currentLanguage,
+                        theme: document.body.classList.contains('dark') ? 'dark' : 'light',
+                        fontSize,
+                        volume,
+                        favorites,
+                        progress
+                    });
+                })
+                .then(() => {
+                    authError.textContent = '';
+                    signupForm.reset();
+                })
+                .catch((error) => {
+                    authError.textContent = error.message;
                 });
-                authError.textContent = '';
-                signupForm.reset();
-            } catch (error) {
-                authError.textContent = error.message;
-            }
         });
     }
 
     // Gestion de la connexion
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
+        loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                authError.textContent = '';
-                loginForm.reset();
-            } catch (error) {
-                authError.textContent = error.message;
-            }
+            console.log('Connexion:', email); // Débogage
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    authError.textContent = '';
+                    loginForm.reset();
+                })
+                .catch((error) => {
+                    authError.textContent = error.message;
+                });
         });
     }
 
     // Gestion de la déconnexion
     const signOutBtn = document.getElementById('sign-out-btn');
     if (signOutBtn) {
-        signOutBtn.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-                authError.textContent = '';
-            } catch (error) {
-                authError.textContent = error.message;
-            }
+        signOutBtn.addEventListener('click', () => {
+            console.log('Déconnexion'); // Débogage
+            firebase.auth().signOut()
+                .then(() => {
+                    authError.textContent = '';
+                })
+                .catch((error) => {
+                    authError.textContent = error.message;
+                });
         });
     }
 
     // Réinitialisation du mot de passe
     const resetPasswordLink = document.getElementById('reset-password');
     if (resetPasswordLink) {
-        resetPasswordLink.addEventListener('click', async (e) => {
+        resetPasswordLink.addEventListener('click', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
+            console.log('Réinitialisation mot de passe:', email); // Débogage
             if (!email) {
                 authError.textContent = 'Veuillez entrer votre e-mail.';
                 return;
             }
-            try {
-                await sendPasswordResetEmail(auth, email);
-                authError.textContent = 'E-mail de réinitialisation envoyé !';
-            } catch (error) {
-                authError.textContent = error.message;
-            }
+            firebase.auth().sendPasswordResetEmail(email)
+                .then(() => {
+                    authError.textContent = 'E-mail de réinitialisation envoyé !';
+                })
+                .catch((error) => {
+                    authError.textContent = error.message;
+                });
         });
     }
 
@@ -155,7 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const profileTheme = document.getElementById('profile-theme');
     if (themeToggle && profileTheme) {
-        themeToggle.addEventListener('click', toggleTheme);
+        themeToggle.addEventListener('click', () => {
+            console.log('Clic mode sombre'); // Débogage
+            toggleTheme();
+        });
         profileTheme.addEventListener('change', toggleTheme);
     }
 
@@ -165,8 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle.querySelector('.icon').textContent = isDark ? '☀️' : '🌙';
         profileTheme.checked = isDark;
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        if (auth.currentUser) {
-            await setDoc(doc(db, 'users', auth.currentUser.uid), { theme: isDark ? 'dark' : 'light' }, { merge: true });
+        if (firebase.auth().currentUser) {
+            await db.collection('users').doc(firebase.auth().currentUser.uid).update({ theme: isDark ? 'dark' : 'light' });
         }
     }
 
@@ -184,12 +185,13 @@ document.addEventListener('DOMContentLoaded', () => {
         profileFontSize.value = fontSize;
         fontSizeValue.textContent = `${fontSize}px`;
         profileFontSize.addEventListener('input', async () => {
+            console.log('Changement taille police'); // Débogage
             fontSize = parseInt(profileFontSize.value);
             fontSizeValue.textContent = `${fontSize}px`;
             updateFontSize();
             localStorage.setItem('fontSize', fontSize);
-            if (auth.currentUser) {
-                await setDoc(doc(db, 'users', auth.currentUser.uid), { fontSize }, { merge: true });
+            if (firebase.auth().currentUser) {
+                await db.collection('users').doc(firebase.auth().currentUser.uid).update({ fontSize });
             }
         });
     }
@@ -213,14 +215,15 @@ document.addEventListener('DOMContentLoaded', () => {
         profileVolume.value = volume;
         volumeValue.textContent = `${volume}%`;
         profileVolume.addEventListener('input', async () => {
+            console.log('Changement volume'); // Débogage
             volume = parseInt(profileVolume.value);
             volumeValue.textContent = `${volume}%`;
             localStorage.setItem('volume', volume);
             if (currentSpeech) {
                 currentSpeech.volume = volume / 100;
             }
-            if (auth.currentUser) {
-                await setDoc(doc(db, 'users', auth.currentUser.uid), { volume }, { merge: true });
+            if (firebase.auth().currentUser) {
+                await db.collection('users').doc(firebase.auth().currentUser.uid).update({ volume });
             }
         });
     }
@@ -232,10 +235,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (languageToggle && profileLanguage) {
         profileLanguage.value = currentLanguage;
         languageToggle.addEventListener('click', async () => {
+            console.log('Clic langue'); // Débogage
             currentLanguage = currentLanguage === 'fr' ? 'en' : currentLanguage === 'en' ? 'ar' : 'fr';
             await updateLanguage();
         });
         profileLanguage.addEventListener('change', async () => {
+            console.log('Changement langue profil'); // Débogage
             currentLanguage = profileLanguage.value;
             await updateLanguage();
         });
@@ -247,8 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         localStorage.setItem('language', currentLanguage);
         if (profileLanguage) profileLanguage.value = currentLanguage;
-        if (auth.currentUser) {
-            await setDoc(doc(db, 'users', auth.currentUser.uid), { language: currentLanguage }, { merge: true });
+        if (firebase.auth().currentUser) {
+            await db.collection('users').doc(firebase.auth().currentUser.uid).update({ language: currentLanguage });
         }
     }
 
@@ -262,20 +267,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileButton = document.getElementById('profile-btn');
     const closeButtons = document.querySelectorAll('.close-btn');
 
-    if (homeButton) homeButton.addEventListener('click', goToHome);
-    if (menuButton) menuButton.addEventListener('click', () => {
-        sections.forEach(section => section.classList.remove('active'));
-        document.getElementById('table-of-contents').classList.add('active');
+    if (homeButton) {
+        homeButton.addEventListener('click', () => {
+            console.log('Clic accueil'); // Débogage
+            goToHome();
+        });
+    }
+    if (menuButton) {
+        menuButton.addEventListener('click', () => {
+            console.log('Clic sommaire'); // Débogage
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById('table-of-contents').classList.add('active');
+        });
+    }
+    if (startButton) {
+        startButton.addEventListener('click', () => {
+            console.log('Clic commencer'); // Débogage
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById('table-of-contents').classList.add('active');
+        });
+    }
+    if (profileButton) {
+        profileButton.addEventListener('click', () => {
+            console.log('Clic profil'); // Débogage
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById('profile').classList.add('active');
+        });
+    }
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            console.log('Clic fermer'); // Débogage
+            goToHome();
+        });
     });
-    if (startButton) startButton.addEventListener('click', () => {
-        sections.forEach(section => section.classList.remove('active'));
-        document.getElementById('table-of-contents').classList.add('active');
-    });
-    if (profileButton) profileButton.addEventListener('click', () => {
-        sections.forEach(section => section.classList.remove('active'));
-        document.getElementById('profile').classList.add('active');
-    });
-    closeButtons.forEach(button => button.addEventListener('click', goToHome));
 
     function goToHome() {
         sections.forEach(section => section.classList.remove('active'));
@@ -286,6 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     links.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
+            console.log('Clic lien chapitre'); // Débogage
             const targetId = link.getAttribute('href').substring(1);
             sections.forEach(section => section.classList.remove('active'));
             document.getElementById(targetId).classList.add('active');
@@ -299,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     prevButtons.forEach(button => {
         button.addEventListener('click', () => {
+            console.log('Clic précédent'); // Débogage
             const currentChapter = button.closest('section').id;
             const currentIndex = chapters.indexOf(currentChapter);
             if (currentIndex > 0) {
@@ -310,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nextButtons.forEach(button => {
         button.addEventListener('click', () => {
+            console.log('Clic suivant'); // Débogage
             const currentChapter = button.closest('section').id;
             const currentIndex = chapters.indexOf(currentChapter);
             if (currentIndex < chapters.length - 1) {
@@ -342,13 +369,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('#favorites-list a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
+                console.log('Clic favori'); // Débogage
                 const targetId = link.getAttribute('href').substring(1);
                 sections.forEach(section => section.classList.remove('active'));
                 document.getElementById(targetId).classList.add('active');
             });
         });
-        if (auth.currentUser) {
-            await setDoc(doc(db, 'users', auth.currentUser.uid), { favorites }, { merge: true });
+        if (firebase.auth().currentUser) {
+            await db.collection('users').doc(firebase.auth().currentUser.uid).update({ favorites });
         }
     }
 
@@ -359,6 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
             star.textContent = '★';
         }
         star.addEventListener('click', async () => {
+            console.log('Clic favori étoile'); // Débogage
             if (!favorites.includes(chapterId)) {
                 favorites.push(chapterId);
                 star.classList.add('active');
@@ -376,6 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const favoritesButton = document.getElementById('favorites-btn');
     if (favoritesButton) {
         favoritesButton.addEventListener('click', () => {
+            console.log('Clic favoris'); // Débogage
             sections.forEach(section => section.classList.remove('active'));
             document.getElementById('favorites').classList.add('active');
         });
@@ -394,8 +424,8 @@ document.addEventListener('DOMContentLoaded', () => {
         progress[chapterId] = Math.max(progress[chapterId] || 0, progressPercent);
         localStorage.setItem('progress', JSON.stringify(progress));
         await updateFavoritesList();
-        if (auth.currentUser) {
-            await setDoc(doc(db, 'users', auth.currentUser.uid), { progress }, { merge: true });
+        if (firebase.auth().currentUser) {
+            await db.collection('users').doc(firebase.auth().currentUser.uid).update({ progress });
         }
     }
 
@@ -429,6 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (voiceToggle) {
         voiceToggle.addEventListener('click', () => {
+            console.log('Clic lecture vocale'); // Débogage
             const activeSection = document.querySelector('section.active');
             if (!activeSection || activeSection.id === 'home' || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents' || activeSection.id === 'profile') return;
 
