@@ -11,35 +11,36 @@ document.addEventListener('keydown', (e) => {
 
 // Gestion du mode sombre/clair
 const themeToggle = document.getElementById('theme-toggle');
-themeToggle.addEventListener('click', () => {
+const profileTheme = document.getElementById('profile-theme');
+themeToggle.addEventListener('click', toggleTheme);
+profileTheme.addEventListener('change', toggleTheme);
+
+function toggleTheme() {
     document.body.classList.toggle('dark');
     const isDark = document.body.classList.contains('dark');
     themeToggle.querySelector('.icon').textContent = isDark ? '☀️' : '🌙';
+    profileTheme.checked = isDark;
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-});
+}
 
 if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark');
     themeToggle.querySelector('.icon').textContent = '☀️';
+    profileTheme.checked = true;
 }
 
-// Gestion du zoom
-let fontSize = 16;
-const zoomIn = document.getElementById('zoom-in');
-const zoomOut = document.getElementById('zoom-out');
+// Gestion de la taille de la police
+let fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
+const profileFontSize = document.getElementById('profile-font-size');
+const fontSizeValue = document.getElementById('font-size-value');
+profileFontSize.value = fontSize;
+fontSizeValue.textContent = `${fontSize}px`;
 
-zoomIn.addEventListener('click', () => {
-    if (fontSize < 24) {
-        fontSize += 2;
-        updateFontSize();
-    }
-});
-
-zoomOut.addEventListener('click', () => {
-    if (fontSize > 12) {
-        fontSize -= 2;
-        updateFontSize();
-    }
+profileFontSize.addEventListener('input', () => {
+    fontSize = parseInt(profileFontSize.value);
+    fontSizeValue.textContent = `${fontSize}px`;
+    updateFontSize();
+    localStorage.setItem('fontSize', fontSize);
 });
 
 function updateFontSize() {
@@ -51,11 +52,32 @@ function updateFontSize() {
     });
 }
 
+updateFontSize();
+
+// Gestion du volume de la lecture vocale
+let volume = parseInt(localStorage.getItem('volume')) || 100;
+const profileVolume = document.getElementById('profile-volume');
+const volumeValue = document.getElementById('volume-value');
+profileVolume.value = volume;
+volumeValue.textContent = `${volume}%`;
+
+profileVolume.addEventListener('input', () => {
+    volume = parseInt(profileVolume.value);
+    volumeValue.textContent = `${volume}%`;
+    localStorage.setItem('volume', volume);
+    if (currentSpeech) {
+        currentSpeech.volume = volume / 100;
+    }
+});
+
 // Navigation entre sections
 const sections = document.querySelectorAll('section');
 const links = document.querySelectorAll('#chapter-list a, #favorites-list a');
 const closeButtons = document.querySelectorAll('.close-btn');
 const startButton = document.getElementById('start-btn');
+const homeButton = document.getElementById('home-btn');
+const menuButton = document.getElementById('menu-btn');
+const profileButton = document.getElementById('profile-btn');
 
 links.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -67,13 +89,17 @@ links.forEach(link => {
 });
 
 closeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        sections.forEach(section => section.classList.remove('active'));
-        document.getElementById('home').classList.add('active');
-    });
+    button.addEventListener('click', goToHome);
 });
 
-document.getElementById('menu-btn').addEventListener('click', () => {
+homeButton.addEventListener('click', goToHome);
+
+function goToHome() {
+    sections.forEach(section => section.classList.remove('active'));
+    document.getElementById('home').classList.add('active');
+}
+
+menuButton.addEventListener('click', () => {
     sections.forEach(section => section.classList.remove('active'));
     document.getElementById('table-of-contents').classList.add('active');
 });
@@ -81,6 +107,11 @@ document.getElementById('menu-btn').addEventListener('click', () => {
 startButton.addEventListener('click', () => {
     sections.forEach(section => section.classList.remove('active'));
     document.getElementById('table-of-contents').classList.add('active');
+});
+
+profileButton.addEventListener('click', () => {
+    sections.forEach(section => section.classList.remove('active'));
+    document.getElementById('profile').classList.add('active');
 });
 
 // Navigation entre chapitres
@@ -169,7 +200,7 @@ document.getElementById('favorites-btn').addEventListener('click', () => {
 // Suivi de la progression
 function trackProgress() {
     const activeSection = document.querySelector('section.active');
-    if (!activeSection || !activeSection.classList.contains('chapter') || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents') return;
+    if (!activeSection || !activeSection.classList.contains('chapter') || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents' || activeSection.id === 'profile') return;
 
     const chapterId = activeSection.id;
     const content = activeSection.querySelector('.content');
@@ -212,98 +243,10 @@ populateVoiceList();
 
 voiceToggle.addEventListener('click', () => {
     const activeSection = document.querySelector('section.active');
-    if (!activeSection || activeSection.id === 'home' || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents') return;
+    if (!activeSection || activeSection.id === 'home' || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents' || activeSection.id === 'profile') return;
 
     const chapterId = activeSection.id;
     const content = activeSection.querySelector(`.content[data-lang="${currentLanguage}"]`);
     const text = Array.from(content.querySelectorAll('p')).map(p => p.textContent).join(' ');
 
-    if (currentSpeech && !currentSpeech.paused) {
-        window.speechSynthesis.pause();
-        voiceToggle.querySelector('.icon').textContent = '🔊';
-        return;
-    }
-
-    if (currentSpeech && currentSpeech.paused) {
-        window.speechSynthesis.resume();
-        voiceToggle.querySelector('.icon').textContent = '⏸️';
-        return;
-    }
-
-    window.speechSynthesis.cancel(); // Annuler toute lecture précédente
-    currentSpeech = new SpeechSynthesisUtterance(text);
-    currentSpeech.lang = currentLanguage === 'fr' ? 'fr-FR' :
-                        currentLanguage === 'en' ? 'en-US' : 'ar-SA';
-    if (voiceSelect.value) {
-        currentSpeech.voice = voices[parseInt(voiceSelect.value)];
-    }
-    currentSpeech.onend = () => {
-        voiceToggle.querySelector('.icon').textContent = '🔊';
-        currentSpeech = null;
-        currentChapter = null;
-    };
-    window.speechSynthesis.speak(currentSpeech);
-    currentChapter = chapterId;
-    voiceToggle.querySelector('.icon').textContent = '⏸️';
-});
-
-// Gestion de la langue
-let currentLanguage = 'fr';
-const languageToggle = document.getElementById('language-toggle');
-const languages = ['fr', 'en', 'ar'];
-
-languageToggle.addEventListener('click', () => {
-    const currentIndex = languages.indexOf(currentLanguage);
-    currentLanguage = languages[(currentIndex + 1) % languages.length];
-    updateLanguage();
-    if (currentSpeech) {
-        window.speechSynthesis.cancel();
-        voiceToggle.querySelector('.icon').textContent = '🔊';
-        currentSpeech = null;
-        currentChapter = null;
-    }
-    populateVoiceList();
-});
-
-function updateLanguage() {
-    sections.forEach(section => {
-        const contents = section.querySelectorAll('.content');
-        contents.forEach(content => {
-            content.style.display = content.dataset.lang === currentLanguage ? 'block' : 'none';
-        });
-        if (section.id.startsWith('chapter')) {
-            const h2 = section.querySelector('h2');
-            if (currentLanguage === 'en') {
-                h2.textContent = h2.textContent.replace('Chapitre', 'Chapter');
-            } else if (currentLanguage === 'ar') {
-                h2.textContent = h2.textContent.replace('Chapitre', 'الفصل');
-            } else {
-                h2.textContent = h2.textContent.replace(/Chapter|الفصل/, 'Chapitre');
-            }
-        }
-    });
-    const favoritesTitle = document.querySelector('#favorites h2');
-    if (currentLanguage === 'en') {
-        favoritesTitle.textContent = 'Your Favorite Chapters';
-    } else if (currentLanguage === 'ar') {
-        favoritesTitle.textContent = 'فصولك المفضلة';
-    } else {
-        favoritesTitle.textContent = 'Vos Chapitres Favoris';
-    }
-    const tocTitle = document.querySelector('#table-of-contents h2');
-    if (currentLanguage === 'en') {
-        tocTitle.textContent = 'Table of Contents';
-    } else if (currentLanguage === 'ar') {
-        tocTitle.textContent = 'جدول المحتويات';
-    } else {
-        tocTitle.textContent = 'Sommaire';
-    }
-    updateFavoritesList();
-}
-
-updateLanguage();
-
-// Nettoyer la synthèse vocale lors du changement de page
-window.addEventListener('beforeunload', () => {
-    window.speechSynthesis.cancel();
-});
+    if
