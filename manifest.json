@@ -8,13 +8,8 @@
     "theme_color": "#1e3a8a",
     "icons": [
         {
-            "src": "book-icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "book-icon-512.png",
-            "sizes": "512x512",
+            "src": "book-icon.png",
+            "sizes": "64x64",
             "type": "image/png"
         }
     ],
