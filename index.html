@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Application de lecture moderne avec mode sombre, zoom, favoris, lecture vocale et traduction">
+    <meta name="description" content="Application de lecture moderne avec mode sombre, zoom, favoris et lecture vocale">
     <meta name="theme-color" content="#1e3a8a">
     <title>Lecteur de Livre</title>
     <link rel="icon" href="book-icon.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"></script>
 </head>
 <body>
     <header>
@@ -39,7 +35,6 @@
             <button id="favorites-btn" title="Voir les favoris">⭐</button>
             <button id="profile-btn" title="Profil">
                 <span class="icon">👤</span>
-                <span id="user-status" class="user-status"></span>
             </button>
         </nav>
     </header>
@@ -50,7 +45,7 @@
             <div class="home-content">
                 <div class="home-text">
                     <h2>Bienvenue dans votre Lecteur de Livre</h2>
-                    <p>Plongez dans une aventure captivante avec *L'Aube Nouvelle*, une histoire épique qui suit Clara, une jeune aventurière en quête de vérité...</p>
+                    <p>Plongez dans une aventure captivante avec *L'Aube Nouvelle*, une histoire épique qui suit Clara...</p>
                     <button id="start-btn">Commencer</button>
                 </div>
                 <img src="book-cover.jpg" alt="Couverture du livre" class="book-cover">
@@ -78,7 +73,7 @@
                 <span class="favorite" data-chapter="chapter1" title="Ajouter aux favoris">⭐</span>
             </div>
             <div class="content" data-lang="fr">
-                <p>Le soleil se levait lentement sur les collines verdoyantes, annonçant un jour nouveau. Clara, une jeune aventurière, observait l’horizon avec espoir, son cœur battant d’excitation...</p>
+                <p>Le soleil se levait lentement sur les collines verdoyantes, annonçant un jour nouveau. Clara, une jeune aventurière, observait l’horizon avec espoir...</p>
             </div>
             <div class="content" data-lang="en" style="display: none;">
                 <p>The sun rose slowly over the lush hills, heralding a new day. Clara, a young adventurer, gazed at the horizon with hope...</p>
@@ -190,49 +185,8 @@
         <!-- Page de profil -->
         <section id="profile" class="chapter">
             <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <h2>Profil</h2>
+            <h2>Paramètres</h2>
             <div class="profile-content">
-                <h3>Compte</h3>
-                <div id="user-info" style="display: none;">
-                    <p><strong>Nom :</strong> <span id="user-name"></span></p>
-                    <p><strong>E-mail :</strong> <span id="user-email"></span></p>
-                    <button id="sign-out-btn">Déconnexion</button>
-                </div>
-                <div id="auth-forms">
-                    <!-- Formulaire de connexion -->
-                    <h4>Connexion</h4>
-                    <form id="login-form">
-                        <div class="form-group">
-                            <label for="login-email">E-mail :</label>
-                            <input type="email" id="login-email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-password">Mot de passe :</label>
-                            <input type="password" id="login-password" required>
-                        </div>
-                        <button type="submit">Se connecter</button>
-                        <p><a href="#" id="reset-password">Mot de passe oublié ?</a></p>
-                    </form>
-                    <!-- Formulaire d'inscription -->
-                    <h4>Inscription</h4>
-                    <form id="signup-form">
-                        <div class="form-group">
-                            <label for="signup-name">Nom :</label>
-                            <input type="text" id="signup-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-email">E-mail :</label>
-                            <input type="email" id="signup-email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signup-password">Mot de passe :</label>
-                            <input type="password" id="signup-password" required>
-                        </div>
-                        <button type="submit">S'inscrire</button>
-                    </form>
-                </div>
-                <p id="auth-error" style="color: red;"></p>
-                <h3>Paramètres</h3>
                 <div class="setting">
                     <label for="profile-language">Langue :</label>
                     <select id="profile-language">
@@ -259,7 +213,6 @@
         </section>
     </main>
 
-    <script src="firebase.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
