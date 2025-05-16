@@ -10,6 +10,141 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Gestion de l'état de l'utilisateur
+    const userInfo = document.getElementById('user-info');
+    const authForms = document.getElementById('auth-forms');
+    const userName = document.getElementById('user-name');
+    const userEmail = document.getElementById('user-email');
+    const userStatus = document.getElementById('user-status');
+    const authError = document.getElementById('auth-error');
+
+    firebase.auth().onAuthStateChanged(async (user) => {
+        if (user) {
+            userInfo.style.display = 'block';
+            authForms.style.display = 'none';
+            userName.textContent = user.displayName || 'Utilisateur';
+            userEmail.textContent = user.email;
+            userStatus.textContent = '🔵';
+            // Charger les préférences depuis Firestore
+            try {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.exists) {
+                    const data = userDoc.data();
+                    currentLanguage = data.language || 'fr';
+                    fontSize = data.fontSize || 16;
+                    volume = data.volume || 100;
+                    favorites = data.favorites || [];
+                    progress = data.progress || {};
+                    document.body.classList.toggle('dark', data.theme === 'dark');
+                    updateLanguage();
+                    updateFontSize();
+                    updateFavoritesList();
+                    if (profileLanguage) profileLanguage.value = currentLanguage;
+                    if (profileFontSize) profileFontSize.value = fontSize;
+                    if (fontSizeValue) fontSizeValue.textContent = `${fontSize}px`;
+                    if (profileVolume) profileVolume.value = volume;
+                    if (volumeValue) volumeValue.textContent = `${volume}%`;
+                    if (themeToggle) themeToggle.querySelector('.icon').textContent = data.theme === 'dark' ? '☀️' : '🌙';
+                    if (profileTheme) profileTheme.checked = data.theme === 'dark';
+                }
+            } catch (error) {
+                console.error('Erreur Firestore:', error);
+            }
+        } else {
+            userInfo.style.display = 'none';
+            authForms.style.display = 'block';
+            userStatus.textContent = '';
+            currentLanguage = localStorage.getItem('language') || 'fr';
+            fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
+            volume = parseInt(localStorage.getItem('volume')) || 100;
+            favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            progress = JSON.parse(localStorage.getItem('progress')) || {};
+            updateLanguage();
+            updateFontSize();
+            updateFavoritesList();
+        }
+    });
+
+    // Gestion de l'inscription
+    const signupForm = document.getElementById('signup-form');
+    if (signupForm) {
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            console.log('Inscription:', email);
+            try {
+                const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                await userCredential.user.updateProfile({ displayName: name });
+                await db.collection('users').doc(userCredential.user.uid).set({
+                    language: currentLanguage,
+                    theme: document.body.classList.contains('dark') ? 'dark' : 'light',
+                    fontSize,
+                    volume,
+                    favorites,
+                    progress
+                });
+                authError.textContent = '';
+                signupForm.reset();
+            } catch (error) {
+                authError.textContent = error.message;
+            }
+        });
+    }
+
+    // Gestion de la connexion
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            console.log('Connexion:', email);
+            try {
+                await firebase.auth().signInWithEmailAndPassword(email, password);
+                authError.textContent = '';
+                loginForm.reset();
+            } catch (error) {
+                authError.textContent = error.message;
+            }
+        });
+    }
+
+    // Gestion de la déconnexion
+    const signOutBtn = document.getElementById('sign-out-btn');
+    if (signOutBtn) {
+        signOutBtn.addEventListener('click', async () => {
+            console.log('Déconnexion');
+            try {
+                await firebase.auth().signOut();
+                authError.textContent = '';
+            } catch (error) {
+                authError.textContent = error.message;
+            }
+        });
+    }
+
+    // Réinitialisation du mot de passe
+    const resetPasswordLink = document.getElementById('reset-password');
+    if (resetPasswordLink) {
+        resetPasswordLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            console.log('Réinitialisation mot de passe:', email);
+            if (!email) {
+                authError.textContent = 'Veuillez entrer votre e-mail.';
+                return;
+            }
+            try {
+                await firebase.auth().sendPasswordResetEmail(email);
+                authError.textContent = 'E-mail de réinitialisation envoyé !';
+            } catch (error) {
+                authError.textContent = error.message;
+            }
+        });
+    }
+
     // Gestion du mode sombre/clair
     const themeToggle = document.getElementById('theme-toggle');
     const profileTheme = document.getElementById('profile-theme');
@@ -24,12 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function toggleTheme() {
+    async function toggleTheme() {
         document.body.classList.toggle('dark');
         const isDark = document.body.classList.contains('dark');
         if (themeToggle) themeToggle.querySelector('.icon').textContent = isDark ? '☀️' : '🌙';
         if (profileTheme) profileTheme.checked = isDark;
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        if (firebase.auth().currentUser) {
+            try {
+                await db.collection('users').doc(firebase.auth().currentUser.uid).update({ theme: isDark ? 'dark' : 'light' });
+            } catch (error) {
+                console.error('Erreur mise à jour thème:', error);
+            }
+        }
     }
 
     if (localStorage.getItem('theme') === 'dark') {
@@ -45,12 +187,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (profileFontSize && fontSizeValue) {
         profileFontSize.value = fontSize;
         fontSizeValue.textContent = `${fontSize}px`;
-        profileFontSize.addEventListener('input', () => {
+        profileFontSize.addEventListener('input', async () => {
             console.log('Changement taille police');
             fontSize = parseInt(profileFontSize.value);
             fontSizeValue.textContent = `${fontSize}px`;
             updateFontSize();
             localStorage.setItem('fontSize', fontSize);
+            if (firebase.auth().currentUser) {
+                try {
+                    await db.collection('users').doc(firebase.auth().currentUser.uid).update({ fontSize });
+                } catch (error) {
+                    console.error('Erreur mise à jour police:', error);
+                }
+            }
         });
     }
 
@@ -72,13 +221,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (profileVolume && volumeValue) {
         profileVolume.value = volume;
         volumeValue.textContent = `${volume}%`;
-        profileVolume.addEventListener('input', () => {
+        profileVolume.addEventListener('input', async () => {
             console.log('Changement volume');
             volume = parseInt(profileVolume.value);
             volumeValue.textContent = `${volume}%`;
             localStorage.setItem('volume', volume);
             if (currentSpeech) {
                 currentSpeech.volume = volume / 100;
+            }
+            if (firebase.auth().currentUser) {
+                try {
+                    await db.collection('users').doc(firebase.auth().currentUser.uid).update({ volume });
+                } catch (error) {
+                    console.error('Erreur mise à jour volume:', error);
+                }
             }
         });
     }
@@ -89,24 +245,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileLanguage = document.getElementById('profile-language');
     if (languageToggle && profileLanguage) {
         profileLanguage.value = currentLanguage;
-        languageToggle.addEventListener('click', () => {
+        languageToggle.addEventListener('click', async () => {
             console.log('Clic langue');
             currentLanguage = currentLanguage === 'fr' ? 'en' : currentLanguage === 'en' ? 'ar' : 'fr';
-            updateLanguage();
+            await updateLanguage();
         });
-        profileLanguage.addEventListener('change', () => {
+        profileLanguage.addEventListener('change', async () => {
             console.log('Changement langue profil');
             currentLanguage = profileLanguage.value;
-            updateLanguage();
+            await updateLanguage();
         });
     }
 
-    function updateLanguage() {
+    async function updateLanguage() {
         document.querySelectorAll('.content').forEach(content => {
             content.style.display = content.dataset.lang === currentLanguage ? 'block' : 'none';
         });
         localStorage.setItem('language', currentLanguage);
         if (profileLanguage) profileLanguage.value = currentLanguage;
+        if (firebase.auth().currentUser) {
+            try {
+                await db.collection('users').doc(firebase.auth().currentUser.uid).update({ language: currentLanguage });
+            } catch (error) {
+                console.error('Erreur mise à jour langue:', error);
+            }
+        }
     }
 
     updateLanguage();
@@ -203,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let progress = JSON.parse(localStorage.getItem('progress')) || {};
     const favoriteStars = document.querySelectorAll('.favorite');
 
-    function updateFavoritesList() {
+    async function updateFavoritesList() {
         const favoritesList = document.getElementById('favorites-list');
         if (favoritesList) {
             favoritesList.innerHTML = '';
@@ -228,6 +391,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById(targetId).classList.add('active');
                 });
             });
+            if (firebase.auth().currentUser) {
+                try {
+                    await db.collection('users').doc(firebase.auth().currentUser.uid).update({ favorites });
+                } catch (error) {
+                    console.error('Erreur mise à jour favoris:', error);
+                }
+            }
         }
     }
 
@@ -237,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
             star.classList.add('active');
             star.textContent = '★';
         }
-        star.addEventListener('click', () => {
+        star.addEventListener('click', async () => {
             console.log('Clic favori étoile');
             if (!favorites.includes(chapterId)) {
                 favorites.push(chapterId);
@@ -249,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 star.textContent = '⭐';
             }
             localStorage.setItem('favorites', JSON.stringify(favorites));
-            updateFavoritesList();
+            await updateFavoritesList();
         });
     });
 
@@ -262,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function trackProgress() {
+    async function trackProgress() {
         const activeSection = document.querySelector('section.active');
         if (!activeSection || !activeSection.classList.contains('chapter') || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents' || activeSection.id === 'profile') return;
 
@@ -274,7 +444,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         progress[chapterId] = Math.max(progress[chapterId] || 0, progressPercent);
         localStorage.setItem('progress', JSON.stringify(progress));
-        updateFavoritesList();
+        await updateFavoritesList();
+        if (firebase.auth().currentUser) {
+            try {
+                await db.collection('users').doc(firebase.auth().currentUser.uid).update({ progress });
+            } catch (error) {
+                console.error('Erreur mise à jour progression:', error);
+            }
+        }
     }
 
     window.addEventListener('scroll', trackProgress);
