@@ -312,6 +312,48 @@ body.dark .progress {
     background-color: #d4af37;
 }
 
+/* Page de profil */
+.profile-content {
+    margin-top: 1rem;
+}
+
+.profile-content h3 {
+    margin: 1rem 0 0.5rem;
+}
+
+.setting {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.5rem 0;
+}
+
+.setting label {
+    flex: 1;
+}
+
+.setting select, .setting input[type="range"], .setting input[type="checkbox"] {
+    flex: 2;
+    padding: 0.3rem;
+    border: 2px solid #d4af37;
+    border-radius: 5px;
+    background-color: #f0f4f8;
+    color: #1e3a8a;
+}
+
+body.dark .setting select, body.dark .setting input[type="range"], body.dark .setting input[type="checkbox"] {
+    background-color: #333;
+    color: #d4af37;
+}
+
+.setting input[type="range"] {
+    width: 100%;
+}
+
+.setting input[type="checkbox"] {
+    width: auto;
+}
+
 /* Responsive pour mobile */
 @media (max-width: 600px) {
     header {
@@ -361,6 +403,15 @@ body.dark .progress {
     .chapter-nav {
         flex-direction: column;
         gap: 0.5rem;
+    }
+
+    .setting {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .setting label, .setting select, .setting input[type="range"], .setting input[type="checkbox"] {
+        width: 100%;
     }
 }
 
