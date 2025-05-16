@@ -1,7 +1,7 @@
 {
     "name": "Lecteur de Livre",
     "short_name": "Livre",
-    "description": "Application de lecture moderne avec mode sombre, zoom, favoris et lecture vocale",
+    "description": "Application de lecture moderne avec mode sombre, zoom, favoris, lecture vocale et traduction",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#1e3a8a",
