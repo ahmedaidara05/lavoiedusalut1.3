@@ -8,8 +8,4 @@
     "icons": [
         {
             "src": "book-icon.png",
-            "sizes": "64x64",
-            "type": "image/png"
-        }
-    ]
-}
+            "sizes":
