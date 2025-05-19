@@ -455,118 +455,90 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
     }
 }
 
-/* Icône flottante */
 #ai-assistant-icon {
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
   width: 64px;
   height: 64px;
-  border-radius: 50%;
-  background-color: #FFD700;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  background-image: url('icon512.png');
-  background-size: 60%;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: move;
+  background-image: url('icone512.png');
+  background-size: cover;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   z-index: 1000;
+  cursor: grab;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Fenêtre de chat */
 #ai-chat-box {
-  position: fixed;
-  bottom: 120px;
-  right: 40px;
-  width: 320px;
-  max-height: 500px;
-  background-color: var(--chat-bg);
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   display: none;
   flex-direction: column;
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  background: var(--bg-color, #fff);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  z-index: 1000;
   overflow: hidden;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
+  font-family: sans-serif;
 }
 
-/* Styles dynamiques pour le mode */
-:root {
-  --chat-bg: #ffffff;
-  --msg-ai: #000000;
-  --msg-user: #FFD700;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --chat-bg: #1e1e1e;
-    --msg-ai: #ffffff;
-    --msg-user: #FFD700;
-  }
-}
-
-/* En-tête */
 #ai-chat-box header {
+  padding: 10px;
   background: #1e3a8a;
   color: white;
-  padding: 10px 16px;
-  font-weight: bold;
   text-align: center;
+  font-weight: bold;
 }
 
-/* Zone de messages */
 #chat-messages {
-  padding: 10px;
   flex: 1;
+  padding: 10px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+  background: var(--bg-color, #f0f0f0);
 }
 
-/* Messages */
 .chat-message {
-  padding: 8px 12px;
   margin: 6px 0;
-  border-radius: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
   max-width: 80%;
   word-wrap: break-word;
-  font-size: 14px;
 }
 
 .chat-user {
-  background-color: var(--msg-user);
-  color: #000;
   align-self: flex-end;
-  border-bottom-right-radius: 0;
+  background: gold;
+  color: black;
 }
 
 .chat-ai {
-  background-color: var(--msg-ai);
-  color: var(--msg-user);
   align-self: flex-start;
-  border-bottom-left-radius: 0;
+  background: #000;
+  color: white;
 }
 
-/* Footer avec input */
 #ai-chat-box footer {
+  padding: 8px;
   display: flex;
-  border-top: 1px solid #ccc;
-  background-color: inherit;
+  gap: 6px;
+  background: #f9f9f9;
 }
 
 #ai-input {
   flex: 1;
-  border: none;
-  padding: 10px;
-  font-size: 14px;
-  background: transparent;
-  color: inherit;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
 #ai-send-btn {
-  background-color: #1e3a8a;
+  padding: 6px 10px;
+  background: #1e3a8a;
   color: white;
   border: none;
-  padding: 10px 14px;
+  border-radius: 6px;
   cursor: pointer;
 }
