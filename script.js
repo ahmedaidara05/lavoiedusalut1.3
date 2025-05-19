@@ -531,3 +531,92 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const currentPage = window.location.href;
+  const shouldShowAI = currentPage.includes("lecture") || currentPage.includes("sommaire");
+
+  if (!shouldShowAI) return;
+
+  // Injecter le HTML
+  const iaHTML = `
+    <div id="ai-assistant-icon" title="Assistant IA"></div>
+    <div id="ai-chat-box">
+      <header>Assistant IA 📖</header>
+      <div id="chat-messages"></div>
+      <footer>
+        <input type="text" id="ai-input" placeholder="Pose une question sur le livre..." />
+        <button id="ai-send-btn">Envoyer</button>
+      </footer>
+    </div>
+  `;
+  document.getElementById("ia-container").innerHTML = iaHTML;
+
+  // Activer l'assistant
+  const icon = document.getElementById("ai-assistant-icon");
+  const box = document.getElementById("ai-chat-box");
+  const input = document.getElementById("ai-input");
+  const sendBtn = document.getElementById("ai-send-btn");
+  const messages = document.getElementById("chat-messages");
+
+  // Afficher/Masquer
+  let isVisible = false;
+  icon.addEventListener("click", () => {
+    isVisible = !isVisible;
+    box.style.display = isVisible ? "flex" : "none";
+  });
+
+  // Déplacement
+  let isDragging = false, offsetX = 0, offsetY = 0;
+  icon.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - icon.offsetLeft;
+    offsetY = e.clientY - icon.offsetTop;
+  });
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+      icon.style.left = (e.clientX - offsetX) + "px";
+      icon.style.top = (e.clientY - offsetY) + "px";
+      icon.style.right = "auto";
+      icon.style.bottom = "auto";
+    }
+  });
+  document.addEventListener("mouseup", () => isDragging = false);
+
+  // Envoi des messages
+  function sendMessage() {
+    const userMsg = input.value.trim();
+    if (!userMsg) return;
+    addMessage(userMsg, "user");
+    input.value = "";
+    callGeminiAPI(userMsg);
+  }
+
+  sendBtn.addEventListener("click", sendMessage);
+  input.addEventListener("keypress", e => {
+    if (e.key === "Enter") sendMessage();
+  });
+
+  function addMessage(text, type) {
+    const msg = document.createElement("div");
+    msg.className = "chat-message " + (type === "user" ? "chat-user" : "chat-ai");
+    msg.textContent = text;
+    messages.appendChild(msg);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  async function callGeminiAPI(question) {
+    const API_KEY = "AIzaSyA0vL0QgFDkAi-ScZDVKC1G5MgcFCURE1A";
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: `Réponds uniquement à partir du livre. Question : ${question}` }] }]
+      })
+    });
+
+    const data = await response.json();
+    const answer = data.candidates?.[0]?.content?.parts?.[0]?.text || "Je ne suis pas sûr d’avoir compris ta question...";
+    addMessage(answer, "ai");
+  }
+});
+
