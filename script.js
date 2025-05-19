@@ -532,8 +532,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 document.addEventListener("DOMContentLoaded", () => {
-  const currentPage = window.location.href;
-  const shouldShowAI = currentPage.includes("lecture") || currentPage.includes("sommaire");
+  const currentPage = window.location.pathname;
+const shouldShowAI = currentPage.includes("lecture") || currentPage.includes("sommaire");
 
   if (!shouldShowAI) return;
 
