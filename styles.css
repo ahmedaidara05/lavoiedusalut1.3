@@ -13,7 +13,7 @@ body {
     user-select: none;
     transition: background-color 0.3s, color 0.3s;
     /* Ajout d'un padding-bottom pour que le contenu ne soit pas masqué par la barre du bas */
-    padding-bottom: 60px; /* Adaptez cette valeur à la hauteur de votre barre du bas */
+    padding-bottom: 60px; /* Ajustez cette valeur à la hauteur réelle de votre .bottom-navbar */
 }
 
 body.dark {
@@ -25,93 +25,27 @@ body.dark {
 .top-navbar {
     background-color: #1e3a8a;
     color: #d4af37;
-    padding: 0.5rem 1rem; /* Réduction du padding pour une barre plus compacte */
+    padding: 0.5rem 1rem;
     display: flex;
-    justify-content: flex-end; /* Aligner les icônes à droite */
+    justify-content: space-between; /* Pour espacer le titre/couverture et les icônes */
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    width: 100%; /* Assurer la pleine largeur */
-}
-
-/* Barre de navigation du bas */
-.bottom-navbar {
-    background-color: #1e3a8a;
-    color: #d4af37;
-    padding: 0.5rem 1rem;
-    display: flex;
-    justify-content: space-around; /* Distribuer les icônes également */
-    align-items: center;
-    position: fixed; /* Fixer la barre en bas de l'écran */
-    bottom: 0;
-    left: 0;
     width: 100%;
-    z-index: 1000;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.top-navbar button, .bottom-navbar button, #voice-select {
-    background: none;
-    border: 2px solid #d4af37;
-    color: #d4af37;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0.3rem;
-    border-radius: 50%;
-    width: 40px; /* Taille légèrement augmentée pour le mobile */
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s, transform 0.2s;
-    margin: 0 0.3rem; /* Espacement entre les icônes */
-}
-
-#voice-select {
-    border-radius: 10px;
-    width: auto;
-    padding: 0.2rem 0.5rem; /* Ajustement du padding */
-    font-size: 0.8rem;
-}
-
-.top-navbar button:hover, .bottom-navbar button:hover, #voice-select:hover {
-    background-color: #d4af37;
-    color: #1e3a8a;
-    transform: scale(1.1);
-}
-
-/* Styles pour les sections du site (accueil, sommaire, etc.) */
-main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 1rem;
-}
-
-section {
-    display: none;
-    padding: 1rem;
-    background: transparent;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-section.active {
-    display: block;
-}
-
-/* Styles existants pour le reste de votre site */
-.left-nav, .right-nav { /* Ces classes ne seront probablement plus utilisées directement pour le positionnement global des icônes */
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.header-content { /* Peut être adapté si vous avez encore du contenu dans le header au-delà des icônes */
+.header-content { /* Contient le titre et la couverture du livre */
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.right-nav { /* Contient les icônes de la barre du haut */
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 .header-book {
@@ -122,11 +56,57 @@ section.active {
     border: 2px solid #d4af37;
 }
 
-.user-status {
-    font-size: 0.8rem;
-    margin-left: 0.3rem;
+/* Barre de navigation du bas */
+.bottom-navbar {
+    background-color: #1e3a8a;
+    color: #d4af37;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-around; /* Pour distribuer les icônes de manière égale */
+    align-items: center;
+    position: fixed; /* Fixer la barre en bas de l'écran */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Styles pour tous les boutons de navigation et le select */
+.top-navbar button, .bottom-navbar button, #voice-select {
+    background: none;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-size: 1rem; /* Taille de police standard */
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%; /* Pour les icônes circulaires */
+    width: 40px; /* Taille par défaut pour un bon touché */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+    /* margin: 0 0.3rem; Pas nécessaire avec gap sur flexbox si désiré */
+}
+
+#voice-select {
+    border-radius: 10px; /* Garde la forme rectangulaire pour le select */
+    width: auto;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    text-align: center; /* Centrer le texte si possible */
+}
+
+.top-navbar button:hover, .bottom-navbar button:hover, #voice-select:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+/* Le reste de votre CSS original, avec les ajustements nécessaires */
+
+/* Page d'accueil */
 .home-content {
     display: flex;
     gap: 2rem;
@@ -162,6 +142,25 @@ section.active {
     max-width: 200px;
     border-radius: 8px;
     border: 3px solid #d4af37;
+}
+
+/* Main */
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+section {
+    display: none;
+    padding: 1rem;
+    background: transparent;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+section.active {
+    display: block;
 }
 
 .chapter-header {
@@ -230,6 +229,7 @@ body.dark .favorite.active {
     transform: scale(1.2);
 }
 
+/* Navigation entre chapitres */
 .chapter-nav {
     display: flex;
     justify-content: space-between;
@@ -260,6 +260,7 @@ body.dark .favorite.active {
     cursor: not-allowed;
 }
 
+/* Liste des chapitres */
 #chapter-list {
     list-style: none;
 }
@@ -287,6 +288,7 @@ body.dark #chapter-list a:hover {
     color: #fff;
 }
 
+/* Favoris */
 #favorites-list {
     list-style: none;
 }
@@ -334,6 +336,7 @@ body.dark .progress {
     background-color: #d4af37;
 }
 
+/* Page de profil */
 .profile-content {
     margin-top: 1rem;
 }
@@ -404,21 +407,31 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
 
 /* Responsive pour mobile */
 @media (max-width: 600px) {
-    /* La barre du haut est déjà optimisée pour les petits écrans */
     .top-navbar {
-        justify-content: space-around; /* Centre les icônes sur mobile */
-        padding: 0.5rem 0.5rem;
+        flex-direction: column; /* Empile le titre/couverture et les icônes */
+        padding: 0.5rem;
+        justify-content: center; /* Centre le contenu en haut */
+    }
+
+    .top-navbar .header-content {
+        margin-bottom: 0.5rem; /* Espace entre le titre et les icônes */
+    }
+
+    .top-navbar .right-nav {
+        flex-wrap: wrap; /* Permet aux icônes de passer à la ligne si besoin */
+        justify-content: center; /* Centre les icônes dans la barre du haut */
+        gap: 0.3rem; /* Espacement réduit entre les icônes */
     }
 
     .bottom-navbar {
         padding: 0.5rem 0.5rem;
     }
 
+    /* Ajustement de la taille des boutons pour mobile */
     .top-navbar button, .bottom-navbar button, #voice-select {
-        width: 35px; /* Légèrement plus petit sur mobile pour plus d'espace */
+        width: 35px;
         height: 35px;
         font-size: 0.8rem;
-        margin: 0 0.2rem;
     }
 
     #voice-select {
