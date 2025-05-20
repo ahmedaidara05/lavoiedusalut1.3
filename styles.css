@@ -25,9 +25,9 @@ body.dark {
 .top-navbar {
     background-color: #1e3a8a;
     color: #d4af37;
-    padding: 0.2rem 1rem;
+    padding: 0.2rem 1rem; /* Réduit le padding vertical pour une barre plus fine */
     display: flex;
-    justify-content: space-between; /* Pour espacer le titre/couverture et les icônes */
+    justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
@@ -36,21 +36,31 @@ body.dark {
     width: 100%;
 }
 
-.header-content { /* Contient le titre et la couverture du livre */
+.header-content { /* Contient l'image et le titre du livre */
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.8rem; /* Espacement ajusté entre l'image et le titre */
 }
 
-.right-nav { /* Contient les icônes de la barre du haut */
+/* Style pour le titre H1 dans la barre du haut */
+.top-navbar h1 {
+    font-size: 1.4rem; /* Taille du titre ajustée */
+    margin: 0; /* Supprime les marges par défaut du h1 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.right-nav { /* Contient le bouton hamburger et le menu déroulant */
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    position: relative; /* IMPORTANT pour le positionnement absolu du menu déroulant */
 }
 
 .header-book {
-    width: 35px;
-    height: 50px;
+    width: 35px;  /* Nouvelle largeur de l'image */
+    height: 50px; /* Nouvelle hauteur de l'image */
     object-fit: cover;
     border-radius: 5px;
     border: 2px solid #d4af37;
@@ -73,11 +83,12 @@ body.dark {
 }
 
 /* Styles pour tous les boutons de navigation et le select */
+/* Appliqué aux boutons de la top-navbar (sauf le hamburger initialement sur mobile) et bottom-navbar */
 .top-navbar button, .bottom-navbar button, #voice-select {
     background: none;
     border: 2px solid #d4af37;
     color: #d4af37;
-    font-size: 1rem; /* Taille de police standard */
+    font-size: 1rem; /* Taille de police standard pour les icônes */
     cursor: pointer;
     padding: 0.3rem;
     border-radius: 50%; /* Pour les icônes circulaires */
@@ -87,8 +98,15 @@ body.dark {
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s, transform 0.2s;
-    /* margin: 0 0.3rem; Pas nécessaire avec gap sur flexbox si désiré */
 }
+
+/* Style spécifique pour le bouton hamburger */
+#hamburger-menu-btn {
+    font-size: 1.2rem; /* Légèrement plus grand pour l'icône hamburger */
+    width: 40px; /* Taille cohérente avec les autres boutons */
+    height: 40px;
+}
+
 
 #voice-select {
     border-radius: 10px; /* Garde la forme rectangulaire pour le select */
@@ -104,7 +122,47 @@ body.dark {
     transform: scale(1.1);
 }
 
-/* Le reste de votre CSS original, avec les ajustements nécessaires */
+/* Styles pour le menu déroulant du hamburger */
+.dropdown-menu {
+    display: flex; /* Toujours flex pour la structure, mais masqué/affiché par opacité/transform */
+    flex-direction: column; /* Pour afficher les éléments verticalement */
+    position: absolute;
+    top: 50px; /* Ajuste la position sous la barre du haut */
+    right: 0;
+    background-color: #1e3a8a; /* Couleur de fond du menu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 999; /* Moins prioritaire que la navbar, mais au-dessus du contenu */
+    min-width: 150px; /* Largeur minimale pour le menu */
+
+    /* Animations */
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none; /* Empêche les interactions quand caché */
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto; /* Permet les interactions quand affiché */
+}
+
+/* Styles pour les éléments à l'intérieur du menu déroulant */
+.dropdown-menu button, .dropdown-menu select {
+    width: 100%; /* Les boutons et select prennent toute la largeur du menu */
+    border-radius: 5px; /* Les rendre plus rectangulaires pour un menu */
+    margin-bottom: 5px; /* Espace entre les éléments */
+    height: auto; /* Laisse la hauteur s'adapter au contenu */
+    padding: 0.5rem; /* Padding pour un meilleur toucher */
+}
+
+/* Retirer le margin-bottom du dernier élément pour éviter un espace superflu */
+.dropdown-menu button:last-child, .dropdown-menu select:last-child {
+    margin-bottom: 0;
+}
+
 
 /* Page d'accueil */
 .home-content {
@@ -408,26 +466,41 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
 /* Responsive pour mobile */
 @media (max-width: 600px) {
     .top-navbar {
-        flex-direction: column; /* Empile le titre/couverture et les icônes */
-        padding: 0.5rem;
-        justify-content: center; /* Centre le contenu en haut */
+        /* Nous n'aurons plus besoin de flex-direction: column ici si le menu est déroulant */
+        /* padding: 0.5rem; --> C'est déjà 0.2rem plus haut, conservons le 0.2rem */
+        /* justify-content: center; --> space-between est mieux pour garder livre/titre à gauche et hamburger à droite */
+        /* align-items: center; --> déjà présent et bon */
     }
 
     .top-navbar .header-content {
-        margin-bottom: 0.5rem; /* Espace entre le titre et les icônes */
+        /* margin-bottom: 0.5rem; --> Plus nécessaire si le menu est en pop-up */
     }
 
     .top-navbar .right-nav {
-        flex-wrap: wrap; /* Permet aux icônes de passer à la ligne si besoin */
-        justify-content: center; /* Centre les icônes dans la barre du haut */
-        gap: 0.3rem; /* Espacement réduit entre les icônes */
+        /* flex-wrap: wrap; --> Plus nécessaire car les icônes sont dans le menu déroulant */
+        /* justify-content: center; --> Plus nécessaire */
+        /* gap: 0.3rem; --> Plus nécessaire ici directement */
     }
+
+    /* Masque les icônes individuelles dans la barre du haut sur mobile, pour que seul le hamburger soit visible */
+    /* Cela cible tous les enfants directs de .right-nav SAUF le bouton hamburger */
+    .right-nav > button:not(#hamburger-menu-btn),
+    .right-nav > select {
+        display: none;
+    }
+
+    /* Affiche le bouton hamburger sur mobile */
+    #hamburger-menu-btn {
+        display: block;
+    }
+
 
     .bottom-navbar {
         padding: 0.5rem 0.5rem;
     }
 
     /* Ajustement de la taille des boutons pour mobile */
+    /* Ces styles s'appliqueront aux boutons DANS le dropdown menu aussi */
     .top-navbar button, .bottom-navbar button, #voice-select {
         width: 35px;
         height: 35px;
@@ -438,6 +511,13 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
         padding: 0.2rem 0.3rem;
         font-size: 0.7rem;
     }
+
+    /* Styles pour le menu déroulant sur mobile (déjà défini plus haut) */
+    .dropdown-menu {
+        top: 50px; /* Positionnement par rapport à la barre du haut */
+        right: 10px; /* Petit décalage depuis la droite */
+    }
+
 
     main {
         padding: 0.5rem;
@@ -472,6 +552,45 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
     }
 }
 
+/* Styles pour les écrans plus grands (>= 601px) */
+@media (min-width: 601px) {
+    /* Masque le bouton hamburger sur les grands écrans */
+    #hamburger-menu-btn {
+        display: none;
+    }
+
+    /* Affiche les icônes directement dans la barre du haut sur grand écran */
+    .right-nav > button,
+    .right-nav > select {
+        display: flex; /* Ou block, ou inline-flex, selon la disposition */
+        /* Réinitialise les styles que le dropdown-menu pourrait avoir imposés */
+        position: static;
+        margin-bottom: 0;
+        width: 40px; /* Taille normale des boutons */
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    #voice-select {
+        width: auto;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+
+    /* Le menu déroulant lui-même est masqué sur grand écran, ou son contenu est affiché directement */
+    .dropdown-menu {
+        display: none; /* Cache le conteneur du menu déroulant sur grand écran */
+    }
+
+    /* Si vous voulez que les icônes du dropdown s'affichent directement SANS le dropdown */
+    /* Vous devriez alors déplacer les icônes HORS du div .dropdown-menu-container dans le HTML pour grand écran */
+    /* Ou gérer plus finement le display: flex/none pour les enfants directs de .right-nav */
+    /* Pour l'instant, le setup actuel masque le dropdown-menu-container sur grand écran,
+       ce qui est simple et efficace si vous voulez juste le hamburger sur mobile */
+}
+
+
 /* Désactiver l'impression */
 @media print {
     body {
@@ -480,89 +599,89 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
 }
 
 #ai-assistant-icon {
-  width: 64px;
-  height: 64px;
-  background-image: url('icone512.png');
-  background-size: cover;
-  position: fixed;
-  bottom: 80px; /* Ajusté pour ne pas chevaucher la barre du bas */
-  right: 20px;
-  z-index: 1000;
-  cursor: grab;
-  border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 64px;
+    height: 64px;
+    background-image: url('icone512.png');
+    background-size: cover;
+    position: fixed;
+    bottom: 80px; /* Ajusté pour ne pas chevaucher la barre du bas */
+    right: 20px;
+    z-index: 1000;
+    cursor: grab;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 #ai-chat-box {
-  display: none;
-  flex-direction: column;
-  position: fixed;
-  bottom: 150px; /* Ajusté pour ne pas chevaucher la barre du bas et l'icône de l'assistant */
-  right: 20px;
-  width: 300px;
-  height: 400px;
-  background: var(--bg-color, #fff);
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  z-index: 1000;
-  overflow: hidden;
-  font-family: sans-serif;
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    bottom: 150px; /* Ajusté pour ne pas chevaucher la barre du bas et l'icône de l'assistant */
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background: var(--bg-color, #fff);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+    overflow: hidden;
+    font-family: sans-serif;
 }
 
 #ai-chat-box header {
-  padding: 10px;
-  background: #1e3a8a;
-  color: white;
-  text-align: center;
-  font-weight: bold;
+    padding: 10px;
+    background: #1e3a8a;
+    color: white;
+    text-align: center;
+    font-weight: bold;
 }
 
 #chat-messages {
-  flex: 1;
-  padding: 10px;
-  overflow-y: auto;
-  background: var(--bg-color, #f0f0f0);
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: var(--bg-color, #f0f0f0);
 }
 
 .chat-message {
-  margin: 6px 0;
-  padding: 8px 12px;
-  border-radius: 10px;
-  max-width: 80%;
-  word-wrap: break-word;
+    margin: 6px 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 
 .chat-user {
-  align-self: flex-end;
-  background: gold;
-  color: black;
+    align-self: flex-end;
+    background: gold;
+    color: black;
 }
 
 .chat-ai {
-  align-self: flex-start;
-  background: #000;
-  color: white;
+    align-self: flex-start;
+    background: #000;
+    color: white;
 }
 
 #ai-chat-box footer {
-  padding: 8px;
-  display: flex;
-  gap: 6px;
-  background: #f9f9f9;
+    padding: 8px;
+    display: flex;
+    gap: 6px;
+    background: #f9f9f9;
 }
 
 #ai-input {
-  flex: 1;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+    flex: 1;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }
 
 #ai-send-btn {
-  padding: 6px 10px;
-  background: #1e3a8a;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+    padding: 6px 10px;
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
