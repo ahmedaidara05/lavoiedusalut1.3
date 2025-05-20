@@ -25,7 +25,7 @@ body.dark {
 .top-navbar {
     background-color: #1e3a8a;
     color: #d4af37;
-    padding: 0.5rem 1rem;
+    padding: 0.2rem 1rem;
     display: flex;
     justify-content: space-between; /* Pour espacer le titre/couverture et les icônes */
     align-items: center;
