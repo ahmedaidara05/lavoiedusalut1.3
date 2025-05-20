@@ -44,7 +44,7 @@ body.dark {
 
 /* Style pour le titre H1 dans la barre du haut */
 .top-navbar h1 {
-    font-size: 1.4rem; /* Taille du titre ajustée */
+    font-size: 1.1rem; /* Taille du titre ajustée */
     margin: 0; /* Supprime les marges par défaut du h1 */
     white-space: nowrap;
     overflow: hidden;
@@ -60,7 +60,7 @@ body.dark {
 
 .header-book {
     width: 35px;  /* Nouvelle largeur de l'image */
-    height: 50px; /* Nouvelle hauteur de l'image */
+    height: 35px; /* Nouvelle hauteur de l'image */
     object-fit: cover;
     border-radius: 5px;
     border: 2px solid #d4af37;
