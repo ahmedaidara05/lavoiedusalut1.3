@@ -12,6 +12,8 @@ body {
     font-size: 16px;
     user-select: none;
     transition: background-color 0.3s, color 0.3s;
+    /* Ajout d'un padding-bottom pour que le contenu ne soit pas masqué par la barre du bas */
+    padding-bottom: 60px; /* Adaptez cette valeur à la hauteur de votre barre du bas */
 }
 
 body.dark {
@@ -19,27 +21,94 @@ body.dark {
     color: #fff;
 }
 
-/* En-tête */
-header {
+/* En-tête (Barre du haut) */
+.top-navbar {
     background-color: #1e3a8a;
     color: #d4af37;
-    padding: 1rem;
+    padding: 0.5rem 1rem; /* Réduction du padding pour une barre plus compacte */
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Aligner les icônes à droite */
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Assurer la pleine largeur */
 }
 
-.left-nav, .right-nav {
+/* Barre de navigation du bas */
+.bottom-navbar {
+    background-color: #1e3a8a;
+    color: #d4af37;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-around; /* Distribuer les icônes également */
+    align-items: center;
+    position: fixed; /* Fixer la barre en bas de l'écran */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.top-navbar button, .bottom-navbar button, #voice-select {
+    background: none;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%;
+    width: 40px; /* Taille légèrement augmentée pour le mobile */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 0 0.3rem; /* Espacement entre les icônes */
+}
+
+#voice-select {
+    border-radius: 10px;
+    width: auto;
+    padding: 0.2rem 0.5rem; /* Ajustement du padding */
+    font-size: 0.8rem;
+}
+
+.top-navbar button:hover, .bottom-navbar button:hover, #voice-select:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+/* Styles pour les sections du site (accueil, sommaire, etc.) */
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+section {
+    display: none;
+    padding: 1rem;
+    background: transparent;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+section.active {
+    display: block;
+}
+
+/* Styles existants pour le reste de votre site */
+.left-nav, .right-nav { /* Ces classes ne seront probablement plus utilisées directement pour le positionnement global des icônes */
     display: flex;
     gap: 0.5rem;
     align-items: center;
 }
 
-.header-content {
+.header-content { /* Peut être adapté si vous avez encore du contenu dans le header au-delà des icônes */
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -53,41 +122,11 @@ header {
     border: 2px solid #d4af37;
 }
 
-nav button, #voice-select {
-    background: none;
-    border: 2px solid #d4af37;
-    color: #d4af37;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0.3rem;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#voice-select {
-    border-radius: 10px;
-    width: auto;
-    padding: 0.2rem;
-    font-size: 0.8rem;
-}
-
-nav button:hover, #voice-select:hover {
-    background-color: #d4af37;
-    color: #1e3a8a;
-    transform: scale(1.1);
-}
-
 .user-status {
     font-size: 0.8rem;
     margin-left: 0.3rem;
 }
 
-/* Page d'accueil */
 .home-content {
     display: flex;
     gap: 2rem;
@@ -123,25 +162,6 @@ nav button:hover, #voice-select:hover {
     max-width: 200px;
     border-radius: 8px;
     border: 3px solid #d4af37;
-}
-
-/* Main */
-main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 1rem;
-}
-
-section {
-    display: none;
-    padding: 1rem;
-    background: transparent;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-section.active {
-    display: block;
 }
 
 .chapter-header {
@@ -210,7 +230,6 @@ body.dark .favorite.active {
     transform: scale(1.2);
 }
 
-/* Navigation entre chapitres */
 .chapter-nav {
     display: flex;
     justify-content: space-between;
@@ -241,7 +260,6 @@ body.dark .favorite.active {
     cursor: not-allowed;
 }
 
-/* Liste des chapitres */
 #chapter-list {
     list-style: none;
 }
@@ -269,7 +287,6 @@ body.dark #chapter-list a:hover {
     color: #fff;
 }
 
-/* Favoris */
 #favorites-list {
     list-style: none;
 }
@@ -317,7 +334,6 @@ body.dark .progress {
     background-color: #d4af37;
 }
 
-/* Page de profil */
 .profile-content {
     margin-top: 1rem;
 }
@@ -388,20 +404,26 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
 
 /* Responsive pour mobile */
 @media (max-width: 600px) {
-    header {
-        flex-wrap: wrap;
-        justify-content: center;
+    /* La barre du haut est déjà optimisée pour les petits écrans */
+    .top-navbar {
+        justify-content: space-around; /* Centre les icônes sur mobile */
+        padding: 0.5rem 0.5rem;
     }
 
-    .header-content {
-        flex-direction: column;
-        align-items: center;
+    .bottom-navbar {
+        padding: 0.5rem 0.5rem;
     }
 
-    .left-nav, .right-nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.3rem;
+    .top-navbar button, .bottom-navbar button, #voice-select {
+        width: 35px; /* Légèrement plus petit sur mobile pour plus d'espace */
+        height: 35px;
+        font-size: 0.8rem;
+        margin: 0 0.2rem;
+    }
+
+    #voice-select {
+        padding: 0.2rem 0.3rem;
+        font-size: 0.7rem;
     }
 
     main {
@@ -419,17 +441,6 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
 
     .book-cover {
         max-width: 150px;
-    }
-
-    nav button, #voice-select {
-        width: 30px;
-        height: 30px;
-        font-size: 0.9rem;
-    }
-
-    #voice-select {
-        width: auto;
-        font-size: 0.7rem;
     }
 
     .chapter-nav {
@@ -461,7 +472,7 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
   background-image: url('icone512.png');
   background-size: cover;
   position: fixed;
-  bottom: 20px;
+  bottom: 80px; /* Ajusté pour ne pas chevaucher la barre du bas */
   right: 20px;
   z-index: 1000;
   cursor: grab;
@@ -473,7 +484,7 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
   display: none;
   flex-direction: column;
   position: fixed;
-  bottom: 100px;
+  bottom: 150px; /* Ajusté pour ne pas chevaucher la barre du bas et l'icône de l'assistant */
   right: 20px;
   width: 300px;
   height: 400px;
