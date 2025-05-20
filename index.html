@@ -19,20 +19,25 @@
 <body>
     <header class="top-navbar">
         <div class="header-content">
-            <h1>La Voie du Salut</h1>
-            <img src="book-cover.jpg" alt="Couverture du livre" class="header-book">
+            <img src="book-cover.jpg" alt="Couverture du livre" class="header-book"> <h1>La Voie du Salut</h1>
         </div>
         <nav class="right-nav">
-            <button id="theme-toggle" title="Mode sombre/clair">
-                <span class="icon">🌙</span>
+            <button id="hamburger-menu-btn" class="menu-toggle-btn" title="Ouvrir le menu">
+                <i class="fas fa-bars"></i>
             </button>
-            <button id="voice-toggle" title="Lecture vocale">
-                <span class="icon">🔊</span>
-            </button>
-            <select id="voice-select" title="Choisir une voix"></select>
-            <button id="language-toggle" title="Changer de langue">
-                <span class="icon">🌐</span>
-            </button>
+
+            <div id="dropdown-menu-container" class="dropdown-menu">
+                <button id="theme-toggle" title="Mode sombre/clair">
+                    <span class="icon">🌙</span>
+                </button>
+                <button id="voice-toggle" title="Lecture vocale">
+                    <span class="icon">🔊</span>
+                </button>
+                <select id="voice-select" title="Choisir une voix"></select>
+                <button id="language-toggle" title="Changer de langue">
+                    <span class="icon">🌐</span>
+                </button>
+            </div>
         </nav>
     </header>
 
@@ -210,9 +215,9 @@
                             <input type="password" id="signup-password" required>
                         </div>
                         <button type="submit">S'inscrire</button>
+                        <p><a href="#" id="auth-error" style="color: red;"></p>
                     </form>
                 </div>
-                <p id="auth-error" style="color: red;"></p>
                 <h3>Paramètres</h3>
                 <div class="setting">
                     <label for="profile-language">Langue :</label>
@@ -255,8 +260,8 @@
         <button id="menu-btn" title="Sommaire">☰</button>
         <button id="favorites-btn" title="Voir les favoris">⭐</button>
         <button id="profile-btn" title="Paramètres">
-             <span class="icon">⚙️</span>
-             <span id="user-status" class="user-status"></span> </button>
+            <span class="icon">⚙️</span>
+            <span id="user-status" class="user-status"></span> </button>
     </nav>
 
     <script src="firebase.js"></script>
