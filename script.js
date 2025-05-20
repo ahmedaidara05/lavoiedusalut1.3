@@ -530,4 +530,34 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // --- New Hamburger Menu Functionality ---
+    const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    if (hamburgerMenuBtn && dropdownMenu) {
+        hamburgerMenuBtn.addEventListener('click', (event) => {
+            console.log('Clic bouton hamburger');
+            dropdownMenu.classList.toggle('show'); // Toggle the 'show' class
+            event.stopPropagation(); // Prevent the click from immediately closing the menu
+        });
+
+        // Close the dropdown menu if a click occurs outside of it
+        document.addEventListener('click', (event) => {
+            if (!dropdownMenu.contains(event.target) && !hamburgerMenuBtn.contains(event.target)) {
+                if (dropdownMenu.classList.contains('show')) {
+                    dropdownMenu.classList.remove('show');
+                    console.log('Menu hamburger fermé en cliquant à l\'extérieur.');
+                }
+            }
+        });
+
+        // Close the dropdown menu when an item inside it is clicked
+        dropdownMenu.querySelectorAll('button, select').forEach(item => {
+            item.addEventListener('click', () => {
+                dropdownMenu.classList.remove('show');
+                console.log('Menu hamburger fermé après sélection.');
+            });
+        });
+    }
 });
