@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (fontSizeValue) fontSizeValue.textContent = `${fontSize}px`;
                     if (profileVolume) profileVolume.value = volume;
                     if (volumeValue) volumeValue.textContent = `${volume}%`;
-                    if (themeToggle) themeToggle.querySelector('.icon').textContent = data.theme === 'dark' ? '☀️' : '🌙';
+                    if (themeToggle) themeToggle.innerHTML = data.theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
                     if (profileTheme) profileTheme.checked = data.theme === 'dark';
                 }
             } catch (error) {
@@ -153,10 +153,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Gestion du mode sombre/clair
     const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
     const profileTheme = document.getElementById('profile-theme');
     if (themeToggle && profileTheme) {
         themeToggle.addEventListener('click', () => {
             console.log('Clic mode sombre');
+            toggleTheme();
+        });
+        themeToggleMobile.addEventListener('click', () => {
+            console.log('Clic mode sombre mobile');
             toggleTheme();
         });
         profileTheme.addEventListener('change', () => {
@@ -168,7 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
     async function toggleTheme() {
         document.body.classList.toggle('dark');
         const isDark = document.body.classList.contains('dark');
-        if (themeToggle) themeToggle.querySelector('.icon').textContent = isDark ? '☀️' : '🌙';
+        if (themeToggle) themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        if (themeToggleMobile) themeToggleMobile.innerHTML = isDark ? '<i class="fas fa-sun"></i> Mode clair' : '<i class="fas fa-moon"></i> Mode sombre';
         if (profileTheme) profileTheme.checked = isDark;
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
         if (firebase.auth().currentUser) {
@@ -182,7 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark');
-        if (themeToggle) themeToggle.querySelector('.icon').textContent = '☀️';
+        if (themeToggle) themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        if (themeToggleMobile) themeToggleMobile.innerHTML = '<i class="fas fa-sun"></i> Mode clair';
         if (profileTheme) profileTheme.checked = true;
     }
 
@@ -248,11 +255,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gestion de la langue
     let currentLanguage = localStorage.getItem('language') || 'fr';
     const languageToggle = document.getElementById('language-toggle');
+    const languageToggleMobile = document.getElementById('language-toggle-mobile');
     const profileLanguage = document.getElementById('profile-language');
-    if (languageToggle && profileLanguage) {
+    if (languageToggle && languageToggleMobile && profileLanguage) {
         profileLanguage.value = currentLanguage;
         languageToggle.addEventListener('click', async () => {
             console.log('Clic langue');
+            currentLanguage = currentLanguage === 'fr' ? 'en' : currentLanguage === 'en' ? 'ar' : 'fr';
+            await updateLanguage();
+        });
+        languageToggleMobile.addEventListener('click', async () => {
+            console.log('Clic langue mobile');
             currentLanguage = currentLanguage === 'fr' ? 'en' : currentLanguage === 'en' ? 'ar' : 'fr';
             await updateLanguage();
         });
@@ -465,15 +478,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Gestion de la lecture vocale
     const voiceToggle = document.getElementById('voice-toggle');
+    const voiceToggleMobile = document.getElementById('voice-toggle-mobile');
     const voiceSelect = document.getElementById('voice-select');
+    const voiceSelectMobile = document.getElementById('voice-select-mobile');
     let currentSpeech = null;
     let currentChapter = null;
     let voices = [];
 
     function populateVoiceList() {
         voices = speechSynthesis.getVoices();
-        if (voiceSelect) {
+        if (voiceSelect && voiceSelectMobile) {
             voiceSelect.innerHTML = '<option value="">Voix par défaut</option>';
+            voiceSelectMobile.innerHTML = '<option value="">Voix par défaut</option>';
             let voiceCounter = 1;
             voices.forEach((voice, index) => {
                 if (voice.lang.startsWith('fr') || voice.lang.startsWith('en') || voice.lang.startsWith('ar')) {
@@ -481,6 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     option.value = index;
                     option.textContent = `Voix ${voiceCounter} (${voice.lang})`;
                     voiceSelect.appendChild(option);
+                    voiceSelectMobile.appendChild(option.cloneNode(true));
                     voiceCounter++;
                 }
             });
@@ -490,8 +507,8 @@ document.addEventListener('DOMContentLoaded', () => {
     speechSynthesis.onvoiceschanged = populateVoiceList;
     populateVoiceList();
 
-    if (voiceToggle) {
-        voiceToggle.addEventListener('click', () => {
+    if (voiceToggle && voiceToggleMobile) {
+        const toggleVoice = () => {
             console.log('Clic lecture vocale');
             const activeSection = document.querySelector('section.active');
             if (!activeSection || activeSection.id === 'home' || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents' || activeSection.id === 'profile') return;
@@ -503,11 +520,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentSpeech && currentChapter === chapterId && !speechSynthesis.paused) {
                 speechSynthesis.pause();
                 currentSpeech.paused = true;
-                voiceToggle.querySelector('.icon').textContent = '▶️';
+                voiceToggle.innerHTML = '<i class="fas fa-play"></i>';
+                voiceToggleMobile.innerHTML = '<i class="fas fa-play"></i> Lecture vocale';
             } else if (currentSpeech && currentSpeech.paused) {
                 speechSynthesis.resume();
                 currentSpeech.paused = false;
-                voiceToggle.querySelector('.icon').textContent = '⏸️';
+                voiceToggle.innerHTML = '<i class="fas fa-pause"></i>';
+                voiceToggleMobile.innerHTML = '<i class="fas fa-pause"></i> Lecture vocale';
             } else {
                 if (currentSpeech) {
                     speechSynthesis.cancel();
@@ -521,28 +540,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentSpeech.paused = false;
                 currentChapter = chapterId;
                 speechSynthesis.speak(currentSpeech);
-                voiceToggle.querySelector('.icon').textContent = '⏸️';
+                voiceToggle.innerHTML = '<i class="fas fa-pause"></i>';
+                voiceToggleMobile.innerHTML = '<i class="fas fa-pause"></i> Lecture vocale';
                 currentSpeech.onend = () => {
-                    voiceToggle.querySelector('.icon').textContent = '🔊';
+                    voiceToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    voiceToggleMobile.innerHTML = '<i class="fas fa-volume-up"></i> Lecture vocale';
                     currentSpeech = null;
                     currentChapter = null;
                 };
             }
+        };
+
+        voiceToggle.addEventListener('click', toggleVoice);
+        voiceToggleMobile.addEventListener('click', toggleVoice);
+    }
+
+    if (voiceSelect && voiceSelectMobile) {
+        voiceSelect.addEventListener('change', () => {
+            voiceSelectMobile.value = voiceSelect.value;
+        });
+        voiceSelectMobile.addEventListener('change', () => {
+            voiceSelect.value = voiceSelectMobile.value;
         });
     }
 
-    // --- New Hamburger Menu Functionality ---
+    // Gestion du menu hamburger
     const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn');
     const dropdownMenu = document.getElementById('dropdown-menu');
 
     if (hamburgerMenuBtn && dropdownMenu) {
         hamburgerMenuBtn.addEventListener('click', (event) => {
             console.log('Clic bouton hamburger');
-            dropdownMenu.classList.toggle('show'); // Toggle the 'show' class
-            event.stopPropagation(); // Prevent the click from immediately closing the menu
+            dropdownMenu.classList.toggle('show');
+            event.stopPropagation();
         });
 
-        // Close the dropdown menu if a click occurs outside of it
         document.addEventListener('click', (event) => {
             if (!dropdownMenu.contains(event.target) && !hamburgerMenuBtn.contains(event.target)) {
                 if (dropdownMenu.classList.contains('show')) {
@@ -552,7 +584,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Close the dropdown menu when an item inside it is clicked
         dropdownMenu.querySelectorAll('button, select').forEach(item => {
             item.addEventListener('click', () => {
                 dropdownMenu.classList.remove('show');
