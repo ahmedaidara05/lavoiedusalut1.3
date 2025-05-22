@@ -580,7 +580,7 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
     }
 }
 
-/* Assure que l'icône IA est visible */
+/* Style pour l'icône IA */
 #ai-assistant-icon {
     display: block;
     width: 50px;
@@ -595,9 +595,10 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
     bottom: 20px;
     right: 20px;
     z-index: 1000;
+    font-size: 24px; /* Pour l'emoji ou le texte */
 }
 
-/* Assure que la boîte de chat est masquée par défaut */
+/* Style pour la boîte de chat IA */
 #ai-chat-box {
     display: none; /* Masquée par défaut, affichée via JavaScript */
     position: fixed;
@@ -612,7 +613,7 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
     z-index: 1000;
 }
 
-/* Style pour l'en-tête de la boîte de chat */
+/* Style pour l'en-tête */
 #ai-chat-box header {
     background-color: #007bff;
     color: white;
@@ -656,7 +657,7 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
     background-color: #0056b3;
 }
 
-/* Assure que la boîte est visible quand elle a la classe 'active' */
+/* Affiche la boîte quand elle a la classe 'active' */
 #ai-chat-box.active {
     display: block;
 }
