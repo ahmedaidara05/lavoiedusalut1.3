@@ -627,7 +627,7 @@ async function askBookAI() {
   messagesDiv.appendChild(thinkingMsg);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
-  const bookText = document.getElementById("book-content").innerText;
+  const bookContent = document.getElementById("book-content").innerText;
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
