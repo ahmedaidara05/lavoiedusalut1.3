@@ -612,38 +612,62 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  z-index: 999;
+  cursor: grab;
+  z-index: 9999;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  user-select: none;
 }
 
-/* Fenêtre de chat */
 #chat-window {
   position: fixed;
   bottom: 90px;
   right: 20px;
-  width: 300px;
-  max-height: 400px;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  width: 320px;
+  max-height: 450px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 12px;
   overflow: hidden;
   display: none;
   flex-direction: column;
-  z-index: 999;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 9999;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
 #chat-messages {
   padding: 10px;
   overflow-y: auto;
   flex: 1;
-  max-height: 300px;
+  max-height: 350px;
+  font-family: sans-serif;
+}
+
+.message-user {
+  background-color: #e0e0e0;
+  color: #000;
+  padding: 8px 12px;
+  margin: 6px 0;
+  max-width: 80%;
+  border-radius: 10px 0 10px 10px;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.message-ai {
+  background-color: #FFD700;
+  color: #000;
+  padding: 8px 12px;
+  margin: 6px 0;
+  max-width: 80%;
+  border-radius: 0 10px 10px 10px;
+  align-self: flex-start;
+  text-align: left;
+  font-weight: 500;
 }
 
 #chat-input {
   display: flex;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #444;
 }
 
 #chat-input input {
@@ -651,6 +675,8 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
   border: none;
   padding: 10px;
   font-size: 14px;
+  background: #222;
+  color: white;
 }
 
 #chat-input button {
@@ -660,4 +686,3 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
   border: none;
   cursor: pointer;
 }
-
