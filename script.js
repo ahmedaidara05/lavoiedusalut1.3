@@ -165,20 +165,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function toggleTheme() {
-        document.body.classList.toggle('dark');
-        const isDark = document.body.classList.contains('dark');
-        if (themeToggle) themeToggle.querySelector('.icon').textContent = isDark ? '☀️' : '🌙';
-        if (profileTheme) profileTheme.checked = isDark;
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        if (firebase.auth().currentUser) {
-            try {
-                await db.collection('users').doc(firebase.auth().currentUser.uid).update({ theme: isDark ? 'dark' : 'light' });
-            } catch (error) {
-                console.error('Erreur mise à jour thème:', error);
-            }
+    async function updateLanguage() {
+    document.querySelectorAll('.content').forEach(content => {
+        const section = content.closest('section');
+        if (section.classList.contains('active') && content.dataset.lang === currentLanguage) {
+            content.style.display = 'block';
+        } else {
+            content.style.display = 'none';
+        }
+    });
+    if (!document.querySelector(`section.active .content[data-lang="${currentLanguage}"]`)) {
+        console.warn(`Aucun contenu trouvé pour la langue ${currentLanguage} dans la section active`);
+    }
+    localStorage.setItem('language', currentLanguage);
+    if (profileLanguage) profileLanguage.value = currentLanguage;
+    if (firebase.auth().currentUser) {
+        try {
+            await db.collection('users').doc(firebase.auth().currentUser.uid).update({ language: currentLanguage });
+        } catch (error) {
+            console.error('Erreur mise à jour langue:', error);
         }
     }
+}
 
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark');
