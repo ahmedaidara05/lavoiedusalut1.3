@@ -344,7 +344,8 @@ body.dark .progress {
 }
 
 /* Styles pour tous les boutons de navigation et le select (sauf hamburger) */
-.top-navbar button:not(#hamburger-menu-btn), .bottom-navbar button, #voice-select {
+/* Styles pour les boutons de la barre supérieure (sauf hamburger) */
+.top-navbar button:not(#hamburger-menu-btn) {
     background: none;
     border: 2px solid #d4af37;
     color: #d4af37;
@@ -360,15 +361,7 @@ body.dark .progress {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-#voice-select {
-    border-radius: 10px;
-    width: auto;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
-    text-align: center;
-}
-
-.top-navbar button:not(#hamburger-menu-btn):hover, .bottom-navbar button:hover, #voice-select:hover {
+.top-navbar button:not(#hamburger-menu-btn):hover {
     background-color: #d4af37;
     color: #1e3a8a;
     transform: scale(1.1);
