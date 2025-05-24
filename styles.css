@@ -661,3 +661,27 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
 #ai-chat-box.active {
     display: block;
 }
+
+#chatbot-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 24px;
+}
+#chatbot-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
