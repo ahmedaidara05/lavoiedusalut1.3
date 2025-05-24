@@ -697,3 +697,18 @@ document.addEventListener("mousemove", (e) => {
 document.addEventListener("mouseup", () => {
   isDragging = false;
 });
+
+// Gestion du menu hamburger
+const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn');
+const dropdownMenu = document.getElementById('dropdown-menu');
+
+hamburgerMenuBtn.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('show');
+});
+
+// Fermer le menu si on clique en dehors
+document.addEventListener('click', (e) => {
+    if (!dropdownMenu.contains(e.target) && !hamburgerMenuBtn.contains(e.target)) {
+        dropdownMenu.classList.remove('show');
+    }
+});
