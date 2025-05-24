@@ -616,17 +616,21 @@ document.getElementById("chat-icon").onclick = () => {
 };
 
 async function askBookAI() {
-  const input = document.getElementById("chat-question");
-  const messagesDiv = document.getElementById("chat-messages");
-  const question = input.value.trim();
-  input.value = "";
-  if (!question) return;
+    const chatInput = document.getElementById('chat-question');
+    const chatMessages = document.getElementById('chat-messages');
+    const question = chatInput.value.trim();
 
-  // Ajoute le message utilisateur
-  const userMsg = document.createElement("div");
-  userMsg.className = "message-user";
-  userMsg.textContent = question;
-  messagesDiv.appendChild(userMsg);
+    if (!question) {
+        return; // Ne rien faire si l'entrée est vide
+    }
+
+  // Ajouter le message de l'utilisateur
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message-user';
+    userMessage.textContent = question;
+    chatMessages.appendChild(userMessage);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll vers le bas
+    chatInput.value = ''; // Vider l'entrée
 
   // Message en attente
   const thinkingMsg = document.createElement("div");
