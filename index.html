@@ -3,96 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'Écho des Étoiles - Lecture</title>
+    <meta name="description" content="Application de lecture moderne avec mode sombre, zoom, favoris, lecture vocale et traduction">
+    <meta name="theme-color" content="#1e3a8a">
+    <title>La Voie du Salut</title>
+    <link rel="icon" href="book-icon.png">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon512.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
-<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" oncopy="return false" oncut="return false" onpaste="return false">
-    <!-- Page d'accueil -->
-    <div class="page" id="home">
-        <div class="hero">
-            <div class="hero-content">
-                <h1>L'Écho des Étoiles</h1>
-                <p>Plongez dans une aventure épique à travers les étoiles, où mystère, courage et destin s'entrelacent.</p>
-                <button onclick="navigate('chapters')"><i class="fas fa-play"></i></button>
+<body>
+    <header class="top-navbar">
+        <div class="header-content">
+            <img src="book-cover.jpg" alt="Couverture du livre" class="header-book">
+            <h1>La Voie du Salut</h1>
+        </div>
+        <nav class="right-nav">
+            <button id="theme-toggle" title="Mode sombre/clair">
+                <span class="icon">🌙</span>
+            </button>
+            <button id="voice-toggle" title="Lecture vocale">
+                <span class="icon">🔊</span>
+            </button>
+            <select id="voice-select" title="Choisir une voix"></select>
+            <button id="language-toggle" title="Changer de langue">
+                <span class="icon">🌐</span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="active">
+            <div class="home-content">
+                <div class="home-text">
+                    <h2>La Voie du Salut - Chercheur de vérité</h2>
+                    <p>Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête inédite de vérité et de lumière. “La Voie du Salut” est cette porte secrète, celle qui vous conduit là où l’islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d'environ 1000 arguments puissants et éclairants, est bien plus qu’une simple lecture : c’est une expérience qui éveille l’âme et nourrit l’esprit. Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter, car ce voyage spirituel pourrait bien être celui qui transforme votre vision du monde et vous guide vers le salut véritable. Osez, lisez et découvrez ce que d’autres n’ont jamais osé explorer.</p>
+                    <button id="start-btn">Commencer</button>
+                </div>
+                <img src="book-cover.jpg" alt="Couverture du livre" class="book-cover">
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Page des chapitres -->
-    <div class="page hidden" id="chapters">
-        <h1>Tableau des chapitres</h1>
-        <div class="chapter-list"></div>
-    </div>
+        <section id="table-of-contents" class="chapter">
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
+            <h2>Sommaire</h2>
+            <ul id="chapter-list">
+                <li><a href="#chapter1">Chapitre 1 : LA GENÈSE</a></li>
+                <li><a href="#chapter2">Chapitre 2 : Qui m’a créé et qui suis-je ?</a></li>
+                <li><a href="#chapter3">Chapitre 3 : Pourquoi on m’a créé ?</a></li>
+                <li><a href="#chapter4">Chapitre 4 : Qu’est-ce qui m’attend ?</a></li>
+                <li><a href="#chapter5">Chapitre 5 : Où irai-je ?</a></li>
+            </ul>
+        </section>
 
-    <!-- Page de lecture -->
-    <div class="page hidden" id="reading">
-        <div class="reading-header">
-            <select id="language">
-                <option value="fr">Français</option>
-                <option value="en">Anglais</option>
-                <option value="ar">Arabe</option>
-            </select>
-            <button id="theme-toggle"><i class="fas fa-moon"></i></button>
-            <button id="zoom-in"><i class="fas fa-search-plus"></i></button>
-            <button id="zoom-out"><i class="fas fa-search-minus"></i></button>
-            <button id="read-aloud"><i class="fas fa-volume-up"></i></button>
-            <select id="voice-select"></select>
-            <button id="favorite"><i class="fas fa-heart"></i></button>
-            <button id="auto-scroll"><i class="fas fa-scroll"></i></button>
-        </div>
-        <div class="chapter-content" id="chapter-content"></div>
-    </div>
-
-    <!-- Page des favoris -->
-    <div class="page hidden" id="favorites">
-        <h1>Favoris</h1>
-        <div class="favorite-list"></div>
-    </div>
-
-    <!-- Page des paramètres -->
-    <div class="page hidden" id="settings">
-        <div class="user-profile">
-            <img src="user-placeholder.png" alt="Photo de profil" id="user-photo">
-            <h2 id="user-name">Utilisateur</h2>
-        </div>
-        <div class="settings-options">
-            <h3>Connexion / Inscription</h3>
-            <input type="text" id="username" placeholder="Nom d'utilisateur">
-            <input type="password" id="password" placeholder="Mot de passe">
-            <button onclick="login()"><i class="fas fa-sign-in-alt"></i></button>
-            <button onclick="register()"><i class="fas fa-user-plus"></i></button>
-            <h3>Préférences</h3>
-            <select id="settings-language">
-                <option value="fr">Français</option>
-                <option value="en">Anglais</option>
-                <option value="ar">Arabe</option>
-            </select>
-            <button id="settings-theme"><i class="fas fa-moon"></i></button>
-            <button id="settings-zoom-in"><i class="fas fa-search-plus"></i></button>
-            <button id="settings-zoom-out"><i class="fas fa-search-minus"></i></button>
-            <h3>À propos</h3>
-            <p>Rejoignez-nous sur les réseaux sociaux :</p>
-            <div class="social-links">
-                <a href="YOUR_LINK"><img src="facebook-icon.png" alt="Facebook"></a>
-                <a href="YOUR_LINK"><img src="twitter-icon.png" alt="Twitter"></a>
-                <a href="YOUR_LINK"><img src="instagram-icon.png" alt="Instagram"></a>
+        <section id="chapter1" class="chapter">
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
+            <div class="chapter-header">
+                <h2>Chapitre 1 : LA GENÈSE</h2>
+                <span class="favorite" data-chapter="chapter1" title="Ajouter aux favoris">⭐</span>
             </div>
-        </div>
-        <button class="back-button" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
+            <div class="content" data-lang="fr">
+                <p>La Voie du Salut est un chemin que chaque âme doit découvrir et emprunter avec pleine conscience, une quête vers la rédemption et la paix éternelle. Ce livre se plonge dans les textes sacrés des grandes religions, cherchant à dévoiler l’unique vérité irréfutable. Il s’agit de découvrir la véritable voie menant au salut dans l’au-delà, un salut qui transcende les dogmes, nous éloignant ainsi de l’enfer dont chaque prophète a mis en garde son peuple. À travers ce voyage spirituel, il est question d’explorer la religion divine. En effet, penser à Dieu est une chose sérieuse et fondamentale. Pour que nos œuvres ne soient vaines, chercher le véritable Dieu qui est digne d’adoration doit constituer le but de chaque être humain qui croit à l’existence d’une vie après la mort.</p>
+                <p>La religion est un système de croyances fondé sur deux liens essentiels: un lien «vertical » entre l’homme et Dieu, et un lien «horizontal » entre les membres d’une communauté humaine.</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>The Path of Salvation is a journey that every soul must discover and undertake with full awareness—a quest for redemption and eternal peace. This book delves into the sacred texts of the world's major religions, striving to unveil the one irrefutable truth. It seeks to reveal the true path leading to salvation in the hereafter—a salvation that transcends dogmas, distancing us from the hell that every prophet warned their people about. Through this spiritual journey, the focus is on exploring the divine religion. Indeed, thinking about God is a serious and fundamental matter. So that our deeds are not in vain, seeking the true God—who alone is worthy of worship—must be the ultimate goal of every human being who believes in the existence of life after death.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p> النجاة هو درب يجب على كل نفس أن تكتشفه وتسلكه بوعي تام، إنها رحلة نحو التوبة والسلام الأبدي. يتعمق هذا الكتاب في النصوص المقدسة للأديان الكبرى، ساعيًا لكشف الحقيقة الوحيدة التي لا تقبل الجدل. الهدف هو اكتشاف الطريق الحقيقي المؤدي إلى النجاة في الحياة الآخرة، نجاة تتجاوز المذاهب والعقائد، وتبعدنا عن الجحيم الذي حذّر منه كل نبي قومه. ومن خلال هذه الرحلة الروحية، يتم التطرق إلى الدين الإلهي. فالتفكر في الله أمر جاد وأساسي. وحتى لا تذهب أعمالنا سدى، يجب أن يكون البحث عن الإله الحق، المستحق وحده للعبادة، غاية كل إنسان يؤمن بوجود حياة بعد الموت .</p>
+            </div>
+            <div class="chapter-nav">
+                <button class="prev-btn" disabled>← Précédent</button>
+                <button class="next-btn">Suivant →</button>
+            </div>
+        </section>
+
+        <section id="chapter2" class="chapter">
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
+            <div class="chapter-header">
+                <h2>Chapitre 2 : Qui m’a créé et qui suis-je ?</h2>
+                <span class="favorite" data-chapter="chapter2" title="Ajouter aux favoris">⭐</span>
+            </div>
+            <div class="content" data-lang="fr">
+                <p>La religion, en tant qu’ensemble de croyances, soulève la question de la relation entre foi et raison. </p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>La religion, en tant qu’ensemble de croyances, soulève la question de la relation entre foi et raison.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>بينما كانت كلارا تتعمق في الغابة الكثيفة، عادت ذكريات الماضي المنسي إلى السطح...</p>
+            </div>
+            <div class="chapter-nav">
+                <button class="prev-btn">← Précédent</button>
+                <button class="next-btn">Suivant →</button>
+            </div>
+        </section>
+
+        <section id="chapter3" class="chapter">
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
+            <div class="chapter-header">
+                <h2>Chapitre 3 : Pourquoi on m’a créé ?</h2>
+                <span class="favorite" data-chapter="chapter3" title="Ajouter aux favoris">⭐</span>
+            </div>
+            <div class="content" data-lang="fr">
+                <p>Clara embarqua sur un vieux navire, prête à découvrir les secrets des mers lointaines...</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>Clara boarded an old ship, ready to uncover the secrets of distant seas...</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>ركبت كلارا سفينة قديمة، مستعدة لاكتشاف أسرار البحار البعيدة...</p>
+            </div>
+            <div class="chapter-nav">
+                <button class="prev-btn">← Précédent</button>
+                <button class="next-btn">Suivant →</button>
+            </div>
+        </section>
+
+        <section id="chapter4" class="chapter">
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
+            <div class="chapter-header">
+                <h2>Chapitre 4 : Pourquoi on m’a créé ?</h2>
+                <span class="favorite" data-chapter="chapter4" title="Ajouter aux favoris">⭐</span>
+            </div>
+            <div class="content" data-lang="fr">
+                <p>La religion, en tant qu’ensemble de croyances, soulève la question de la relation entre foi et raison.</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>La religion, en tant qu’ensemble de croyances, soulève la question de la relation entre foi et raison.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>في مكتبة قديمة، وجدت كلارا مخطوطة غيرت كل شيء...</p>
+            </div>
+            <div class="chapter-nav">
+                <button class="prev-btn">← Précédent</button>
+                <button class="next-btn">Suivant →</button>
+            </div>
+        </section>
+
+        <section id="chapter5" class="chapter">
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
+            <div class="chapter-header">
+                <h2>Chapitre 5 : Pourquoi on m’a créé ?</h2>
+                <span class="favorite" data-chapter="chapter5" title="Ajouter aux favoris">⭐</span>
+            </div>
+            <div class="content" data-lang="fr">
+                <p>La religion, en tant qu’ensemble de croyances, soulève la question de la relation entre foi et raison.</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>La religion, en tant qu’ensemble de croyances, soulève la question de la relation entre foi et raison.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>وصلت كلارا أخيرًا إلى الأفق، حيث كان مصير جديد ينتظرها...</p>
+            </div>
+            <div class="chapter-nav">
+                <button class="prev-btn">← Précédent</button>
+                <button class="next-btn" disabled>Suivant →</button>
+            </div>
+        </section>
+
+        <section id="favorites" class="chapter">
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
+            <h2>Vos Chapitres Favoris</h2>
+            <ul id="favorites-list"></ul>
+        </section>
+
+        <section id="profile" class="chapter">
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
+            <h2>Profil</h2>
+            <div class="profile-content">
+                <h3>Compte</h3>
+                <div id="user-info" style="display: none;">
+                    <p><strong>Nom :</strong> <span id="user-name"></span></p>
+                    <p><strong>E-mail :</strong> <span id="user-email"></span></p>
+                    <button id="sign-out-btn">Déconnexion</button>
+                </div>
+                <div id="auth-forms">
+                    <h4>Connexion</h4>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-email">E-mail :</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Mot de passe :</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <button type="submit">Se connecter</button>
+                        <p><a href="#" id="reset-password">Mot de passe oublié ?</a></p>
+                    </form>
+                    <h4>Inscription</h4>
+                    <form id="signup-form">
+                        <div class="form-group">
+                            <label for="signup-name">Nom :</label>
+                            <input type="text" id="signup-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">E-mail :</label>
+                            <input type="email" id="signup-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Mot de passe :</label>
+                            <input type="password" id="signup-password" required>
+                        </div>
+                        <button type="submit">S'inscrire</button>
+                    </form>
+                </div>
+                <p id="auth-error" style="color: red;"></p>
+                <h3>Paramètres</h3>
+                <div class="setting">
+                    <label for="profile-language">Langue :</label>
+                    <select id="profile-language">
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <div class="setting">
+                    <label for="profile-theme">Mode sombre :</label>
+                    <input type="checkbox" id="profile-theme">
+                </div>
+                <div class="setting">
+                    <label for="profile-font-size">Taille de la police :</label>
+                    <input type="range" id="profile-font-size" min="12" max="24" value="16">
+                    <span id="font-size-value">16px</span>
+                </div>
+                <div class="setting">
+                    <label for="profile-volume">Volume de la lecture vocale :</label>
+                    <input type="range" id="profile-volume" min="0" max="100" value="100">
+                    <span id="volume-value">100%</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="ai-assistant-icon" title="Assistant IA"></div>
+    <div id="ai-chat-box">
+        <header>Assistant IA 📖</header>
+        <div id="chat-messages"></div>
+        <footer>
+            <input type="text" id="ai-input" placeholder="Pose une question sur le livre..." />
+            <button id="ai-send-btn">Envoyer</button>
+        </footer>
     </div>
 
-    <!-- Barre de navigation -->
-    <div class="nav-bar">
-        <button onclick="navigate('home')"><i class="fas fa-home"></i></button>
-        <button onclick="navigate('chapters')"><i class="fas fa-book"></i></button>
-        <button onclick="navigate('reading')"><i class="fas fa-book-open"></i></button>
-        <button onclick="navigate('favorites')"><i class="fas fa-heart"></i></button>
-        <button onclick="navigate('settings')"><i class="fas fa-cog"></i></button>
-    </div>
+    <nav class="bottom-navbar">
+        <button id="home-btn" title="Accueil">🏠</button>
+        <button id="menu-btn" title="Sommaire">☰</button>
+        <button id="favorites-btn" title="Voir les favoris">⭐</button>
+        <button id="profile-btn" title="Paramètres">
+             <span class="icon">⚙️</span>
+             <span id="user-status" class="user-status"></span> </button>
+    </nav>
 
+    <script src="firebase.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
