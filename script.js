@@ -339,21 +339,59 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Navigation entre chapitres
-    const chapters = ['chapter1', 'chapter2', 'chapter3', 'chapter4', 'chapter5'];
-    const prevButtons = document.querySelectorAll('.prev-btn');
-    const nextButtons = document.querySelectorAll('.next-btn');
+    const chapters = [
+    'preamble', 'foreword', 'chapter1', 'chapter2', 'chapter3', 'chapter4', 'chapter5',
+    'chapter6', 'chapter7', 'chapter8', 'chapter9', 'chapter10', 'chapter11', 'chapter12',
+    'chapter13', 'chapter14', 'chapter15', 'chapter16', 'chapter17', 'chapter18', 'chapter19',
+    'chapter20', 'chapter21', 'chapter22', 'chapter23', 'chapter24', 'chapter25', 'chapter26',
+    'chapter27', 'chapter28', 'chapter29', 'chapter30', 'chapter31', 'chapter32', 'chapter33',
+    'chapter34', 'chapter35', 'chapter36', 'chapter37', 'chapter38', 'chapter39', 'chapter40',
+    'chapter41', 'chapter42'
+];
 
-    prevButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            console.log('Clic précédent');
-            const currentChapter = button.closest('section').id;
-            const currentIndex = chapters.indexOf(currentChapter);
-            if (currentIndex > 0) {
-                sections.forEach(section => section.classList.remove('active'));
-                document.getElementById(chapters[currentIndex - 1]).classList.add('active');
-            }
-        });
+function updateNavigation(currentChapterId) {
+    const currentIndex = chapters.indexOf(currentChapterId);
+    const prevButtons = document.querySelectorAll(`#${currentChapterId} .prev-btn`);
+    const nextButtons = document.querySelectorAll(`#${currentChapterId} .next-btn`);
+
+    prevButtons.forEach(btn => {
+        btn.disabled = currentIndex === 0;
     });
+    nextButtons.forEach(btn => {
+        btn.disabled = currentIndex === chapters.length - 1;
+    });
+}
+
+const prevButtons = document.querySelectorAll('.prev-btn');
+const nextButtons = document.querySelectorAll('.next-btn');
+
+prevButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        console.log('Clic précédent');
+        const currentChapter = button.closest('section').id;
+        const currentIndex = chapters.indexOf(currentChapter);
+        if (currentIndex > 0) {
+            sections.forEach(section => section.classList.remove('active'));
+            const prevChapterId = chapters[currentIndex - 1];
+            document.getElementById(prevChapterId).classList.add('active');
+            updateNavigation(prevChapterId);
+        }
+    });
+});
+
+nextButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        console.log('Clic suivant');
+        const currentChapter = button.closest('section').id;
+        const currentIndex = chapters.indexOf(currentChapter);
+        if (currentIndex < chapters.length - 1) {
+            sections.forEach(section => section.classList.remove('active'));
+            const nextChapterId = chapters[currentIndex + 1];
+            document.getElementById(nextChapterId).classList.add('active');
+            updateNavigation(nextChapterId);
+        }
+    });
+});
 
     nextButtons.forEach(button => {
         button.addEventListener('click', () => {
