@@ -5,58 +5,33 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-// Gestion de l'assistant IA
-const aiAssistantIcon = document.getElementById('ai-assistant-icon');
-const aiChatBox = document.getElementById('ai-chat-box');
-const aiSendBtn = document.getElementById('ai-send-btn');
-const aiInput = document.getElementById('ai-input');
-const chatMessages = document.getElementById('chat-messages');
+    // Récupère le contenu des chapitres depuis la div .book-content
+const content = document.querySelector('.book-content')?.innerText || "Contenu introuvable.";
 
-if (aiAssistantIcon && aiChatBox) {
-    aiAssistantIcon.addEventListener('click', () => {
-        console.log('Clic sur l\'icône IA');
-        aiChatBox.classList.toggle('active'); // Affiche/masque la boîte de chat
-    });
-} else {
-    console.error('Icône IA ou boîte de chat non trouvée. Vérifiez les ID #ai-assistant-icon et #ai-chat-box dans le HTML.');
+// Gestion de l'assistant IA
+const apiKey = "AIzaSyA0vL0QgFDkAi-ScZDVKC1G5MgcFCURE1A";
+
+document.getElementById("chatbot-toggle").onclick = () => {
+  const box = document.getElementById("chatbot-container");
+  box.style.display = box.style.display === "none" ? "block" : "none";
+};
+
+async function askGemini() {
+  const question = document.getElementById("user-question").value;
+  const fullPrompt = `Voici le contenu d'un livre :\n\n${content}\n\nRéponds à cette question uniquement selon ce livre :\n\n${question}`;
+
+  const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + apiKey, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: fullPrompt }] }]
+    })
+  });
+
+  const data = await res.json();
+  document.getElementById("ai-response").innerText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Aucune réponse.";
 }
 
-if (aiSendBtn && aiInput && chatMessages) {
-    aiSendBtn.addEventListener('click', async () => {
-        const question = aiInput.value.trim();
-        if (!question) {
-            console.log('Aucune question saisie');
-            chatMessages.innerHTML += '<div>Erreur : Veuillez entrer une question.</div>';
-            return;
-        }
-        console.log('Envoi question à Gemini AI:', question);
-
-        // Ajoute la question de l'utilisateur
-        chatMessages.innerHTML += `<div>Vous: ${question}</div>`;
-
-        try {
-            // Appel à l'API Gemini
-            const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAljojXHODwHjStePWkhthWLRzrw3pUslQ', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{ text: question }]
-                    }]
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`Erreur HTTP ${response.status}`);
-            }
-
-            const data = await response.json();
-            const aiResponse = data.candidates[0]?.content?.parts[0]?.text || 'Aucune réponse reçue de l\'IA';
-
-            // Ajoute la réponse de l'IA
-            chatMessages.innerHTML += `<div>IA: ${aiResponse}</div>`;
 
             // Vide le champ de saisie et scroll en bas
             aiInput.value = '';
