@@ -241,15 +241,15 @@
         </section>
     </main>
 
-    <div id="ai-assistant-icon" title="Assistant IA"></div>
-    <div id="ai-chat-box">
-        <header>Assistant IA 📖</header>
-        <div id="chat-messages"></div>
-        <footer>
-            <input type="text" id="ai-input" placeholder="Pose une question sur le livre..." />
-            <button id="ai-send-btn">Envoyer</button>
-        </footer>
-    </div>
+    <div id="chat-icon">💬</div>
+
+<div id="chat-window">
+  <div id="chat-messages"></div>
+  <div id="chat-input">
+    <input type="text" id="chat-question" placeholder="Pose une question..." />
+    <button onclick="askBookAI()">➤</button>
+  </div>
+</div>
 
     <nav class="bottom-navbar">
         <button id="home-btn" title="Accueil">🏠</button>
