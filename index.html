@@ -1109,14 +1109,23 @@
   </div>
 </div>
 
-    <nav class="bottom-navbar">
-        <button id="home-btn" title="Accueil">🏠</button>
-        <button id="menu-btn" title="Sommaire">☰</button>
-        <button id="favorites-btn" title="Voir les favoris">⭐</button>
-        <button id="profile-btn" title="Paramètres">
-             <span class="icon">⚙️</span>
-             <span id="user-status" class="user-status"></span> </button>
-    </nav>
+    <nav class="right-nav">
+    <button id="hamburger-menu-btn" title="Menu">
+        <span class="icon">☰</span>
+    </button>
+    <div id="dropdown-menu" class="dropdown-menu">
+        <button id="theme-toggle" title="Mode sombre/clair">
+            <span class="icon">🌙</span>
+        </button>
+        <button id="voice-toggle" title="Lecture vocale">
+            <span class="icon">🔊</span>
+        </button>
+        <select id="voice-select" title="Choisir une voix"></select>
+        <button id="language-toggle" title="Changer de langue">
+            <span class="icon">🌐</span>
+        </button>
+    </div>
+</nav>
 
     <script src="firebase.js"></script>
     <script src="script.js"></script>
