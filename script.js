@@ -564,52 +564,86 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const apiKey = "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";
 
-// Affichage/Masquage de la fenêtre de chat
 document.getElementById("chat-icon").onclick = () => {
   const window = document.getElementById("chat-window");
   window.style.display = window.style.display === "flex" ? "none" : "flex";
 };
 
-// Fonction principale : poser une question à l’IA
 async function askBookAI() {
   const input = document.getElementById("chat-question");
   const messagesDiv = document.getElementById("chat-messages");
-  const question = input.value;
+  const question = input.value.trim();
   input.value = "";
+  if (!question) return;
 
-  // Affiche la question de l'utilisateur
-  messagesDiv.innerHTML += `<div><strong>Toi :</strong> ${question}</div>`;
+  // Ajoute le message utilisateur
+  const userMsg = document.createElement("div");
+  userMsg.className = "message-user";
+  userMsg.textContent = question;
+  messagesDiv.appendChild(userMsg);
 
-  // Récupère le texte complet du livre
+  // Message en attente
+  const thinkingMsg = document.createElement("div");
+  thinkingMsg.className = "message-ai";
+  thinkingMsg.textContent = "Réfléchit...";
+  messagesDiv.appendChild(thinkingMsg);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
   const bookText = document.getElementById("book-content").innerText;
 
-  messagesDiv.innerHTML += `<div><em>IA :</em> ⏳ Réfléchit...</div>`;
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-3.5-turbo",
+        messages: [
+          {
+            role: "system",
+            content: "Tu es un assistant littéraire. Tu dois répondre uniquement selon le contenu du livre fourni par l'utilisateur."
+          },
+          {
+            role: "user",
+            content: `Voici le contenu du livre : """${bookText}"""\nVoici ma question : ${question}`
+          }
+        ]
+      })
+    });
 
-  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "openai/gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content: "Tu es un assistant littéraire. Tu dois répondre uniquement selon le contenu du livre donné."
-        },
-        {
-          role: "user",
-          content: `Voici le contenu du livre : """${bookText}""". Voici ma question : ${question}`
-        }
-      ],
-    }),
-  });
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content || "❌ Pas de réponse";
 
-  const data = await response.json();
-  const reply = data.choices?.[0]?.message?.content || "❌ Pas de réponse";
+    thinkingMsg.remove(); // Retire "Réfléchit..."
+    const aiMsg = document.createElement("div");
+    aiMsg.className = "message-ai";
+    aiMsg.textContent = reply;
+    messagesDiv.appendChild(aiMsg);
+  } catch (err) {
+    thinkingMsg.textContent = "❌ Erreur de l'IA.";
+  }
 
-  // Affiche la réponse de l'IA
-  messagesDiv.innerHTML += `<div><strong>IA :</strong> ${reply}</div>`;
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
+
+// Permet de déplacer le bouton
+const chatIcon = document.getElementById("chat-icon");
+let isDragging = false;
+
+chatIcon.addEventListener("mousedown", (e) => {
+  isDragging = true;
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+  chatIcon.style.left = e.pageX - 30 + "px";
+  chatIcon.style.top = e.pageY - 30 + "px";
+  chatIcon.style.bottom = "auto";
+  chatIcon.style.right = "auto";
+});
+
+document.addEventListener("mouseup", () => {
+  isDragging = false;
+});
