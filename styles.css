@@ -82,87 +82,6 @@ body.dark {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Styles pour tous les boutons de navigation et le select */
-/* Appliqué aux boutons de la top-navbar (sauf le hamburger initialement sur mobile) et bottom-navbar */
-.top-navbar button, .bottom-navbar button, #voice-select {
-    background: none;
-    border: 2px solid #d4af37;
-    color: #d4af37;
-    font-size: 1rem; /* Taille de police standard pour les icônes */
-    cursor: pointer;
-    padding: 0.3rem;
-    border-radius: 50%; /* Pour les icônes circulaires */
-    width: 40px; /* Taille par défaut pour un bon touché */
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-/* Style spécifique pour le bouton hamburger */
-#hamburger-menu-btn {
-    font-size: 1.2rem; /* Légèrement plus grand pour l'icône hamburger */
-    width: 40px; /* Taille cohérente avec les autres boutons */
-    height: 40px;
-}
-
-
-#voice-select {
-    border-radius: 10px; /* Garde la forme rectangulaire pour le select */
-    width: auto;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
-    text-align: center; /* Centrer le texte si possible */
-}
-
-.top-navbar button:hover, .bottom-navbar button:hover, #voice-select:hover {
-    background-color: #d4af37;
-    color: #1e3a8a;
-    transform: scale(1.1);
-}
-
-/* Styles pour le menu déroulant du hamburger */
-.dropdown-menu {
-    display: flex; /* Toujours flex pour la structure, mais masqué/affiché par opacité/transform */
-    flex-direction: column; /* Pour afficher les éléments verticalement */
-    position: absolute;
-    top: 50px; /* Ajuste la position sous la barre du haut */
-    right: 0;
-    background-color: #1e3a8a; /* Couleur de fond du menu */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-    padding: 10px;
-    z-index: 999; /* Moins prioritaire que la navbar, mais au-dessus du contenu */
-    min-width: 150px; /* Largeur minimale pour le menu */
-
-    /* Animations */
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none; /* Empêche les interactions quand caché */
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-}
-
-.dropdown-menu.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto; /* Permet les interactions quand affiché */
-}
-
-/* Styles pour les éléments à l'intérieur du menu déroulant */
-.dropdown-menu button, .dropdown-menu select {
-    width: 100%; /* Les boutons et select prennent toute la largeur du menu */
-    border-radius: 5px; /* Les rendre plus rectangulaires pour un menu */
-    margin-bottom: 5px; /* Espace entre les éléments */
-    height: auto; /* Laisse la hauteur s'adapter au contenu */
-    padding: 0.5rem; /* Padding pour un meilleur toucher */
-}
-
-/* Retirer le margin-bottom du dernier élément pour éviter un espace superflu */
-.dropdown-menu button:last-child, .dropdown-menu select:last-child {
-    margin-bottom: 0;
-}
-
 
 /* Page d'accueil */
 .home-content {
@@ -422,6 +341,134 @@ body.dark .progress {
     border-radius: 5px;
     background-color: #f0f4f8;
     color: #1e3a8a;
+}
+
+/* Styles pour tous les boutons de navigation et le select (sauf hamburger) */
+.top-navbar button:not(#hamburger-menu-btn), .bottom-navbar button, #voice-select {
+    background: none;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#voice-select {
+    border-radius: 10px;
+    width: auto;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.top-navbar button:not(#hamburger-menu-btn):hover, .bottom-navbar button:hover, #voice-select:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+/* Style pour le bouton hamburger */
+#hamburger-menu-btn {
+    background: none;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#hamburger-menu-btn:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+/* Style pour le menu déroulant */
+.dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: #1e3a8a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 999;
+    min-width: 60px;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Styles pour les éléments dans le menu déroulant */
+.dropdown-menu button, .dropdown-menu select {
+    background: none;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.dropdown-menu select {
+    border-radius: 10px;
+    width: 100px;
+    padding: 0.2rem;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.dropdown-menu button:hover, .dropdown-menu select:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+/* Responsive pour mobile */
+@media (max-width: 600px) {
+    .dropdown-menu {
+        top: 50px;
+        right: 10px;
+    }
+}
+
+/* Responsive pour desktop */
+@media (min-width: 601px) {
+    .dropdown-menu {
+        top: 50px;
+        right: 10px;
+    }
 }
 
 body.dark .setting select, body.dark .setting input[type="range"],
