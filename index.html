@@ -1116,15 +1116,39 @@
         </section>
     </main>
 
-    <div id="ai-assistant-icon" title="Assistant IA"></div>
-    <div id="ai-chat-box">
-        <header>Assistant IA 📖</header>
-        <div id="chat-messages"></div>
-        <footer>
-            <input type="text" id="ai-input" placeholder="Pose une question sur le livre..." />
-            <button id="ai-send-btn">Envoyer</button>
-        </footer>
-    </div>
+    <div id="chatbot-toggle">💬</div>
+<div id="chatbot-container" style="display:none;">
+  <textarea id="user-question" placeholder="Pose ta question sur le livre..."></textarea>
+  <button onclick="askGemini()">Envoyer</button>
+  <div id="ai-response"></div>
+</div>
+
+<style>
+  #chatbot-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 24px;
+  }
+  #chatbot-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+</style>
+
 
     <nav class="bottom-navbar">
         <button id="home-btn" title="Accueil">🏛️</button>
