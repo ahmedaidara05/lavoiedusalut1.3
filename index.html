@@ -37,16 +37,167 @@
     </header>
     
     <main>
-        <section id="home" class="active">
-            <div class="home-content">
-                <div class="home-text">
-                    <h2>La Voie du Salut - Chercheur de vérité</h2>
-                    <p>Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête inédite de vérité et de lumière. “La Voie du Salut” est cette porte secrète, celle qui vous conduit là où l’islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d'environ 1000 arguments puissants et éclairants, est bien plus qu’une simple lecture : c’est une expérience qui éveille l’âme et nourrit l’esprit. Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter, car ce voyage spirituel pourrait bien être celui qui transforme votre vision du monde et vous guide vers le salut véritable. Osez, lisez et découvrez ce que d’autres n’ont jamais osé explorer.</p>
-                    <button id="start-btn">Commencer</button>
-                </div>
-                <img src="book-cover.jpg" alt="Couverture du livre" class="book-cover">
-            </div>
-        </section>
+        <div class="app-container">
+  <button class="nav-button prev" aria-label="Slide précédent"><svg><use href="#arrow-left"></use></svg></button>
+  <button class="nav-button next" aria-label="Slide suivant"><svg><use href="#arrow-right"></use></svg></button>
+
+  <div class="carousel">
+    <!-- Slide 1 -->
+    <div class="carousel-slide">
+      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+1');"></div>
+      <div class="top-buttons">
+        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+      </div>
+      <div class="content">
+        <div class="pagination">
+          <span class="dot active" data-slide="0"></span>
+          <span class="dot" data-slide="1"></span>
+          <span class="dot" data-slide="2"></span>
+          <span class="dot" data-slide="3"></span>
+          <span class="dot" data-slide="4"></span>
+        </div>
+        <div class="title-section">
+          <div class="title-author">
+            <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
+            <p class="author">Ahmed Said Aidara</p>
+          </div>
+          <button class="start-button">Commencer</button>
+        </div>
+        <div class="description">
+          <h2>Description</h2>
+          <p>
+            Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-slide">
+      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+2');"></div>
+      <div class="top-buttons">
+        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+      </div>
+      <div class="content">
+        <div class="pagination">
+          <span class="dot" data-slide="0"></span>
+          <span class="dot active" data-slide="1"></span>
+          <span class="dot" data-slide="2"></span>
+          <span class="dot" data-slide="3"></span>
+          <span class="dot" data-slide="4"></span>
+        </div>
+        <div class="title-section">
+          <div class="title-author">
+            <h1>Plongez dans l’Inconnu</h1>
+            <p class="author">Entre Foi et Raison</p>
+          </div>
+          <button class="start-button">Explorer</button>
+        </div>
+        <div class="description">
+          <h2>Découvrez</h2>
+          <p>
+            Une œuvre qui éclaire les zones d’ombre entre deux mondes spirituels. Ce n’est pas un débat, c’est une exploration sincère, posée, documentée, entre deux traditions millénaires.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-slide">
+      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+3');"></div>
+      <div class="top-buttons">
+        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+      </div>
+      <div class="content">
+        <div class="pagination">
+          <span class="dot" data-slide="0"></span>
+          <span class="dot" data-slide="1"></span>
+          <span class="dot active" data-slide="2"></span>
+          <span class="dot" data-slide="3"></span>
+          <span class="dot" data-slide="4"></span>
+        </div>
+        <div class="title-section">
+          <div class="title-author">
+            <h1>Un Voyage de Réflexion</h1>
+            <p class="author">Sans Dogmes, Sans Peur</p>
+          </div>
+          <button class="start-button">Lire</button>
+        </div>
+        <div class="description">
+          <h2>Pourquoi ce livre ?</h2>
+          <p>
+            Parce qu’il est temps d’oser penser par soi-même. Ce livre vous tend la main, pas pour convaincre, mais pour éveiller. Les réponses sont en vous, laissez-vous guider.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="carousel-slide">
+      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+4');"></div>
+      <div class="top-buttons">
+        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+      </div>
+      <div class="content">
+        <div class="pagination">
+          <span class="dot" data-slide="0"></span>
+          <span class="dot" data-slide="1"></span>
+          <span class="dot" data-slide="2"></span>
+          <span class="dot active" data-slide="3"></span>
+          <span class="dot" data-slide="4"></span>
+        </div>
+        <div class="title-section">
+          <div class="title-author">
+            <h1>Foi & Science</h1>
+            <p class="author">Deux Mondes Unis</p>
+          </div>
+          <button class="start-button">Continuer</button>
+        </div>
+        <div class="description">
+          <h2>Dialogue</h2>
+          <p>
+            Loin des clichés, ce texte montre que la foi peut cohabiter avec la science, que la vérité n’a pas peur d’être questionnée, et que le doute peut être fertile.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="carousel-slide">
+      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+5');"></div>
+      <div class="top-buttons">
+        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+      </div>
+      <div class="content">
+        <div class="pagination">
+          <span class="dot" data-slide="0"></span>
+          <span class="dot" data-slide="1"></span>
+          <span class="dot" data-slide="2"></span>
+          <span class="dot" data-slide="3"></span>
+          <span class="dot active" data-slide="4"></span>
+        </div>
+        <div class="title-section">
+          <div class="title-author">
+            <h1>Prêt pour l’Aventure ?</h1>
+            <p class="author">Commence maintenant</p>
+          </div>
+          <button class="start-button">Accéder au livre</button>
+        </div>
+        <div class="description">
+          <h2>Un mot pour finir</h2>
+          <p>
+            Ce livre n’est pas une conclusion, c’est une invitation. Si tu as le courage de remettre en question, tu es déjà sur le chemin. Bonne lecture, cher voyageur de la vérité.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
         <section id="table-of-contents" class="chapter">
             <button class="close-btn" title="Retour à l'accueil">✖</button>
