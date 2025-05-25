@@ -5,6 +5,190 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // Gestion du carrousel
+const carousel = document.querySelector('.carousel');
+const slides = document.querySelectorAll('.carousel-slide');
+const dots = document.querySelectorAll('.dot');
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+let currentSlide = 0;
+let startX = 0;
+let isDragging = false;
+
+// Fonction pour mettre à jour la position du carrousel
+function updateCarousel() {
+    carousel.style.transform = `translateX(-${currentSlide * 20}%)`;
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+    });
+    // Désactiver les boutons si on est au début ou à la fin
+    prevButton.disabled = currentSlide === 0;
+    nextButton.disabled = currentSlide === slides.length - 1;
+
+    // Animer le contenu de la slide active
+    slides.forEach((slide, index) => {
+        const content = slide.querySelector('.content');
+        const description = slide.querySelector('.description');
+        if (index === currentSlide) {
+            content.style.opacity = 1;
+            content.style.transform = 'translateY(0)';
+            description.style.opacity = 1;
+            description.style.transform = 'translateY(0)';
+        } else {
+            content.style.opacity = 0;
+            content.style.transform = 'translateY(20px)';
+            description.style.opacity = 0;
+            description.style.transform = 'translateY(20px)';
+        }
+    });
+}
+
+// Gestion des clics sur les boutons de navigation
+prevButton.addEventListener('click', () => {
+    if (currentSlide > 0) {
+        currentSlide--;
+        updateCarousel();
+    }
+});
+
+nextButton.addEventListener('click', () => {
+    if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateCarousel();
+    }
+});
+
+// Gestion des clics sur les points
+dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+        currentSlide = parseInt(dot.getAttribute('data-slide'));
+        updateCarousel();
+    });
+});
+
+// Défilement tactile
+carousel.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+});
+
+carousel.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const currentX = e.touches[0].clientX;
+    const diffX = startX - currentX;
+
+    // Prévenir le défilement vertical du carrousel pour éviter les interférences
+    if (Math.abs(e.touches[0].clientY - startY) > Math.abs(diffX)) {
+        isDragging = false;
+        return;
+    }
+
+    if (diffX > 50 && currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateCarousel();
+        isDragging = false;
+    } else if (diffX < -50 && currentSlide > 0) {
+        currentSlide--;
+        updateCarousel();
+        isDragging = false;
+    }
+});
+
+let startY = 0; // Ajout pour le défilement tactile
+carousel.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY; // Enregistre la position Y au début du touch
+    isDragging = true;
+});
+
+carousel.addEventListener('touchend', () => {
+    isDragging = false;
+});
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    updateCarousel(); // Mettre à jour pour afficher la première slide correctement avec animations
+});
+
+
+// Gestion des liens des boutons "Commencer" et "Paramètres"
+document.querySelectorAll('.start-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const targetPage = this.dataset.target;
+        window.location.href = targetPage;
+    });
+});
+
+document.querySelectorAll('.settings-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault(); // Empêche le comportement par défaut du lien
+        const targetPage = this.getAttribute('href');
+        window.location.href = targetPage;
+    });
+});
+
+
+// Masquer les barres supérieure et inférieure uniquement sur la page d'accueil (index.html)
+// Et gérer l'affichage de l'icône de chat
+
+window.addEventListener('DOMContentLoaded', () => {
+    const topNavbar = document.querySelector('.top-navbar');
+    const bottomNavbar = document.querySelector('.bottom-navbar');
+    const chatIcon = document.getElementById('chat-icon');
+    const chatWindow = document.getElementById('chat-window');
+
+    // Vérifiez si nous sommes sur la page d'accueil (index.html)
+    // Ceci est une simplification. Si votre "application" est une SPA,
+    // vous devrez gérer ça avec un routeur JS ou un état.
+    // Pour des fichiers HTML séparés, c'est suffisant.
+    if (window.location.pathname === '/' || window.location.pathname.includes('index.html')) {
+        if (topNavbar) {
+            topNavbar.style.display = 'none';
+        }
+        if (bottomNavbar) {
+            bottomNavbar.style.display = 'none';
+        }
+        if (chatIcon) {
+            chatIcon.style.display = 'none';
+        }
+        if (chatWindow) {
+            chatWindow.style.display = 'none';
+        }
+    } else {
+        // Si ce n'est PAS la page d'accueil, assurez-vous qu'elles sont visibles
+        if (topNavbar) {
+            topNavbar.style.display = 'flex'; // Ou 'block' selon votre CSS
+        }
+        if (bottomNavbar) {
+            bottomNavbar.style.display = 'flex'; // Ou 'block' selon votre CSS
+        }
+        if (chatIcon) {
+            chatIcon.style.display = 'flex'; // Ou 'block'
+        }
+    }
+});
+
+// Fonctionnalité pour le partage (si vous souhaitez l'implémenter)
+document.querySelectorAll('.share-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        if (navigator.share) {
+            navigator.share({
+                title: document.title,
+                text: "Découvrez 'La Voie du Salut' : une quête de vérité et de lumière.",
+                url: window.location.href
+            }).then(() => {
+                console.log('Partage réussi !');
+            }).catch((error) => {
+                console.error('Erreur de partage :', error);
+            });
+        } else {
+            alert('La fonctionnalité de partage n\'est pas supportée par votre navigateur.');
+            // Fallback pour les navigateurs qui ne supportent pas Web Share API
+            // Vous pouvez implémenter un copier-coller de lien ou autre
+        }
+    });
+});
+    
     // Protection contre le copier-coller
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     document.addEventListener('copy', (e) => e.preventDefault());
