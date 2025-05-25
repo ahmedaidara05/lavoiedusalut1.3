@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icon512.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -37,184 +37,193 @@
     </header>
     
     <main>
-        <div class="app-container">
-  <button class="nav-button prev" aria-label="Slide précédent"><svg><use href="#arrow-left"></use></svg></button>
-  <button class="nav-button next" aria-label="Slide suivant"><svg><use href="#arrow-right"></use></svg></button>
+        <section id="home" class="active">
+            <div class="app-container">
+                <!-- Boutons de navigation -->
+                <button class="nav-button prev" aria-label="Slide précédent"><svg><use href="#arrow-left"></use></svg></button>
+                <button class="nav-button next" aria-label="Slide suivant"><svg><use href="#arrow-right"></use></svg></button>
 
-  <div class="carousel">
-    <!-- Slide 1 -->
-    <div class="carousel-slide">
-      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+1');"></div>
-      <div class="top-buttons">
-        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-      </div>
-      <div class="content">
-        <div class="pagination">
-          <span class="dot active" data-slide="0"></span>
-          <span class="dot" data-slide="1"></span>
-          <span class="dot" data-slide="2"></span>
-          <span class="dot" data-slide="3"></span>
-          <span class="dot" data-slide="4"></span>
-        </div>
-        <div class="title-section">
-          <div class="title-author">
-            <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
-            <p class="author">Ahmed Said Aidara</p>
-          </div>
-          <button class="start-button">Commencer</button>
-        </div>
-        <div class="description">
-          <h2>Description</h2>
-          <p>
-            Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante.
-          </p>
-        </div>
-      </div>
-    </div>
+                <!-- Carrousel de pages -->
+                <div class="carousel">
+                    <!-- Page 1 -->
+                    <div class="carousel-slide">
+                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+1');"></div>
+                        <div class="top-buttons">
+                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+                            <a href="#profile" class="icon-btn settings-link" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+                        </div>
+                        <div class="content">
+                            <div class="pagination">
+                                <span class="dot active" data-slide="0"></span>
+                                <span class="dot" data-slide="1"></span>
+                                <span class="dot" data-slide="2"></span>
+                                <span class="dot" data-slide="3"></span>
+                                <span class="dot" data-slide="4"></span>
+                            </div>
+                            <div class="title-section">
+                                <div class="title-author">
+                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
+                                    <p class="author">Ahmed Said Aidara</p>
+                                </div>
+                                <button class="start-button" onclick="document.getElementById('table-of-contents').classList.add('active'); document.getElementById('home').classList.remove('active');">Commencer</button>
+                            </div>
+                            <div class="description">
+                                <h2>Description</h2>
+                                <p>
+                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
+                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- Slide 2 -->
-    <div class="carousel-slide">
-      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+2');"></div>
-      <div class="top-buttons">
-        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-      </div>
-      <div class="content">
-        <div class="pagination">
-          <span class="dot" data-slide="0"></span>
-          <span class="dot active" data-slide="1"></span>
-          <span class="dot" data-slide="2"></span>
-          <span class="dot" data-slide="3"></span>
-          <span class="dot" data-slide="4"></span>
-        </div>
-        <div class="title-section">
-          <div class="title-author">
-            <h1>Plongez dans l’Inconnu</h1>
-            <p class="author">Entre Foi et Raison</p>
-          </div>
-          <button class="start-button">Explorer</button>
-        </div>
-        <div class="description">
-          <h2>Découvrez</h2>
-          <p>
-            Une œuvre qui éclaire les zones d’ombre entre deux mondes spirituels. Ce n’est pas un débat, c’est une exploration sincère, posée, documentée, entre deux traditions millénaires.
-          </p>
-        </div>
-      </div>
-    </div>
+                    <!-- Page 2 -->
+                    <div class="carousel-slide">
+                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+2');"></div>
+                        <div class="top-buttons">
+                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+                            <a href="#profile" class="icon-btn settings-link" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+                        </div>
+                        <div class="content">
+                            <div class="pagination">
+                                <span class="dot" data-slide="0"></span>
+                                <span class="dot active" data-slide="1"></span>
+                                <span class="dot" data-slide="2"></span>
+                                <span class="dot" data-slide="3"></span>
+                                <span class="dot" data-slide="4"></span>
+                            </div>
+                            <div class="title-section">
+                                <div class="title-author">
+                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
+                                    <p class="author">Ahmed Said Aidara</p>
+                                </div>
+                                <button class="start-button" onclick="document.getElementById('table-of-contents').classList.add('active'); document.getElementById('home').classList.remove('active');">Commencer</button>
+                            </div>
+                            <div class="description">
+                                <h2>Description</h2>
+                                <p>
+                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
+                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- Slide 3 -->
-    <div class="carousel-slide">
-      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+3');"></div>
-      <div class="top-buttons">
-        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-      </div>
-      <div class="content">
-        <div class="pagination">
-          <span class="dot" data-slide="0"></span>
-          <span class="dot" data-slide="1"></span>
-          <span class="dot active" data-slide="2"></span>
-          <span class="dot" data-slide="3"></span>
-          <span class="dot" data-slide="4"></span>
-        </div>
-        <div class="title-section">
-          <div class="title-author">
-            <h1>Un Voyage de Réflexion</h1>
-            <p class="author">Sans Dogmes, Sans Peur</p>
-          </div>
-          <button class="start-button">Lire</button>
-        </div>
-        <div class="description">
-          <h2>Pourquoi ce livre ?</h2>
-          <p>
-            Parce qu’il est temps d’oser penser par soi-même. Ce livre vous tend la main, pas pour convaincre, mais pour éveiller. Les réponses sont en vous, laissez-vous guider.
-          </p>
-        </div>
-      </div>
-    </div>
+                    <!-- Page 3 -->
+                    <div class="carousel-slide">
+                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+3');"></div>
+                        <div class="top-buttons">
+                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+                            <a href="#profile" class="icon-btn settings-link" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+                        </div>
+                        <div class="content">
+                            <div class="pagination">
+                                <span class="dot" data-slide="0"></span>
+                                <span class="dot" data-slide="1"></span>
+                                <span class="dot active" data-slide="2"></span>
+                                <span class="dot" data-slide="3"></span>
+                                <span class="dot" data-slide="4"></span>
+                            </div>
+                            <div class="title-section">
+                                <div class="title-author">
+                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
+                                    <p class="author">Ahmed Said Aidara</p>
+                                </div>
+                                <button class="start-button" onclick="document.getElementById('table-of-contents').classList.add('active'); document.getElementById('home').classList.remove('active');">Commencer</button>
+                            </div>
+                            <div class="description">
+                                <h2>Description</h2>
+                                <p>
+                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
+                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- Slide 4 -->
-    <div class="carousel-slide">
-      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+4');"></div>
-      <div class="top-buttons">
-        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-      </div>
-      <div class="content">
-        <div class="pagination">
-          <span class="dot" data-slide="0"></span>
-          <span class="dot" data-slide="1"></span>
-          <span class="dot" data-slide="2"></span>
-          <span class="dot active" data-slide="3"></span>
-          <span class="dot" data-slide="4"></span>
-        </div>
-        <div class="title-section">
-          <div class="title-author">
-            <h1>Foi & Science</h1>
-            <p class="author">Deux Mondes Unis</p>
-          </div>
-          <button class="start-button">Continuer</button>
-        </div>
-        <div class="description">
-          <h2>Dialogue</h2>
-          <p>
-            Loin des clichés, ce texte montre que la foi peut cohabiter avec la science, que la vérité n’a pas peur d’être questionnée, et que le doute peut être fertile.
-          </p>
-        </div>
-      </div>
-    </div>
+                    <!-- Page 4 -->
+                    <div class="carousel-slide">
+                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+4');"></div>
+                        <div class="top-buttons">
+                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+                            <a href="#profile" class="icon-btn settings-link" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+                        </div>
+                        <div class="content">
+                            <div class="pagination">
+                                <span class="dot" data-slide="0"></span>
+                                <span class="dot" data-slide="1"></span>
+                                <span class="dot" data-slide="2"></span>
+                                <span class="dot active" data-slide="3"></span>
+                                <span class="dot" data-slide="4"></span>
+                            </div>
+                            <div class="title-section">
+                                <div class="title-author">
+                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
+                                    <p class="author">Ahmed Said Aidara</p>
+                                </div>
+                                <button class="start-button" onclick="document.getElementById('table-of-contents').classList.add('active'); document.getElementById('home').classList.remove('active');">Commencer</button>
+                            </div>
+                            <div class="description">
+                                <h2>Description</h2>
+                                <p>
+                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
+                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- Slide 5 -->
-    <div class="carousel-slide">
-      <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+5');"></div>
-      <div class="top-buttons">
-        <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-        <a href="settings.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-      </div>
-      <div class="content">
-        <div class="pagination">
-          <span class="dot" data-slide="0"></span>
-          <span class="dot" data-slide="1"></span>
-          <span class="dot" data-slide="2"></span>
-          <span class="dot" data-slide="3"></span>
-          <span class="dot active" data-slide="4"></span>
-        </div>
-        <div class="title-section">
-          <div class="title-author">
-            <h1>Prêt pour l’Aventure ?</h1>
-            <p class="author">Commence maintenant</p>
-          </div>
-          <button class="start-button">Accéder au livre</button>
-        </div>
-        <div class="description">
-          <h2>Un mot pour finir</h2>
-          <p>
-            Ce livre n’est pas une conclusion, c’est une invitation. Si tu as le courage de remettre en question, tu es déjà sur le chemin. Bonne lecture, cher voyageur de la vérité.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                    <!-- Page 5 -->
+                    <div class="carousel-slide">
+                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+5');"></div>
+                        <div class="top-buttons">
+                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
+                            <a href="#profile" class="icon-btn settings-link" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
+                        </div>
+                        <div class="content">
+                            <div class="pagination">
+                                <span class="dot" data-slide="0"></span>
+                                <span class="dot" data-slide="1"></span>
+                                <span class="dot" data-slide="2"></span>
+                                <span class="dot" data-slide="3"></span>
+                                <span class="dot active" data-slide="4"></span>
+                            </div>
+                            <div class="title-section">
+                                <div class="title-author">
+                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
+                                    <p class="author">Ahmed Said Aidara</p>
+                                </div>
+                                <button class="start-button" onclick="document.getElementById('table-of-contents').classList.add('active'); document.getElementById('home').classList.remove('active');">Commencer</button>
+                            </div>
+                            <div class="description">
+                                <h2>Description</h2>
+                                <p>
+                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
+                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- SVG Icons -->
-    <svg style="display: none;">
-        <symbol id="share-icon" viewBox="0 0 24 24">
-            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
-        </symbol>
-        <symbol id="settings-icon" viewBox="0 0 24 24">
-            <path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.43-.48-.47h-3.84c-.24.04-.43.23-.47.47l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96c-.22-.07-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.3-.06.61-.06.94s.02.64.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.04.24.24.43.48.47h3.84c.24-.04.43-.23.47-.47l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.07.47 0 .59-.22l1.92-3.32c.12-.22.08-.47-.12-.61l-2.03-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-        </symbol>
-        <symbol id="arrow-left" viewBox="0 0 24 24">
-            <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
-        </symbol>
-        <symbol id="arrow-right" viewBox="0 0 24 24">
-            <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
-        </symbol>
-    </svg>
-        
+                <!-- SVG Icons -->
+                <svg style="display: none;">
+                    <symbol id="share-icon" viewBox="0 0 24 24">
+                        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+                    </symbol>
+                    <symbol id="settings-icon" viewBox="0 0 24 24">
+                        <path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.43-.48-.47h-3.84c-.24.04-.43.23-.47.47l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96c-.22-.07-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.3-.06.61-.06.94s.02.64.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.04.24.24.43.48.47h3.84c.24-.04.43-.23.47-.47l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.07.47 0 .59-.22l1.92-3.32c.12-.22.08-.47-.12-.61l-2.03-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                    </symbol>
+                    <symbol id="arrow-left" viewBox="0 0 24 24">
+                        <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
+                    </symbol>
+                    <symbol id="arrow-right" viewBox="0 0 24 24">
+                        <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
+                    </symbol>
+                </svg>
+            </div>
+        </section>
+
         <section id="table-of-contents" class="chapter">
             <button class="close-btn" title="Retour à l'accueil">✖</button>
             <h2>Sommaire</h2>
@@ -286,911 +295,27 @@
                 <button class="next-btn">Suivant →</button>
             </div>
         </section>
-
-        <section id="foreword" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Avant-propos</h2>
-                <span class="favorite" data-chapter="foreword" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>L’avant-propos de *La Voie du Salut* est un appel à la réflexion. Avant de plonger dans les chapitres, prenez un moment pour méditer sur votre propre quête de sens. Ce livre ne prétend pas imposer des réponses, mais plutôt éveiller en vous une soif de vérité. À travers des arguments tirés des écritures saintes et de la raison, il vous invite à explorer les convergences entre les grandes traditions spirituelles, dans l’espoir de vous rapprocher du salut.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>The foreword of *The Path of Salvation* is a call to reflection. Before diving into the chapters, take a moment to contemplate your own quest for meaning. This book does not claim to impose answers but rather to awaken in you a thirst for truth. Through arguments drawn from holy scriptures and reason, it invites you to explore the convergences between great spiritual traditions, in the hope of bringing you closer to salvation.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>التمهيد لكتاب *طريق النجاة* هو دعوة للتأمل. قبل الغوص في الفصول، خذ لحظة للتفكير في رحلتك الخاصة بحثًا عن المعنى. هذا الكتاب لا يدعي فرض إجابات، بل إيقاظ شغف بالحقيقة داخلك. من خلال الحجج المستمدة من الكتب المقدسة والعقل، يدعوك لاستكشاف التقاطعات بين التقاليد الروحية العظيمة، على أمل تقريبك من النجاة.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter1" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 1 : La Genèse</h2>
-                <span class="favorite" data-chapter="chapter1" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La Voie du Salut est un chemin que chaque âme doit découvrir et emprunter avec pleine conscience, une quête vers la rédemption et la paix éternelle. Ce livre se plonge dans les textes sacrés des grandes religions, cherchant à dévoiler l’unique vérité irréfutable. Il s’agit de découvrir la véritable voie menant au salut dans l’au-delà, un salut qui transcende les dogmes, nous éloignant ainsi de l’enfer dont chaque prophète a mis en garde son peuple. À travers ce voyage spirituel, il est question d’explorer la religion divine. En effet, penser à Dieu est une chose sérieuse et fondamentale. Pour que nos œuvres ne soient vaines, chercher le véritable Dieu qui est digne d’adoration doit constituer le but de chaque être humain qui croit à l’existence d’une vie après la mort.</p>
-                <p>La religion est un système de croyances fondé sur deux liens essentiels: un lien «vertical » entre l’homme et Dieu, et un lien «horizontal » entre les membres d’une communauté humaine.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>The Path of Salvation is a journey that every soul must discover and undertake with full awareness—a quest for redemption and eternal peace. This book delves into the sacred texts of the world's major religions, striving to unveil the one irrefutable truth. It seeks to reveal the true path leading to salvation in the hereafter—a salvation that transcends dogmas, distancing us from the hell that every prophet warned their people about. Through this spiritual journey, the focus is on exploring the divine religion. Indeed, thinking about God is a serious and fundamental matter. So that our deeds are not in vain, seeking the true God—who alone is worthy of worship—must be the ultimate goal of every human being who believes in the existence of life after death.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p> النجاة هو درب يجب على كل نفس أن تكتشفه وتسلكه بوعي تام، إنها رحلة نحو التوبة والسلام الأبدي. يتعمق هذا الكتاب في النصوص المقدسة للأديان الكبرى، ساعيًا لكشف الحقيقة الوحيدة التي لا تقبل الجدل. الهدف هو اكتشاف الطريق الحقيقي المؤدي إلى النجاة في الحياة الآخرة، نجاة تتجاوز المذاهب والعقائد، وتبعدنا عن الجحيم الذي حذّر منه كل نبي قومه. ومن خلال هذه الرحلة الروحية، يتم التطرق إلى الدين الإلهي. فالتفكر في الله أمر جاد وأساسي. وحتى لا تذهب أعمالنا سدى، يجب أن يكون البحث عن الإله الحق، المستحق وحده للعبادة، غاية كل إنسان يؤمن بوجود حياة بعد الموت .</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter2" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 2 : Qui m’a créé et qui suis-je ?</h2>
-                <span class="favorite" data-chapter="chapter2" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La religion, en tant qu’ensemble de croyances, soulève la question de la relation entre foi et raison.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Religion, as a set of beliefs, raises the question of the relationship between faith and reason.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الدين، كنظام من المعتقدات، يثير سؤال العلاقة بين الإيمان والعقل.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter3" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 3 : Pourquoi on m’a créé ?</h2>
-                <span class="favorite" data-chapter="chapter3" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Clara embarqua sur un vieux navire, prête à découvrir les secrets des mers lointaines...</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Clara boarded an old ship, ready to uncover the secrets of distant seas...</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>ركبت كلارا سفينة قديمة، مستعدة لاكتشاف أسرار البحار البعيدة...</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter4" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 4 : Qu’est-ce qui m’attend ?</h2>
-                <span class="favorite" data-chapter="chapter4" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La religion, en tant qu’ensemble de croyances, soulève la question de la relation entre foi et raison.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Religion, as a set of beliefs, raises the question of the relationship between faith and reason.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الدين، كنظام من المعتقدات، يثير سؤال العلاقة بين الإيمان والعقل.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter5" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 5 : Où irai-je ?</h2>
-                <span class="favorite" data-chapter="chapter5" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La religion, en tant qu’ensemble de croyances, soulève la question de la relation entre foi et raison.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Religion, as a set of beliefs, raises the question of the relationship between faith and reason.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الدين، كنظام من المعتقدات، يثير سؤال العلاقة بين الإيمان والعقل.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter6" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 6 : La quête de la vérité</h2>
-                <span class="favorite" data-chapter="chapter6" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La vérité est le phare qui guide l’âme dans l’obscurité. Ce chapitre explore comment les grandes traditions spirituelles convergent vers une vérité universelle, en examinant les enseignements des prophètes et des sages à travers les âges.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Truth is the beacon that guides the soul through darkness. This chapter explores how great spiritual traditions converge toward a universal truth, examining the teachings of prophets and sages across the ages.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الحقيقة هي المنارة التي تهدي النفس في الظلام. يستكشف هذا الفصل كيف تتلاقى التقاليد الروحية العظيمة نحو حقيقة كونية، من خلال دراسة تعاليم الأنبياء والحكماء عبر العصور.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter7" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 7 : La lumière divine</h2>
-                <span class="favorite" data-chapter="chapter7" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La lumière divine éclaire le chemin de ceux qui cherchent Dieu. Ce chapitre examine comment la présence de Dieu se manifeste dans la création et dans les cœurs des croyants.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>The divine light illuminates the path of those who seek God. This chapter examines how God’s presence manifests in creation and in the hearts of believers.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>النور الإلهي يضيء طريق من يبحثون عن الله. يتناول هذا الفصل كيف تتجلى حضور الله في الخلق وفي قلوب المؤمنين.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter8" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 8 : Les prophètes et leurs messages</h2>
-                <span class="favorite" data-chapter="chapter8" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Les prophètes sont des messagers de Dieu, porteurs de guidance. Ce chapitre explore leurs rôles et les similitudes dans leurs enseignements à travers les religions.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Prophets are God’s messengers, bearers of guidance. This chapter explores their roles and the similarities in their teachings across religions.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الأنبياء هم رسل الله، حاملو الهداية. يستكشف هذا الفصل أدوارهم والتشابهات في تعاليمهم عبر الأديان.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter9" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 9 : Le lien entre foi et raison</h2>
-                <span class="favorite" data-chapter="chapter9" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La foi et la raison ne s’opposent pas, mais se complètent. Ce chapitre analyse comment la réflexion rationnelle peut renforcer la croyance en Dieu.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Faith and reason do not oppose each other but complement one another. This chapter analyzes how rational reflection can strengthen belief in God.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الإيمان والعقل لا يتعارضان، بل يكملان بعضهما. يحلل هذا الفصل كيف يمكن للتفكير العقلاني أن يعزز الإيمان بالله.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter10" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 10 : La miséricorde de Dieu</h2>
-                <span class="favorite" data-chapter="chapter10" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La miséricorde divine est au cœur de la foi. Ce chapitre explore comment Dieu pardonne et guide ceux qui se tournent vers Lui.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Divine mercy is at the heart of faith. This chapter explores how God forgives and guides those who turn to Him.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>رحمة الله هي جوهر الإيمان. يستكشف هذا الفصل كيف يغفر الله ويهدي من يتوجهون إليه.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter11" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 11 : Les épreuves de la vie</h2>
-                <span class="favorite" data-chapter="chapter11" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Les épreuves sont des tests de la foi. Ce chapitre examine leur rôle dans le développement spirituel et comment les surmonter.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Trials are tests of faith. This chapter examines their role in spiritual growth and how to overcome them.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الابتلاءات هي اختبارات للإيمان. يتناول هذا الفصل دورها في النمو الروحي وكيفية التغلب عليها.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter12" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 12 : La prière comme refuge</h2>
-                <span class="favorite" data-chapter="chapter12" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La prière est un lien direct avec Dieu. Ce chapitre explore son importance et ses bienfaits pour l’âme.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Prayer is a direct connection to God. This chapter explores its importance and benefits for the soul.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الصلاة هي رابط مباشر مع الله. يستكشف هذا الفصل أهميتها وفوائدها للنفس.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter13" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 13 : La justice divine</h2>
-                <span class="favorite" data-chapter="chapter13" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La justice de Dieu est parfaite. Ce chapitre analyse comment elle se manifeste dans la vie et dans l’au-delà.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>God’s justice is perfect. This chapter analyzes how it manifests in life and the hereafter.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>عدالة الله كاملة. يحلل هذا الفصل كيف تتجلى في الحياة وفي الآخرة.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter14" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 14 : Le péché et la rédemption</h2>
-                <span class="favorite" data-chapter="chapter14" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Le péché éloigne l’homme de Dieu, mais la rédemption est toujours possible. Ce chapitre explore ce cycle spirituel.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Sin distances man from God, but redemption is always possible. This chapter explores this spiritual cycle.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الخطيئة تبعد الإنسان عن الله، لكن التوبة دائمًا ممكنة. يستكشف هذا الفصل هذه الدورة الروحية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter15" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 15 : La communauté des croyants</h2>
-                <span class="favorite" data-chapter="chapter15" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La foi se vit en communauté. Ce chapitre examine l’importance de la fraternité spirituelle et du soutien mutuel.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Faith is lived in community. This chapter examines the importance of spiritual brotherhood and mutual support.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الإيمان يُعاش في جماعة. يتناول هذا الفصل أهمية الأخوة الروحية والدعم المتبادل.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter16" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 16 : L’amour dans la foi</h2>
-                <span class="favorite" data-chapter="chapter16" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>L’amour est la clé de la foi véritable. Ce chapitre explore comment l’amour pour Dieu et pour autrui guide l’âme.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Love is the key to true faith. This chapter explores how love for God and others guides the soul.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الحب هو مفتاح الإيمان الحقيقي. يستكشف هذا الفصل كيف يهدي حب الله والآخرين النفس.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter17" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 17 : Les textes sacrés</h2>
-                <span class="favorite" data-chapter="chapter17" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Les textes sacrés sont des guides divins. Ce chapitre analyse leur rôle dans la compréhension de la volonté de Dieu.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Sacred texts are divine guides. This chapter analyzes their role in understanding God’s will.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>النصوص المقدسة هي أدلة إلهية. يحلل هذا الفصل دورها في فهم إرادة الله.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter18" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 18 : La finalité de l’existence</h2>
-                <span class="favorite" data-chapter="chapter18" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Quel est le but ultime de la vie ? Ce chapitre explore la finalité de l’existence humaine à travers la foi.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>What is the ultimate purpose of life? This chapter explores the purpose of human existence through faith.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>ما هو الهدف الأسمى للحياة؟ يستكشف هذا الفصل غاية الوجود البشري من خلال الإيمان.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter19" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 19 : La patience et la persévérance</h2>
-                <span class="favorite" data-chapter="chapter19" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La patience est une vertu essentielle. Ce chapitre examine comment elle aide à surmonter les défis spirituels.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Patience is an essential virtue. This chapter examines how it helps overcome spiritual challenges.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الصبر فضيلة أساسية. يتناول هذا الفصل كيف يساعد في التغلب على التحديات الروحية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter20" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 20 : Le libre arbitre</h2>
-                <span class="favorite" data-chapter="chapter20" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Le libre arbitre est un don divin. Ce chapitre explore comment nos choix façonnent notre destinée spirituelle.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Free will is a divine gift. This chapter explores how our choices shape our spiritual destiny.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الإرادة الحرة هبة إلهية. يستكشف هذا الفصل كيف تشكل خياراتنا مصيرنا الروحي.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter21" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 21 : La création et son dessein</h2>
-                <span class="favorite" data-chapter="chapter21" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La création est un reflet de la sagesse divine. Ce chapitre examine le dessein derrière l’univers et l’humanité.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Creation is a reflection of divine wisdom. This chapter examines the purpose behind the universe and humanity.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الخلق هو انعكاس للحكمة الإلهية. يتناول هذا الفصل الغرض من الكون والبشرية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter22" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 22 : Les anges et leurs rôles</h2>
-                <span class="favorite" data-chapter="chapter22" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Les anges sont des serviteurs de Dieu. Ce chapitre explore leurs fonctions dans les traditions spirituelles.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Angels are God’s servants. This chapter explores their roles in spiritual traditions.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الملائكة هم عباد الله. يستكشف هذا الفصل أدوارهم في التقاليد الروحية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter23" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 23 : La vie après la mort</h2>
-                <span class="favorite" data-chapter="chapter23" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La vie après la mort est une promesse divine. Ce chapitre examine les croyances sur l’au-delà.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Life after death is a divine promise. This chapter examines beliefs about the hereafter.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الحياة بعد الموت وعد إلهي. يتناول هذا الفصل المعتقدات حول الآخرة.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter24" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 24 : Le jour du jugement</h2>
-                <span class="favorite" data-chapter="chapter24" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Le jour du jugement est un moment de vérité. Ce chapitre explore son importance dans la foi.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>The Day of Judgment is a moment of truth. This chapter explores its significance in faith.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>يوم القيامة هو لحظة الحقيقة. يستكشف هذا الفصل أهميته في الإيمان.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter25" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 25 : Le paradis promis</h2>
-                <span class="favorite" data-chapter="chapter25" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Le paradis est la récompense des justes. Ce chapitre décrit la beauté et la paix de cette destination ultime.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Paradise is the reward of the righteous. This chapter describes the beauty and peace of this ultimate destination.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الجنة هي مكافأة الصالحين. يصف هذا الفصل جمال وسلام هذه الوجهة النهائية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter26" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 26 : L’enfer et ses avertissements</h2>
-                <span class="favorite" data-chapter="chapter26" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>L’enfer est un avertissement pour les âmes égarées. Ce chapitre explore son rôle dans la guidance divine.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Hell is a warning for misguided souls. This chapter explores its role in divine guidance.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الجحيم هو تحذير للنفوس الضالة. يستكشف هذا الفصل دوره في الهداية الإلهية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter27" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 27 : La science et la foi</h2>
-                <span class="favorite" data-chapter="chapter27" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La science et la foi peuvent coexister. Ce chapitre examine comment elles se complètent dans la quête de vérité.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Science and faith can coexist. This chapter examines how they complement each other in the quest for truth.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>العلم والإيمان يمكن أن يتعايشا. يتناول هذا الفصل كيف يكملان بعضهما في البحث عن الحقيقة.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter28" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 28 : Les miracles divins</h2>
-                <span class="favorite" data-chapter="chapter28" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Les miracles sont des signes de Dieu. Ce chapitre explore leur signification et leur impact sur la foi.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Miracles are signs from God. This chapter explores their meaning and impact on faith.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>المعجزات هي علامات من الله. يستكشف هذا الفصل معناها وتأثيرها على الإيمان.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter29" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 29 : L’unité de Dieu</h2>
-                <span class="favorite" data-chapter="chapter29" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>L’unité de Dieu est un principe fondamental. Ce chapitre examine ce concept à travers les traditions.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>The unity of God is a fundamental principle. This chapter examines this concept across traditions.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>وحدة الله هي مبدأ أساسي. يتناول هذا الفصل هذا المفهوم عبر التقاليد.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter30" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 30 : La guidance divine</h2>
-                <span class="favorite" data-chapter="chapter30" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Dieu guide ceux qui cherchent la vérité. Ce chapitre explore les moyens par lesquels Il nous guide.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>God guides those who seek the truth. This chapter explores the ways in which He guides us.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الله يهدي من يبحثون عن الحقيقة. يستكشف هذا الفصل الطرق التي يهدينا بها.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter31" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 31 : La responsabilité humaine</h2>
-                <span class="favorite" data-chapter="chapter31" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Chaque être humain est responsable de ses actes. Ce chapitre examine cette responsabilité face à Dieu.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Every human is responsible for their actions. This chapter examines this responsibility before God.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>كل إنسان مسؤول عن أفعاله. يتناول هذا الفصل هذه المسؤولية أمام الله.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter32" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 32 : La gratitude envers Dieu</h2>
-                <span class="favorite" data-chapter="chapter32" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La gratitude renforce la foi. Ce chapitre explore comment remercier Dieu pour Ses bienfaits.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Gratitude strengthens faith. This chapter explores how to thank God for His blessings.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الشكر يقوي الإيمان. يستكشف هذا الفصل كيف نشكر الله على نعمه.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter33" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 33 : La purification de l’âme</h2>
-                <span class="favorite" data-chapter="chapter33" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La purification de l’âme est essentielle pour se rapprocher de Dieu. Ce chapitre explore ce processus.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Purification of the soul is essential to draw closer to God. This chapter explores this process.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>تطهير النفس ضروري للاقتراب من الله. يستكشف هذا الفصل هذه العملية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter34" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 34 : Les vertus morales</h2>
-                <span class="favorite" data-chapter="chapter34" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Les vertus morales sont les piliers de la foi. Ce chapitre examine leur rôle dans la vie spirituelle.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Moral virtues are the pillars of faith. This chapter examines their role in spiritual life.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الفضائل الأخلاقية هي أعمدة الإيمان. يتناول هذا الفصل دورها في الحياة الروحية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter35" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 35 : La fraternité universelle</h2>
-                <span class="favorite" data-chapter="chapter35" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La fraternité unit l’humanité sous la bannière de Dieu. Ce chapitre explore cette unité spirituelle.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Brotherhood unites humanity under God’s banner. This chapter explores this spiritual unity.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الأخوة توحد البشرية تحت راية الله. يستكشف هذا الفصل هذه الوحدة الروحية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter36" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 36 : La beauté de la création</h2>
-                <span class="favorite" data-chapter="chapter36" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La création est un chef-d’œuvre divin. Ce chapitre explore comment sa beauté reflète la grandeur de Dieu.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Creation is a divine masterpiece. This chapter explores how its beauty reflects God’s greatness.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الخلق هو تحفة إلهية. يستكشف هذا الفصل كيف يعكس جماله عظمة الله.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter37" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 37 : La quête de la paix intérieure</h2>
-                <span class="favorite" data-chapter="chapter37" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La paix intérieure est le fruit de la foi. Ce chapitre explore comment l’atteindre à travers la spiritualité.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Inner peace is the fruit of faith. This chapter explores how to achieve it through spirituality.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>السلام الداخلي هو ثمرة الإيمان. يستكشف هذا الفصل كيفية تحقيقه من خلال الروحانية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter38" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 38 : La vérité universelle</h2>
-                <span class="favorite" data-chapter="chapter38" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La vérité est une, bien que ses expressions varient. Ce chapitre explore l’unité des vérités spirituelles.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Truth is one, though its expressions vary. This chapter explores the unity of spiritual truths.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الحقيقة واحدة، رغم أن تعبيراتها تختلف. يستكشف هذا الفصل وحدة الحقائق الروحية.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter39" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 39 : Les enseignements des anciens</h2>
-                <span class="favorite" data-chapter="chapter39" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>Les anciens ont laissé des leçons précieuses. Ce chapitre explore leur sagesse et son actualité.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>The ancients left valuable lessons. This chapter explores their wisdom and its relevance today.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>ترك القدماء دروسًا قيمة. يستكشف هذا الفصل حكمتهم وأهميتها اليوم.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter40" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 40 : La sagesse divine</h2>
-                <span class="favorite" data-chapter="chapter40" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La sagesse divine guide l’humanité. Ce chapitre explore comment l’embrasser pour une vie meilleure.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>Divine wisdom guides humanity. This chapter explores how to embrace it for a better life.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الحكمة الإلهية تهدي البشرية. يستكشف هذا الفصل كيفية تبنيها لحياة أفضل.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
-        <section id="chapter41" class="chapter">
-            <button class="close-btn" title="Retour à l'accueil">✖</button>
-            <div class="chapter-header">
-                <h2>Chapitre 41 : La foi en action</h2>
-                <span class="favorite" data-chapter="chapter41" title="Ajouter aux favoris">⭐</span>
-            </div>
-            <div class="content" data-lang="fr">
-                <p>La foi véritable se manifeste par des actes. Ce chapitre explore comment vivre sa foi au quotidien.</p>
-            </div>
-            <div class="content" data-lang="en" style="display: none;">
-                <p>True faith is manifested through actions. This chapter explores how to live one’s faith daily.</p>
-            </div>
-            <div class="content" data-lang="ar" style="display: none;">
-                <p>الإيمان الحقيقي يتجلى بالأفعال. يستكشف هذا الفصل كيفية عيش الإيمان يوميًا.</p>
-            </div>
-            <div class="chapter-nav">
-                <button class="prev-btn">← Précédent</button>
-                <button class="next-btn">Suivant →</button>
-            </div>
-        </section>
-
         <section id="chapter42" class="chapter">
-    <button class="close-btn" title="Retour à l'accueil">✖</button>
-    <div class="chapter-header">
-        <h2>Chapitre 42 : La voie finale</h2>
-        <span class="favorite" data-chapter="chapter42" title="Ajouter aux favoris">⭐</span>
-    </div>
-    <div class="content" data-lang="fr">
-        <p>La voie finale est la culmination de la quête spirituelle. Ce chapitre explore comment atteindre l’union ultime avec Dieu.</p>
-    </div>
-    <div class="content" data-lang="en" style="display: none;">
-        <p>The final path is the culmination of the spiritual quest. This chapter explores how to achieve ultimate union with God.</p>
-    </div>
-    <div class="content" data-lang="ar" style="display: none;">
-        <p>الطريق النهائي هو ذروة الرحلة الروحية. يستكشف هذا الفصل كيفية تحقيق الاتحاد النهائي مع الله.</p>
-    </div>
-    <div class="chapter-nav">
-        <button class="prev-btn">← Précédent</button>
-        <button class="next-btn" disabled>Suivant →</button>
-    </div>
-</section>
-    
+            <button class="close-btn" title="Retour à l'accueil">✖</button>
+            <div class="chapter-header">
+                <h2>Chapitre 42 : La voie finale</h2>
+                <span class="favorite" data-chapter="chapter42" title="Ajouter aux favoris">⭐</span>
+            </div>
+            <div class="content" data-lang="fr">
+                <p>La voie finale est la culmination de la quête spirituelle. Ce chapitre explore comment atteindre l’union ultime avec Dieu.</p>
+            </div>
+            <div class="content" data-lang="en" style="display: none;">
+                <p>The final path is the culmination of the spiritual quest. This chapter explores how to achieve ultimate union with God.</p>
+            </div>
+            <div class="content" data-lang="ar" style="display: none;">
+                <p>الطريق النهائي هو ذروة الرحلة الروحية. يستكشف هذا الفصل كيفية تحقيق الاتحاد النهائي مع الله.</p>
+            </div>
+            <div class="chapter-nav">
+                <button class="prev-btn">← Précédent</button>
+                <button class="next-btn" disabled>Suivant →</button>
+            </div>
+        </section>
+        
         <section id="favorites" class="chapter">
             <button class="close-btn" title="Retour à l'accueil">✖</button>
             <h2>Vos Chapitres Favoris</h2>
@@ -1268,21 +393,22 @@
 
     <div id="chat-icon" draggable="true">⫸</div>
 
-<div id="chat-window">
-  <div id="chat-messages"></div>
-  <div id="chat-input">
-    <input type="text" id="chat-question" placeholder="Pose une question..." />
-    <button onclick="askBookAI()">➤</button>
-  </div>
-</div>
+    <div id="chat-window">
+        <div id="chat-messages"></div>
+        <div id="chat-input">
+            <input type="text" id="chat-question" placeholder="Pose une question..." />
+            <button onclick="askBookAI()">➤</button>
+        </div>
+    </div>
 
     <nav class="bottom-navbar">
         <button id="home-btn" title="Accueil">🏠</button>
         <button id="menu-btn" title="Sommaire">☰</button>
         <button id="favorites-btn" title="Voir les favoris">⭐</button>
         <button id="profile-btn" title="Paramètres">
-             <span class="icon">⚙️</span>
-             <span id="user-status" class="user-status"></span> </button>
+            <span class="icon">⚙️</span>
+            <span id="user-status" class="user-status"></span>
+        </button>
     </nav>
 
     <script src="firebase.js"></script>
