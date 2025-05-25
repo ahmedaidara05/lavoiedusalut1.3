@@ -24,33 +24,18 @@
         </div>
         <nav class="right-nav">
             <button id="theme-toggle" title="Mode sombre/clair">
-                <i class="fas fa-moon"></i>
+                <span class="icon">🌙</span>
             </button>
             <button id="voice-toggle" title="Lecture vocale">
-                <i class="fas fa-volume-up"></i>
+                <span class="icon">🔊</span>
             </button>
             <select id="voice-select" title="Choisir une voix"></select>
             <button id="language-toggle" title="Changer de langue">
-                <i class="fas fa-globe"></i>
+                <span class="icon">🌐</span>
             </button>
-            <button id="hamburger-menu-btn" title="Menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div id="dropdown-menu" class="dropdown-menu">
-                <button id="theme-toggle-mobile" title="Mode sombre/clair">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button id="voice-toggle-mobile" title="Lecture vocale">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-                <select id="voice-select-mobile" title="Choisir une voix"></select>
-                <button id="language-toggle-mobile" title="Changer de langue">
-                    <i class="fas fa-globe"></i>
-                </button>
-            </div>
         </nav>
     </header>
-
+    
     <main>
         <section id="home" class="active">
             <div class="home-content">
@@ -113,7 +98,7 @@
                 <li><a href="#chapter42">Chapitre 42 : La voie finale</a></li>
             </ul>
         </section>
-
+        
         <section id="preamble" class="chapter">
             <button class="close-btn" title="Retour à l'accueil">✖</button>
             <div class="chapter-header">
@@ -1038,9 +1023,7 @@
         <button class="next-btn" disabled>Suivant →</button>
     </div>
 </section>
-
-        
-
+    
         <section id="favorites" class="chapter">
             <button class="close-btn" title="Retour à l'accueil">✖</button>
             <h2>Vos Chapitres Favoris</h2>
@@ -1116,7 +1099,7 @@
         </section>
     </main>
 
-    <div id="chat-icon">💬</div>
+    <div id="chat-icon" draggable="true">⫸</div>
 
 <div id="chat-window">
   <div id="chat-messages"></div>
@@ -1126,15 +1109,13 @@
   </div>
 </div>
 
-
     <nav class="bottom-navbar">
-        <button id="home-btn" title="Accueil">🏛️</button>
-        <button id="menu-btn" title="Sommaire">📖</button>
-        <button id="favorites-btn" title="Voir les favoris">📌</button>
+        <button id="home-btn" title="Accueil">🏠</button>
+        <button id="menu-btn" title="Sommaire">☰</button>
+        <button id="favorites-btn" title="Voir les favoris">⭐</button>
         <button id="profile-btn" title="Paramètres">
-            <span class="icon">👥</span>
-            <span id="user-status" class="user-status"></span>
-        </button>
+             <span class="icon">⚙️</span>
+             <span id="user-status" class="user-status"></span> </button>
     </nav>
 
     <script src="firebase.js"></script>
