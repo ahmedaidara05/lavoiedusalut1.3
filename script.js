@@ -370,6 +370,26 @@ function updateNavigation(currentChapterId) {
     });
 }
 
+// === AJOUT POUR LE MENU HAMBURGER ===
+const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn');
+const dropdownMenu = document.getElementById('dropdown-menu');
+
+if (hamburgerMenuBtn && dropdownMenu) {
+    hamburgerMenuBtn.addEventListener('click', () => {
+        console.log('Clic bouton hamburger');
+        dropdownMenu.classList.toggle('show');
+    });
+
+    // Ferme le menu si clic à l'extérieur
+    document.addEventListener('click', (event) => {
+        if (!dropdownMenu.contains(event.target) && !hamburgerMenuBtn.contains(event.target)) {
+            dropdownMenu.classList.remove('show');
+            console.log('Menu fermé (clic extérieur)');
+        }
+    });
+}    
+    
+// === GESTION DES BOUTONS PRÉCÉDENT / SUIVANT ===
 const prevButtons = document.querySelectorAll('.prev-btn');
 const nextButtons = document.querySelectorAll('.next-btn');
 
@@ -400,18 +420,6 @@ nextButtons.forEach(button => {
         }
     });
 });
-
-    nextButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            console.log('Clic suivant');
-            const currentChapter = button.closest('section').id;
-            const currentIndex = chapters.indexOf(currentChapter);
-            if (currentIndex < chapters.length - 1) {
-                sections.forEach(section => section.classList.remove('active'));
-                document.getElementById(chapters[currentIndex + 1]).classList.add('active');
-            }
-        });
-    });
 
     // Gestion des favoris et progression
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
