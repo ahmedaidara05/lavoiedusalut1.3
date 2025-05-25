@@ -5,47 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Récupère le contenu des chapitres depuis la div .book-content
-const content = document.querySelector('.book-content')?.innerText || "Contenu introuvable.";
-
-// Gestion de l'assistant IA
-const apiKey = "AIzaSyA0vL0QgFDkAi-ScZDVKC1G5MgcFCURE1A";
-
-document.getElementById("chatbot-toggle").onclick = () => {
-  const box = document.getElementById("chatbot-container");
-  box.style.display = box.style.display === "none" ? "block" : "none";
-};
-
-async function askGemini() {
-  const question = document.getElementById("user-question").value;
-  const fullPrompt = `Voici le contenu d'un livre :\n\n${content}\n\nRéponds à cette question uniquement selon ce livre :\n\n${question}`;
-
-  const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + apiKey, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: fullPrompt }] }]
-    })
-  });
-
-  const data = await res.json();
-  document.getElementById("ai-response").innerText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Aucune réponse.";
-}
-
-
-            // Vide le champ de saisie et scroll en bas
-            aiInput.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        } catch (error) {
-            console.error('Erreur lors de l\'appel à Gemini AI:', error);
-            chatMessages.innerHTML += `<div>Erreur: ${error.message}</div>`;
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-    });
-} else {
-    console.error('Bouton IA, champ de saisie ou zone de messages non trouvé. Vérifiez les ID #ai-send-btn, #ai-input, #chat-messages.');
-}
-    
     // Protection contre le copier-coller
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     document.addEventListener('copy', (e) => e.preventDefault());
@@ -91,7 +50,7 @@ async function askGemini() {
                     if (fontSizeValue) fontSizeValue.textContent = `${fontSize}px`;
                     if (profileVolume) profileVolume.value = volume;
                     if (volumeValue) volumeValue.textContent = `${volume}%`;
-                    if (themeToggle) themeToggle.innerHTML = data.theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                    if (themeToggle) themeToggle.querySelector('.icon').textContent = data.theme === 'dark' ? '☀️' : '🌙';
                     if (profileTheme) profileTheme.checked = data.theme === 'dark';
                 }
             } catch (error) {
@@ -194,15 +153,10 @@ async function askGemini() {
 
     // Gestion du mode sombre/clair
     const themeToggle = document.getElementById('theme-toggle');
-    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
     const profileTheme = document.getElementById('profile-theme');
     if (themeToggle && profileTheme) {
         themeToggle.addEventListener('click', () => {
             console.log('Clic mode sombre');
-            toggleTheme();
-        });
-        themeToggleMobile.addEventListener('click', () => {
-            console.log('Clic mode sombre mobile');
             toggleTheme();
         });
         profileTheme.addEventListener('change', () => {
@@ -211,26 +165,32 @@ async function askGemini() {
         });
     }
 
-    async function toggleTheme() {
-        document.body.classList.toggle('dark');
-        const isDark = document.body.classList.contains('dark');
-        if (themeToggle) themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        if (themeToggleMobile) themeToggleMobile.innerHTML = isDark ? '<i class="fas fa-sun"></i> Mode clair' : '<i class="fas fa-moon"></i> Mode sombre';
-        if (profileTheme) profileTheme.checked = isDark;
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        if (firebase.auth().currentUser) {
-            try {
-                await db.collection('users').doc(firebase.auth().currentUser.uid).update({ theme: isDark ? 'dark' : 'light' });
-            } catch (error) {
-                console.error('Erreur mise à jour thème:', error);
-            }
+    async function updateLanguage() {
+    document.querySelectorAll('.content').forEach(content => {
+        const section = content.closest('section');
+        if (section.classList.contains('active') && content.dataset.lang === currentLanguage) {
+            content.style.display = 'block';
+        } else {
+            content.style.display = 'none';
+        }
+    });
+    if (!document.querySelector(`section.active .content[data-lang="${currentLanguage}"]`)) {
+        console.warn(`Aucun contenu trouvé pour la langue ${currentLanguage} dans la section active`);
+    }
+    localStorage.setItem('language', currentLanguage);
+    if (profileLanguage) profileLanguage.value = currentLanguage;
+    if (firebase.auth().currentUser) {
+        try {
+            await db.collection('users').doc(firebase.auth().currentUser.uid).update({ language: currentLanguage });
+        } catch (error) {
+            console.error('Erreur mise à jour langue:', error);
         }
     }
+}
 
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark');
-        if (themeToggle) themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        if (themeToggleMobile) themeToggleMobile.innerHTML = '<i class="fas fa-sun"></i> Mode clair';
+        if (themeToggle) themeToggle.querySelector('.icon').textContent = '☀️';
         if (profileTheme) profileTheme.checked = true;
     }
 
@@ -296,17 +256,11 @@ async function askGemini() {
     // Gestion de la langue
     let currentLanguage = localStorage.getItem('language') || 'fr';
     const languageToggle = document.getElementById('language-toggle');
-    const languageToggleMobile = document.getElementById('language-toggle-mobile');
     const profileLanguage = document.getElementById('profile-language');
-    if (languageToggle && languageToggleMobile && profileLanguage) {
+    if (languageToggle && profileLanguage) {
         profileLanguage.value = currentLanguage;
         languageToggle.addEventListener('click', async () => {
             console.log('Clic langue');
-            currentLanguage = currentLanguage === 'fr' ? 'en' : currentLanguage === 'en' ? 'ar' : 'fr';
-            await updateLanguage();
-        });
-        languageToggleMobile.addEventListener('click', async () => {
-            console.log('Clic langue mobile');
             currentLanguage = currentLanguage === 'fr' ? 'en' : currentLanguage === 'en' ? 'ar' : 'fr';
             await updateLanguage();
         });
@@ -392,8 +346,8 @@ async function askGemini() {
         });
     });
 
-// Navigation entre chapitres
-const chapters = [
+    // Navigation entre chapitres
+    const chapters = [
     'preamble', 'foreword', 'chapter1', 'chapter2', 'chapter3', 'chapter4', 'chapter5',
     'chapter6', 'chapter7', 'chapter8', 'chapter9', 'chapter10', 'chapter11', 'chapter12',
     'chapter13', 'chapter14', 'chapter15', 'chapter16', 'chapter17', 'chapter18', 'chapter19',
@@ -557,18 +511,15 @@ nextButtons.forEach(button => {
 
     // Gestion de la lecture vocale
     const voiceToggle = document.getElementById('voice-toggle');
-    const voiceToggleMobile = document.getElementById('voice-toggle-mobile');
     const voiceSelect = document.getElementById('voice-select');
-    const voiceSelectMobile = document.getElementById('voice-select-mobile');
     let currentSpeech = null;
     let currentChapter = null;
     let voices = [];
 
     function populateVoiceList() {
         voices = speechSynthesis.getVoices();
-        if (voiceSelect && voiceSelectMobile) {
+        if (voiceSelect) {
             voiceSelect.innerHTML = '<option value="">Voix par défaut</option>';
-            voiceSelectMobile.innerHTML = '<option value="">Voix par défaut</option>';
             let voiceCounter = 1;
             voices.forEach((voice, index) => {
                 if (voice.lang.startsWith('fr') || voice.lang.startsWith('en') || voice.lang.startsWith('ar')) {
@@ -576,7 +527,6 @@ nextButtons.forEach(button => {
                     option.value = index;
                     option.textContent = `Voix ${voiceCounter} (${voice.lang})`;
                     voiceSelect.appendChild(option);
-                    voiceSelectMobile.appendChild(option.cloneNode(true));
                     voiceCounter++;
                 }
             });
@@ -586,8 +536,8 @@ nextButtons.forEach(button => {
     speechSynthesis.onvoiceschanged = populateVoiceList;
     populateVoiceList();
 
-    if (voiceToggle && voiceToggleMobile) {
-        const toggleVoice = () => {
+    if (voiceToggle) {
+        voiceToggle.addEventListener('click', () => {
             console.log('Clic lecture vocale');
             const activeSection = document.querySelector('section.active');
             if (!activeSection || activeSection.id === 'home' || activeSection.id === 'favorites' || activeSection.id === 'table-of-contents' || activeSection.id === 'profile') return;
@@ -599,13 +549,11 @@ nextButtons.forEach(button => {
             if (currentSpeech && currentChapter === chapterId && !speechSynthesis.paused) {
                 speechSynthesis.pause();
                 currentSpeech.paused = true;
-                voiceToggle.innerHTML = '<i class="fas fa-play"></i>';
-                voiceToggleMobile.innerHTML = '<i class="fas fa-play"></i> Lecture vocale';
+                voiceToggle.querySelector('.icon').textContent = '▶️';
             } else if (currentSpeech && currentSpeech.paused) {
                 speechSynthesis.resume();
                 currentSpeech.paused = false;
-                voiceToggle.innerHTML = '<i class="fas fa-pause"></i>';
-                voiceToggleMobile.innerHTML = '<i class="fas fa-pause"></i> Lecture vocale';
+                voiceToggle.querySelector('.icon').textContent = '⏸️';
             } else {
                 if (currentSpeech) {
                     speechSynthesis.cancel();
@@ -619,41 +567,28 @@ nextButtons.forEach(button => {
                 currentSpeech.paused = false;
                 currentChapter = chapterId;
                 speechSynthesis.speak(currentSpeech);
-                voiceToggle.innerHTML = '<i class="fas fa-pause"></i>';
-                voiceToggleMobile.innerHTML = '<i class="fas fa-pause"></i> Lecture vocale';
+                voiceToggle.querySelector('.icon').textContent = '⏸️';
                 currentSpeech.onend = () => {
-                    voiceToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-                    voiceToggleMobile.innerHTML = '<i class="fas fa-volume-up"></i> Lecture vocale';
+                    voiceToggle.querySelector('.icon').textContent = '🔊';
                     currentSpeech = null;
                     currentChapter = null;
                 };
             }
-        };
-
-        voiceToggle.addEventListener('click', toggleVoice);
-        voiceToggleMobile.addEventListener('click', toggleVoice);
-    }
-
-    if (voiceSelect && voiceSelectMobile) {
-        voiceSelect.addEventListener('change', () => {
-            voiceSelectMobile.value = voiceSelect.value;
-        });
-        voiceSelectMobile.addEventListener('change', () => {
-            voiceSelect.value = voiceSelectMobile.value;
         });
     }
 
-    // Gestion du menu hamburger
+    // --- New Hamburger Menu Functionality ---
     const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn');
     const dropdownMenu = document.getElementById('dropdown-menu');
 
     if (hamburgerMenuBtn && dropdownMenu) {
         hamburgerMenuBtn.addEventListener('click', (event) => {
             console.log('Clic bouton hamburger');
-            dropdownMenu.classList.toggle('show');
-            event.stopPropagation();
+            dropdownMenu.classList.toggle('show'); // Toggle the 'show' class
+            event.stopPropagation(); // Prevent the click from immediately closing the menu
         });
 
+        // Close the dropdown menu if a click occurs outside of it
         document.addEventListener('click', (event) => {
             if (!dropdownMenu.contains(event.target) && !hamburgerMenuBtn.contains(event.target)) {
                 if (dropdownMenu.classList.contains('show')) {
@@ -663,6 +598,7 @@ nextButtons.forEach(button => {
             }
         });
 
+        // Close the dropdown menu when an item inside it is clicked
         dropdownMenu.querySelectorAll('button, select').forEach(item => {
             item.addEventListener('click', () => {
                 dropdownMenu.classList.remove('show');
@@ -670,4 +606,90 @@ nextButtons.forEach(button => {
             });
         });
     }
+});
+
+const apiKey = "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";
+
+document.getElementById("chat-icon").onclick = () => {
+  const window = document.getElementById("chat-window");
+  window.style.display = window.style.display === "flex" ? "none" : "flex";
+};
+
+async function askBookAI() {
+  const input = document.getElementById("chat-question");
+  const messagesDiv = document.getElementById("chat-messages");
+  const question = input.value.trim();
+  input.value = "";
+  if (!question) return;
+
+  // Ajoute le message utilisateur
+  const userMsg = document.createElement("div");
+  userMsg.className = "message-user";
+  userMsg.textContent = question;
+  messagesDiv.appendChild(userMsg);
+
+  // Message en attente
+  const thinkingMsg = document.createElement("div");
+  thinkingMsg.className = "message-ai";
+  thinkingMsg.textContent = "Réfléchit...";
+  messagesDiv.appendChild(thinkingMsg);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+  const bookContent = document.getElementById("book-content").innerText;
+
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-3.5-turbo",
+        messages: [
+          {
+            role: "system",
+            content: "Tu es un assistant littéraire. Tu dois répondre uniquement selon le contenu du livre fourni par l'utilisateur."
+          },
+          {
+            role: "user",
+            content: `Voici le contenu du livre : """${bookText}"""\nVoici ma question : ${question}`
+          }
+        ]
+      })
+    });
+
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content || "❌ Pas de réponse";
+
+    thinkingMsg.remove(); // Retire "Réfléchit..."
+    const aiMsg = document.createElement("div");
+    aiMsg.className = "message-ai";
+    aiMsg.textContent = reply;
+    messagesDiv.appendChild(aiMsg);
+  } catch (err) {
+    thinkingMsg.textContent = "❌ Erreur de l'IA.";
+  }
+
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+// Permet de déplacer le bouton
+const chatIcon = document.getElementById("chat-icon");
+let isDragging = false;
+
+chatIcon.addEventListener("mousedown", (e) => {
+  isDragging = true;
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+  chatIcon.style.left = e.pageX - 30 + "px";
+  chatIcon.style.top = e.pageY - 30 + "px";
+  chatIcon.style.bottom = "auto";
+  chatIcon.style.right = "auto";
+});
+
+document.addEventListener("mouseup", () => {
+  isDragging = false;
 });
