@@ -1,3 +1,15 @@
+function updateFavoritesList() {
+    // ... (ton code avant)
+    favorites.forEach(favId => {
+        let chapterElement = document.getElementById(favId);
+        if (chapterElement) {
+            let favBtn = chapterElement.querySelector('.favorite');
+            if (favBtn) {
+                favBtn.classList.add('active');
+            }
+        }
+    });
+    // ... (ton code après)
 
 document.addEventListener('DOMContentLoaded', () => {
     // Vérifier que firebase est chargé
@@ -992,3 +1004,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+}
