@@ -82,6 +82,87 @@ body.dark {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Styles pour tous les boutons de navigation et le select */
+/* Appliqué aux boutons de la top-navbar (sauf le hamburger initialement sur mobile) et bottom-navbar */
+.top-navbar button, .bottom-navbar button, #voice-select {
+    background: none;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-size: 1rem; /* Taille de police standard pour les icônes */
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%; /* Pour les icônes circulaires */
+    width: 40px; /* Taille par défaut pour un bon touché */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Style spécifique pour le bouton hamburger */
+#hamburger-menu-btn {
+    font-size: 1.2rem; /* Légèrement plus grand pour l'icône hamburger */
+    width: 40px; /* Taille cohérente avec les autres boutons */
+    height: 40px;
+}
+
+
+#voice-select {
+    border-radius: 10px; /* Garde la forme rectangulaire pour le select */
+    width: auto;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    text-align: center; /* Centrer le texte si possible */
+}
+
+.top-navbar button:hover, .bottom-navbar button:hover, #voice-select:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+/* Styles pour le menu déroulant du hamburger */
+.dropdown-menu {
+    display: flex; /* Toujours flex pour la structure, mais masqué/affiché par opacité/transform */
+    flex-direction: column; /* Pour afficher les éléments verticalement */
+    position: absolute;
+    top: 50px; /* Ajuste la position sous la barre du haut */
+    right: 0;
+    background-color: #1e3a8a; /* Couleur de fond du menu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 999; /* Moins prioritaire que la navbar, mais au-dessus du contenu */
+    min-width: 150px; /* Largeur minimale pour le menu */
+
+    /* Animations */
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none; /* Empêche les interactions quand caché */
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto; /* Permet les interactions quand affiché */
+}
+
+/* Styles pour les éléments à l'intérieur du menu déroulant */
+.dropdown-menu button, .dropdown-menu select {
+    width: 100%; /* Les boutons et select prennent toute la largeur du menu */
+    border-radius: 5px; /* Les rendre plus rectangulaires pour un menu */
+    margin-bottom: 5px; /* Espace entre les éléments */
+    height: auto; /* Laisse la hauteur s'adapter au contenu */
+    padding: 0.5rem; /* Padding pour un meilleur toucher */
+}
+
+/* Retirer le margin-bottom du dernier élément pour éviter un espace superflu */
+.dropdown-menu button:last-child, .dropdown-menu select:last-child {
+    margin-bottom: 0;
+}
+
 
 /* Page d'accueil */
 .home-content {
@@ -343,127 +424,6 @@ body.dark .progress {
     color: #1e3a8a;
 }
 
-/* Styles pour tous les boutons de navigation et le select (sauf hamburger) */
-/* Styles pour les boutons de la barre supérieure (sauf hamburger) */
-.top-navbar button:not(#hamburger-menu-btn) {
-    background: none;
-    border: 2px solid #d4af37;
-    color: #d4af37;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0.3rem;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.top-navbar button:not(#hamburger-menu-btn):hover {
-    background-color: #d4af37;
-    color: #1e3a8a;
-    transform: scale(1.1);
-}
-
-/* Style pour le bouton hamburger */
-#hamburger-menu-btn {
-    background: none;
-    border: 2px solid #d4af37;
-    color: #d4af37;
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 0.3rem;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#hamburger-menu-btn:hover {
-    background-color: #d4af37;
-    color: #1e3a8a;
-    transform: scale(1.1);
-}
-
-/* Style pour le menu déroulant */
-.dropdown-menu {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 50px;
-    right: 10px;
-    background-color: #1e3a8a;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-    padding: 10px;
-    z-index: 999;
-    min-width: 60px;
-    align-items: center;
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-}
-
-.dropdown-menu.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-/* Styles pour les éléments dans le menu déroulant */
-.dropdown-menu button, .dropdown-menu select {
-    background: none;
-    border: 2px solid #d4af37;
-    color: #d4af37;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0.3rem;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 0;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.dropdown-menu select {
-    border-radius: 10px;
-    width: 100px;
-    padding: 0.2rem;
-    font-size: 0.8rem;
-    text-align: center;
-}
-
-.dropdown-menu button:hover, .dropdown-menu select:hover {
-    background-color: #d4af37;
-    color: #1e3a8a;
-    transform: scale(1.1);
-}
-
-/* Responsive pour mobile */
-@media (max-width: 600px) {
-    .dropdown-menu {
-        top: 50px;
-        right: 10px;
-    }
-}
-
-/* Responsive pour desktop */
-@media (min-width: 601px) {
-    .dropdown-menu {
-        top: 50px;
-        right: 10px;
-    }
-}
-
 body.dark .setting select, body.dark .setting input[type="range"],
 body.dark .setting input[type="checkbox"], body.dark .form-group input {
     background-color: #333;
@@ -638,91 +598,90 @@ body.dark .setting input[type="checkbox"], body.dark .form-group input {
     }
 }
 
-/* Icône de chat flottante */
-#chat-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: grab;
-  z-index: 9999;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  user-select: none;
+#ai-assistant-icon {
+    width: 64px;
+    height: 64px;
+    background-image: url('icone512.png');
+    background-size: cover;
+    position: fixed;
+    bottom: 80px; /* Ajusté pour ne pas chevaucher la barre du bas */
+    right: 20px;
+    z-index: 1000;
+    cursor: grab;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-#chat-window {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  width: 320px;
-  max-height: 450px;
-  background: #1e1e1e;
-  border: 1px solid #444;
-  border-radius: 12px;
-  overflow: hidden;
-  display: none;
-  flex-direction: column;
-  z-index: 9999;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+#ai-chat-box {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    bottom: 150px; /* Ajusté pour ne pas chevaucher la barre du bas et l'icône de l'assistant */
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background: var(--bg-color, #fff);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+#ai-chat-box header {
+    padding: 10px;
+    background: #1e3a8a;
+    color: white;
+    text-align: center;
+    font-weight: bold;
 }
 
 #chat-messages {
-  padding: 10px;
-  overflow-y: auto;
-  flex: 1;
-  max-height: 350px;
-  font-family: sans-serif;
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: var(--bg-color, #f0f0f0);
 }
 
-.message-user {
-  background-color: #e0e0e0;
-  color: #000;
-  padding: 8px 12px;
-  margin: 6px 0;
-  max-width: 80%;
-  border-radius: 10px 0 10px 10px;
-  align-self: flex-end;
-  text-align: right;
+.chat-message {
+    margin: 6px 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 
-.message-ai {
-  background-color: #FFD700;
-  color: #000;
-  padding: 8px 12px;
-  margin: 6px 0;
-  max-width: 80%;
-  border-radius: 0 10px 10px 10px;
-  align-self: flex-start;
-  text-align: left;
-  font-weight: 500;
+.chat-user {
+    align-self: flex-end;
+    background: gold;
+    color: black;
 }
 
-#chat-input {
-  display: flex;
-  border-top: 1px solid #444;
+.chat-ai {
+    align-self: flex-start;
+    background: #000;
+    color: white;
 }
 
-#chat-input input {
-  flex: 1;
-  border: none;
-  padding: 10px;
-  font-size: 14px;
-  background: #222;
-  color: white;
+#ai-chat-box footer {
+    padding: 8px;
+    display: flex;
+    gap: 6px;
+    background: #f9f9f9;
 }
 
-#chat-input button {
-  padding: 10px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
+#ai-input {
+    flex: 1;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+#ai-send-btn {
+    padding: 6px 10px;
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
