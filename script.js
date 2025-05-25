@@ -1004,4 +1004,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+// Fonction pour afficher les sections
+function showSection(sectionId) {
+    // Masquer toutes les sections
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Afficher la section demandée
+    document.getElementById(sectionId).classList.add('active');
+}
+
+// Gestion des clics sur les boutons de navigation
+document.addEventListener('DOMContentLoaded', function() {
+    // Boutons du header
+    document.getElementById('home-btn').addEventListener('click', () => showSection('home'));
+    document.getElementById('menu-btn').addEventListener('click', () => showSection('table-of-contents'));
+    document.getElementById('favorites-btn').addEventListener('click', () => showSection('favorites'));
+    document.getElementById('profile-btn').addEventListener('click', () => showSection('profile'));
+    
+    // Boutons de fermeture dans les chapitres
+    document.querySelectorAll('.close-btn').forEach(btn => {
+        btn.addEventListener('click', () => showSection('home'));
+    });
+});
+
+
+    
 }
