@@ -11,7 +11,6 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icon512.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -39,173 +38,13 @@
     
     <main>
         <section id="home" class="active">
-            <div class="app-container">
-                <!-- Boutons de navigation -->
-                <button class="nav-button prev" aria-label="Slide précédent"><svg><use href="#arrow-left"></use></svg></button>
-                <button class="nav-button next" aria-label="Slide suivant"><svg><use href="#arrow-right"></use></svg></button>
-
-                <!-- Carrousel de pages -->
-                <div class="carousel">
-                    <!-- Page 1 -->
-                    <div class="carousel-slide">
-                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+1');"></div>
-                        <div class="top-buttons">
-                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-                            <a href="parametres.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-                        </div>
-                        <div class="content">
-                            <div class="pagination">
-                                <span class="dot active" data-slide="0"></span>
-                                <span class="dot" data-slide="1"></span>
-                                <span class="dot" data-slide="2"></span>
-                                <span class="dot" data-slide="3"></span>
-                                <span class="dot" data-slide="4"></span>
-                            </div>
-                            <div class="title-section">
-                                <div class="title-author">
-                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
-                                    <p class="author">Ahmed Said Aidara</p>
-                                </div>
-                                <button class="start-button" id="start-btn">Commencer</button>
-                            </div>
-                            <div class="description">
-                                <h2>Description</h2>
-                                <p>
-                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
-                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Page 2 -->
-                    <div class="carousel-slide">
-                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+2');"></div>
-                        <div class="top-buttons">
-                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-                            <a href="parametres.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-                        </div>
-                        <div class="content">
-                            <div class="pagination">
-                                <span class="dot" data-slide="0"></span>
-                                <span class="dot active" data-slide="1"></span>
-                                <span class="dot" data-slide="2"></span>
-                                <span class="dot" data-slide="3"></span>
-                                <span class="dot" data-slide="4"></span>
-                            </div>
-                            <div class="title-section">
-                                <div class="title-author">
-                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
-                                    <p class="author">Ahmed Said Aidara</p>
-                                </div>
-                                <button class="start-button" id="start-btn">Commencer</button>
-                            </div>
-                            <div class="description">
-                                <h2>Description</h2>
-                                <p>
-                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
-                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Page 3 -->
-                    <div class="carousel-slide">
-                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+3');"></div>
-                        <div class="top-buttons">
-                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-                            <a href="parametres.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-                        </div>
-                        <div class="content">
-                            <div class="pagination">
-                                <span class="dot" data-slide="0"></span>
-                                <span class="dot" data-slide="1"></span>
-                                <span class="dot active" data-slide="2"></span>
-                                <span class="dot" data-slide="3"></span>
-                                <span class="dot" data-slide="4"></span>
-                            </div>
-                            <div class="title-section">
-                                <div class="title-author">
-                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
-                                    <p class="author">Ahmed Said Aidara</p>
-                                </div>
-                                <button class="start-button" id="start-btn">Commencer</button>
-                            </div>
-                            <div class="description">
-                                <h2>Description</h2>
-                                <p>
-                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
-                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Page 4 -->
-                    <div class="carousel-slide">
-                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+4');"></div>
-                        <div class="top-buttons">
-                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-                            <a href="parametres.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-                        </div>
-                        <div class="content">
-                            <div class="pagination">
-                                <span class="dot" data-slide="0"></span>
-                                <span class="dot" data-slide="1"></span>
-                                <span class="dot" data-slide="2"></span>
-                                <span class="dot active" data-slide="3"></span>
-                                <span class="dot" data-slide="4"></span>
-                            </div>
-                            <div class="title-section">
-                                <div class="title-author">
-                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
-                                    <p class="author">Ahmed Said Aidara</p>
-                                </div>
-                                <button class="start-button" id="start-btn">Commencer</button>
-                            </div>
-                            <div class="description">
-                                <h2>Description</h2>
-                                <p>
-                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
-                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Page 5 -->
-                    <div class="carousel-slide">
-                        <div class="background-image" style="background-image: url('https://via.placeholder.com/720x1280?text=Photo+5');"></div>
-                        <div class="top-buttons">
-                            <button class="icon-btn" aria-label="Partager"><svg><use href="#share-icon"></use></svg></button>
-                            <a href="parametres.html" class="icon-btn" aria-label="Paramètres"><svg><use href="#settings-icon"></use></svg></a>
-                        </div>
-                        <div class="content">
-                            <div class="pagination">
-                                <span class="dot" data-slide="0"></span>
-                                <span class="dot" data-slide="1"></span>
-                                <span class="dot" data-slide="2"></span>
-                                <span class="dot" data-slide="3"></span>
-                                <span class="dot active" data-slide="4"></span>
-                            </div>
-                            <div class="title-section">
-                                <div class="title-author">
-                                    <h1>La Voie du Salut – <br>Chercheur de Vérité</h1>
-                                    <p class="author">Ahmed Said Aidara</p>
-                                </div>
-                                <button class="start-button" id="start-btn">Commencer</button>
-                            </div>
-                            <div class="description">
-                                <h2>Description</h2>
-                                <p>
-                                    Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête intérieure de vérité et de lumière. "La Voie du Salut" est cette porte secrète, celle qui vous conduit là où l'Islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d’environ 1000 pages et éclairants, est une expérience qui éveille l’âme et nourrit l’esprit.<br><br>
-                                    Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter par ce voyage spirituel nourrissant.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="home-content">
+                <div class="home-text">
+                    <h2>La Voie du Salut - Chercheur de vérité</h2>
+                    <p>Imaginez un livre qui ne se contente pas de répondre à vos questions, mais qui les transforme en une quête inédite de vérité et de lumière. “La Voie du Salut” est cette porte secrète, celle qui vous conduit là où l’islam et le christianisme se rencontrent dans une harmonie saisissante. Ce livre, riche d'environ 1000 arguments puissants et éclairants, est bien plus qu’une simple lecture : c’est une expérience qui éveille l’âme et nourrit l’esprit. Ne le laissez pas échapper. Chaque page est une invitation à franchir un seuil, à ouvrir votre cœur à des révélations profondes qui ne demandent qu’à être comprises. Laissez-vous envoûter, car ce voyage spirituel pourrait bien être celui qui transforme votre vision du monde et vous guide vers le salut véritable. Osez, lisez et découvrez ce que d’autres n’ont jamais osé explorer.</p>
+                    <button id="start-btn">Commencer</button>
                 </div>
+                <img src="book-cover.jpg" alt="Couverture du livre" class="book-cover">
             </div>
         </section>
 
@@ -589,7 +428,7 @@
                 <p>Sin distances man from God, but redemption is always possible. This chapter explores this spiritual cycle.</p>
             </div>
             <div class="content" data-lang="ar" style="display: none;">
-                <p>الخطيئة تبعد الإنسان عن الله، لكن التوبة دائمًا ممكنة. يستكشف هذه الدورة الروحية.</p>
+                <p>الخطيئة تبعد الإنسان عن الله، لكن التوبة دائمًا ممكنة. يستكشف هذا الفصل هذه الدورة الروحية.</p>
             </div>
             <div class="chapter-nav">
                 <button class="prev-btn">← Précédent</button>
@@ -988,7 +827,7 @@
                 <p>Purification of the soul is essential to draw closer to God. This chapter explores this process.</p>
             </div>
             <div class="content" data-lang="ar" style="display: none;">
-                <p>تطهير النفس ضروري للاقتراب من الله. يستكشف هذه العملية.</p>
+                <p>تطهير النفس ضروري للاقتراب من الله. يستكشف هذا الفصل هذه العملية.</p>
             </div>
             <div class="chapter-nav">
                 <button class="prev-btn">← Précédent</button>
@@ -1030,7 +869,7 @@
                 <p>Brotherhood unites humanity under God’s banner. This chapter explores this spiritual unity.</p>
             </div>
             <div class="content" data-lang="ar" style="display: none;">
-                <p>الأخوة توحد البشرية تحت راية الله. يستكشف هذه الوحدة الروحية.</p>
+                <p>الأخوة توحد البشرية تحت راية الله. يستكشف هذا الفصل هذه الوحدة الروحية.</p>
             </div>
             <div class="chapter-nav">
                 <button class="prev-btn">← Précédent</button>
