@@ -1,15 +1,16 @@
 {
   "name": "La Voie du Salut",
-  "short_name": "La Voie du Salut",
-  "description": "Application de lecture moderne avec mode sombre, zoom, favoris, lecture vocale et traduction",
+  "short_name": "Voie du Salut",
+  "description": "Application de lecture moderne pour explorer 'La Voie du Salut', avec mode sombre, zoom, favoris, lecture vocale et traduction.",
   "start_url": "/index.html",
-  "display": "fullscreen",
-  "background_color": "#1e3a8a",
+  "display": "standalone",
+  "background_color": "#f0f4f8",
   "theme_color": "#1e3a8a",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "book-icon.png",
-      "sizes": "64x64",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
@@ -19,6 +20,5 @@
     }
   ],
   "lang": "fr",
-  "dir": "ltr",
-  "orientation": "portrait"
+  "dir": "ltr"
 }
