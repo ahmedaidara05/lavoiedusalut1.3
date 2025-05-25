@@ -105,45 +105,64 @@ body.dark {
 }
 
 
-#voice-select {
-    border-radius: 10px; /* Garde la forme rectangulaire pour le select */
-    width: auto;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
-    text-align: center; /* Centrer le texte si possible */
-}
-
-.top-navbar button:hover, .bottom-navbar button:hover, #voice-select:hover {
-    background-color: #d4af37;
-    color: #1e3a8a;
-    transform: scale(1.1);
-}
-
-/* Styles pour le menu déroulant du hamburger */
 .dropdown-menu {
-    display: flex; /* Toujours flex pour la structure, mais masqué/affiché par opacité/transform */
-    flex-direction: column; /* Pour afficher les éléments verticalement */
-    position: absolute;
-    top: 50px; /* Ajuste la position sous la barre du haut */
-    right: 0;
-    background-color: #1e3a8a; /* Couleur de fond du menu */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 60px; /* Sous la barre .top-navbar */
+    right: 10px;
+    background-color: #1e3a8a;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 2px solid #d4af37;
     border-radius: 8px;
     padding: 10px;
-    z-index: 999; /* Moins prioritaire que la navbar, mais au-dessus du contenu */
-    min-width: 150px; /* Largeur minimale pour le menu */
-
-    /* Animations */
+    z-index: 999;
+    width: 60px; /* Largeur fixe pour une barre étroite */
     opacity: 0;
     transform: translateY(-10px);
-    pointer-events: none; /* Empêche les interactions quand caché */
+    pointer-events: none;
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 .dropdown-menu.show {
     opacity: 1;
     transform: translateY(0);
-    pointer-events: auto; /* Permet les interactions quand affiché */
+    pointer-events: auto;
+}
+
+.dropdown-menu button, .dropdown-menu select {
+    background: none;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.dropdown-menu button:hover, .dropdown-menu select:hover {
+    background-color: #d4af37;
+    color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+.dropdown-menu select {
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    text-align: center;
+    appearance: none; /* Supprime le style par défaut du select */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23d4af37" d="M7 10l5 5 5-5z"/></svg>') no-repeat right center #1e3a8a;
 }
 
 /* Styles pour les éléments à l'intérieur du menu déroulant */
@@ -262,6 +281,29 @@ p {
     background-color: #d4af37;
     color: #1e3a8a;
     transform: scale(1.1);
+}
+
+#chat-icon {
+    position: fixed;
+    bottom: 80px; /* Déplacé plus haut pour éviter de chevaucher la barre inférieure */
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    z-index: 9999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    user-select: none;
+}
+
+#chat-icon:active {
+    cursor: grabbing;
 }
 
 .favorite {
