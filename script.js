@@ -1,3 +1,112 @@
+// Gestion du carrousel
+const carousel = document.querySelector('.carousel');
+const slides = document.querySelectorAll('.carousel-slide');
+const dots = document.querySelectorAll('.dot');
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+let currentSlide = 0;
+let startX = 0;
+let isDragging = false;
+
+// Fonction pour mettre à jour la position du carrousel
+function updateCarousel() {
+    carousel.style.transform = `translateX(-${currentSlide * 20}%)`;
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+    });
+    // Désactiver les boutons si on est au début ou à la fin
+    prevButton.disabled = currentSlide === 0;
+    nextButton.disabled = currentSlide === slides.length - 1;
+}
+
+// Gestion des clics sur les boutons de navigation
+prevButton.addEventListener('click', () => {
+    if (currentSlide > 0) {
+        currentSlide--;
+        updateCarousel();
+    }
+});
+
+nextButton.addEventListener('click', () => {
+    if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateCarousel();
+    }
+});
+
+// Gestion des clics sur les points
+dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+        currentSlide = parseInt(dot.getAttribute('data-slide'));
+        updateCarousel();
+    });
+});
+
+// Défilement tactile
+carousel.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+});
+
+carousel.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const currentX = e.touches[0].clientX;
+    const diffX = startX - currentX;
+
+    if (diffX > 50 && currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateCarousel();
+        isDragging = false;
+    } else if (diffX < -50 && currentSlide > 0) {
+        currentSlide--;
+        updateCarousel();
+        isDragging = false;
+    }
+});
+
+carousel.addEventListener('touchend', () => {
+    isDragging = false;
+});
+
+// Animation d'entrée pour le contenu de chaque slide
+document.addEventListener('DOMContentLoaded', () => {
+    slides.forEach(slide => {
+        const content = slide.querySelector('.content');
+        const description = slide.querySelector('.description');
+
+        content.style.opacity = 0;
+        content.style.transform = 'translateY(20px)';
+        description.style.opacity = 0;
+        description.style.transform = 'translateY(20px)';
+    });
+
+    // Animation pour le premier slide au chargement
+    const firstContent = slides[0].querySelector('.content');
+    const firstDescription = slides[0].querySelector('.description');
+    firstContent.style.transition = 'opacity 0.8s, transform 0.8s';
+    firstContent.style.opacity = 1;
+    firstContent.style.transform = 'translateY(0)';
+    firstDescription.style.transition = 'opacity 0.8s 0.2s, transform 0.8s 0.2s';
+    firstDescription.style.opacity = 1;
+    firstDescription.style.transform = 'translateY(0)';
+});
+
+// Animation lors du changement de slide
+carousel.addEventListener('transitionend', () => {
+    const currentContent = slides[currentSlide].querySelector('.content');
+    const currentDescription = slides[currentSlide].querySelector('.description');
+    currentContent.style.transition = 'opacity 0.8s, transform 0.8s';
+    currentContent.style.opacity = 1;
+    currentContent.style.transform = 'translateY(0)';
+    currentDescription.style.transition = 'opacity 0.8s 0.2s, transform 0.8s 0.2s';
+    currentDescription.style.opacity = 1;
+    currentDescription.style.transform = 'translateY(0)';
+});
+
+// Initialisation
+updateCarousel();
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // Vérifier que firebase est chargé
     if (!window.firebase) {
@@ -370,26 +479,6 @@ function updateNavigation(currentChapterId) {
     });
 }
 
-// === AJOUT POUR LE MENU HAMBURGER ===
-const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn');
-const dropdownMenu = document.getElementById('dropdown-menu');
-
-if (hamburgerMenuBtn && dropdownMenu) {
-    hamburgerMenuBtn.addEventListener('click', () => {
-        console.log('Clic bouton hamburger');
-        dropdownMenu.classList.toggle('show');
-    });
-
-    // Ferme le menu si clic à l'extérieur
-    document.addEventListener('click', (event) => {
-        if (!dropdownMenu.contains(event.target) && !hamburgerMenuBtn.contains(event.target)) {
-            dropdownMenu.classList.remove('show');
-            console.log('Menu fermé (clic extérieur)');
-        }
-    });
-}    
-    
-// === GESTION DES BOUTONS PRÉCÉDENT / SUIVANT ===
 const prevButtons = document.querySelectorAll('.prev-btn');
 const nextButtons = document.querySelectorAll('.next-btn');
 
@@ -420,6 +509,18 @@ nextButtons.forEach(button => {
         }
     });
 });
+
+    nextButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            console.log('Clic suivant');
+            const currentChapter = button.closest('section').id;
+            const currentIndex = chapters.indexOf(currentChapter);
+            if (currentIndex < chapters.length - 1) {
+                sections.forEach(section => section.classList.remove('active'));
+                document.getElementById(chapters[currentIndex + 1]).classList.add('active');
+            }
+        });
+    });
 
     // Gestion des favoris et progression
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
